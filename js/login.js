@@ -1,10 +1,10 @@
-function submitForm(event) {
-  event.preventDefault();
-  let usuario = document.getElementById("usuario").value;
-  let contrasena = document.getElementById("contrasena").value;
-  let loginError = document.getElementById("loginError");
-  let errorMessage = "";
-  
+//Guardar usuario
+function submitForm(event){
+    event.preventDefault();
+    let usuario = document.getElementById("usuario").value;
+    let contrasena = document.getElementById("contrasena").value;
+    let loginError = document.getElementById("loginError");
+    let errorMessage = "";
 
   if (usuario !== "" && contrasena !== "") {
     
@@ -17,9 +17,12 @@ function submitForm(event) {
   } else {
       errorMessage = "Usuario y contraseña requeridos";
   }
+
+
+    loginError.innerHTML = errorMessage;
 }
 
-// Mostrar contraseña
+//Mostrar contraseña
 function mostrarPassword() {
   var contrasena = document.getElementById("contrasena");
   var show_eye = document.getElementById("show_eye");
