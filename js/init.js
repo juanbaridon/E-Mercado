@@ -15,6 +15,16 @@ let hideSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
+// Al cargar la pagina, mostramos el usuario si esta loggeado - ENTREGA 2
+document.addEventListener("DOMContentLoaded", function(){
+  var usuario = localStorage.getItem("usuario");
+  if (usuario === null){
+      window.location.href="login.html";
+  } else {
+      document.getElementById("emailButton").innerHTML = localStorage.getItem("usuario");
+  }
+});
+
 let getJSONData = function(url){
     let result = {};
     showSpinner();
