@@ -1,3 +1,4 @@
+//Guardar usuario
 function submitForm(event){
     event.preventDefault();
     let usuario = document.getElementById("usuario").value;
@@ -15,7 +16,7 @@ function submitForm(event){
     loginError.innerHTML = errorMessage;
 };
 
-//Mostrar contraseña;
+//Mostrar contraseña
 function mostrarPassword() {
     var contrasena = document.getElementById("contrasena");
    var show_eye = document.getElementById("show_eye");
