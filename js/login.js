@@ -1,57 +1,74 @@
-function submitForm(event) {
-    event.preventDefault();
-    let usuario = document.getElementById("usuario").value;
-    let contrasena = document.getElementById("contrasena").value;
-    let loginError = document.getElementById("loginError");
-    let errorMessage = "";
-  
-    if (usuario !== "" && contrasena !== "") {
-      if (emailValido(usuario) && contrasenaValida(contrasena)) { //linea agregada
-        localStorage.setItem("usuario", usuario);
-        window.location.href = "index.html";
-      } else {
-        errorMessage = "Datos de inicio de sesión no válidos"; //linea agregada
-      }
-    } else {
-      errorMessage = "Usuario y contraseña requeridos";
+let usuario = document.getElementById("usuario");
+let contrasena = document.getElementById("contrasena");
+let loginError = document.getElementById("loginError");
+let errorMessage = "";
+
+document.addEventListener("input", ()=>{
+  //Mostrar que el usuario es válido
+  if (!emailValido(usuario.value)) {
+    usuario.classList.add('is-invalid');
+    usuario.classList.remove('is-valid');
     }
+  else{
+    usuario.classList.add('is-valid');
+    usuario.classList.remove('is-invalid');
+  }
+  //Mostrar que la contraseña es válida
+  if (!contrasenaValida(contrasena.value)) {
+    contrasena.classList.add('is-invalid');
+    contrasena.classList.remove('is-valid');
+    }
+  else{
+    contrasena.classList.add('is-valid');
+    contrasena.classList.remove('is-invalid');
+  }
+})
 
-    //comienzo agregado
-    if (!emailValido(usuario)) {
-        errorMessage += "<li class='small'>Formato de correo electrónico incorrecto</li>";
+//Guardar usuario
+function submitForm(event){
+    event.preventDefault();
 
-      }
+  if (usuario.value !== "" && contrasena.value !== "") {
+
+    if (emailValido(usuario.value) && contrasenaValida(contrasena.value)) { //linea agregada
+          localStorage.setItem("usuario", usuario.value);
+          window.location.href = "index.html";
+    } 
+  
+  //Mensajes de error
+  else {
+      errorMessage = "Datos de inicio de sesión no válidos"; //linea agregada
+  }
+  
+  } else {
+      errorMessage = "Usuario y contraseña requeridos";
+  }
+
+  if (!emailValido(usuario.value)) {
+      errorMessage += "<li class='small'>Formato de correo electrónico incorrecto</li>";
+  }
     
-
-  if (contrasena.length < 8) {
+  if (contrasena.value.length < 8) {
     errorMessage += "<li  class='small'>La contraseña debe tener al menos 8 caracteres</li>";
   }
-
   
-   
-    if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(contrasena)) {
-      errorMessage += "<li class='small'>Debe incluir al menos un carácter especial </li>";
-    }
-  
-
-    if (!/[A-Za-z]/.test(contrasena)) {
-      errorMessage += "<li  class='small'>Debe incluir al menos una letra</li>";
-    }
-  
-    
-    if (!/\d/.test(contrasena)) {
-      errorMessage += "<li  class='small'>Debe incluir al menos un número</li>";
-    }
-  
-    // Muestra los errores
-    loginError.innerHTML = "<ul>" + errorMessage + "</ul>";
+  if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(contrasena.value)) {
+    errorMessage += "<li class='small'>Debe incluir al menos un carácter especial </li>";
   }
   
-//fin agregado
+  if (!/[A-Za-z]/.test(contrasena.value)) {
+    errorMessage += "<li  class='small'>Debe incluir al menos una letra</li>";
+  }
+  
+  if (!/\d/.test(contrasena.value)) {
+    errorMessage += "<li  class='small'>Debe incluir al menos un número</li>";
+  }
 
-// Mostrar contraseña
+    loginError.innerHTML = "<ul>" + errorMessage + "</ul>";
+}
+
+//Mostrar contraseña
 function mostrarPassword() {
-  var contrasena = document.getElementById("contrasena");
   var show_eye = document.getElementById("show_eye");
   var hide_eye = document.getElementById("hide_eye");
 
@@ -67,7 +84,8 @@ function mostrarPassword() {
   }
 }
 
-//comienzo agregado
+
+// inicio agregado
   function emailValido(email) {
     // valida correo electrónico de la forma hola@gmail.com
     var condicionDeEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -79,7 +97,4 @@ function contrasenaValida(password) {
     var condicionDecontrasena = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     return condicionDecontrasena.test(password);
 }
-
-//fin agregado
-
-
+// final agregado
