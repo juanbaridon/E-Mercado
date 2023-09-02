@@ -52,9 +52,6 @@ function submitForm(event){
     errorMessage += "<li  class='small'>La contraseña debe tener al menos 8 caracteres</li>";
   }
   
-  if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(contrasena.value)) {
-    errorMessage += "<li class='small'>Debe incluir al menos un carácter especial </li>";
-  }
   
   if (!/[A-Za-z]/.test(contrasena.value)) {
     errorMessage += "<li  class='small'>Debe incluir al menos una letra</li>";
