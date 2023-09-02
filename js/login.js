@@ -1,28 +1,55 @@
-//Guardar usuario
-function submitForm(event){
+function submitForm(event) {
     event.preventDefault();
     let usuario = document.getElementById("usuario").value;
     let contrasena = document.getElementById("contrasena").value;
     let loginError = document.getElementById("loginError");
     let errorMessage = "";
-
-  if (usuario !== "" && contrasena !== "") {
-    
+  
+    if (usuario !== "" && contrasena !== "") {
       if (emailValido(usuario) && contrasenaValida(contrasena)) { //linea agregada
-          localStorage.setItem("usuario", usuario);
-          window.location.href = "index.html";
+        localStorage.setItem("usuario", usuario);
+        window.location.href = "index.html";
       } else {
-          errorMessage = "Datos de inicio de sesión no válidos"; //linea agregada
+        errorMessage = "Datos de inicio de sesión no válidos"; //linea agregada
       }
-  } else {
+    } else {
       errorMessage = "Usuario y contraseña requeridos";
+    }
+
+    //comienzo agregado
+    if (!emailValido(usuario)) {
+        errorMessage += "<li class='small'>Formato de correo electrónico incorrecto</li>";
+
+      }
+    
+
+  if (contrasena.length < 8) {
+    errorMessage += "<li  class='small'>La contraseña debe tener al menos 8 caracteres</li>";
   }
 
+  
+   
+    if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(contrasena)) {
+      errorMessage += "<li class='small'>Debe incluir al menos un carácter especial </li>";
+    }
+  
 
-    loginError.innerHTML = errorMessage;
-}
+    if (!/[A-Za-z]/.test(contrasena)) {
+      errorMessage += "<li  class='small'>Debe incluir al menos una letra</li>";
+    }
+  
+    
+    if (!/\d/.test(contrasena)) {
+      errorMessage += "<li  class='small'>Debe incluir al menos un número</li>";
+    }
+  
+    // Muestra los errores
+    loginError.innerHTML = "<ul>" + errorMessage + "</ul>";
+  }
+  
+//fin agregado
 
-//Mostrar contraseña
+// Mostrar contraseña
 function mostrarPassword() {
   var contrasena = document.getElementById("contrasena");
   var show_eye = document.getElementById("show_eye");
@@ -40,8 +67,7 @@ function mostrarPassword() {
   }
 }
 
-
-// inicio agregado
+//comienzo agregado
   function emailValido(email) {
     // valida correo electrónico de la forma hola@gmail.com
     var condicionDeEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -53,6 +79,7 @@ function contrasenaValida(password) {
     var condicionDecontrasena = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     return condicionDecontrasena.test(password);
 }
-// final agregado
+
+//fin agregado
 
 
