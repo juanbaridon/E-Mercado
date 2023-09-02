@@ -93,8 +93,8 @@ function mostrarPassword() {
 }
 
 function contrasenaValida(password) {
-    // verifica que la contraseña tenga un mínimo de 8 caracteres, con al menos una letra y un número
-    var condicionDecontrasena = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    return condicionDecontrasena.test(password);
+  var condicionDecontrasena = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d.@$!%*?&]{8,}$/;
+  return condicionDecontrasena.test(password);
 }
+
 // final agregado
