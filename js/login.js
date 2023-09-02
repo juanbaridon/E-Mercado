@@ -90,7 +90,7 @@ function mostrarPassword() {
 }
 
 function contrasenaValida(password) {
-  var condicionDecontrasena = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d.@$!%*?&]{8,}$/;
+  var condicionDecontrasena = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\-!"#$%&()*,./:;?@[\]^_`{|}~+<=>]{8,}$/;
   return condicionDecontrasena.test(password);
 }
 
