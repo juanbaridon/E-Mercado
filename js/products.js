@@ -14,6 +14,12 @@ const btnPrecioDesc = document.getElementById("sortDesc2");
 const btnRelevancia = document.getElementById("sortByCount2");
 const campoBusqueda = document.getElementById("buscador")
 
+//Funcion que almacena el id del producto y redirecciona a product-info.html
+function redirectProduct(prodId){
+  localStorage.setItem("productId", prodId);
+  window.location.href = "product-info.html";
+};
+
 //Función que muestra los productos;
 function showData(dataArray) { 
   nombreCategoria.innerHTML = categoria.catName;
@@ -22,7 +28,9 @@ function showData(dataArray) {
   //Listado de productos
   dataArray.products.forEach((prod)=>{
     divProductos.innerHTML +=
-      `<div class="list-group-item list-group-item-action cursor-active">
+      `<div class="list-group-item list-group-item-action cursor-active"
+        onclick="redirectProduct('${prod.id}')"
+      >
         <div class="row">
           <div class="col-3">
             <img src="${prod.image}" class="img-thumbnail">
