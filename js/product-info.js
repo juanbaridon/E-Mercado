@@ -89,42 +89,51 @@ async function cargarComments(url) {
 
 // Inicio punto 4
 
+function obtenerPuntuacionHTML(puntuacion) {
+    let starClass = "";
+
+    for (let i = 0; i < puntuacion; i++) {
+        starClass += '<span class="fa fa-star checked"></span>';
+    }
+    for (let i = puntuacion; i < 5; i++) {
+        starClass += '<span class="fa fa-star"></span>';
+    }
+
+    return starClass;
+}
+
+function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
+    const comentarioHTML = `
+    <li class="list-group-item">
+        <div>
+            <strong>${actualUser}</strong>
+            <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
+            ${obtenerPuntuacionHTML(puntuacion)}
+            <br>
+            ${opinion}
+        </div>
+    </li>`;
+
+    comentarios.innerHTML += comentarioHTML;
+}
+
 const commentForm = document.getElementById('commentForm');
 
 commentForm.addEventListener('submit', e => {
-    e.preventDefault()
+    e.preventDefault();
+
     const puntuacion = document.getElementById('puntuacion').value;
     const opinion = document.getElementById('opinion').value;
     const fechaHora = new Date();
     const fechaFormateada = fechaHora.toISOString();
     const actualUser = localStorage.getItem('usuario');
-    
-    let contador = 0;
-    let starClass = "";
 
-    for (let i = 0; i < puntuacion; i++) {
-        starClass += '<span class="fa fa-star checked"></span>';
-        contador++;
-    }
-    for (let i = contador; i < 5; i++) {
-        starClass += '<span class="fa fa-star"></span>';
-    }
-
-    comentarios.innerHTML += `
-    <li class="list-group-item">
-        <div>
-            <strong>${actualUser}</strong>
-            <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
-            ${starClass}
-            <br>
-            ${opinion}
-        </div>
-
-       
-    </li>`
+    agregarComentario(opinion, fechaFormateada, actualUser, puntuacion);
 
     commentForm.reset();
+});
 
-})
+
+
 
 // Fin punto 4
