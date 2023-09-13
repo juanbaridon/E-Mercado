@@ -1,39 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // 1. Obtener el ID del producto en el local storage
-    let productId = localStorage.getItem("productId");
-    console.log(productId)
+    // 1. URL
+    let productInfoUrl = PRODUCT_INFO_URL + localStorage.getItem("productId") + EXT_TYPE;
 
+    // 2. Hacer la solicitud
+    async function getJson() {
+      try{
+        const response = await fetch(productInfoUrl);
+        const json = await response.json();
+        showData(json);
+      }
+      catch (error){
+        //Mensaje de error
+        console.error('Error al solicitar la información \n', error);
+        divProductInfo.innerHTML = `
+          <div class="bg-danger text-white text-center rounded p-4 m-4">
+            <h5>Lo sentimos, ha ocurrido un error.</h5>
+          </div>`
+      }
+    }
+    getJson();
 
-    // 2. Fetch
-    let productInfoUrl = PRODUCT_INFO_URL + productId + EXT_TYPE;
+    //3. Mostrar la información
+    const divProductInfo = document.getElementById('divProductInfo');
+    const productImgs = document.getElementById('productImgs');
 
-    // 3. Hacer la solicitud y mostrar la información
-    fetch(productInfoUrl)
-        .then(response => response.json())
-        .then(data => {
-
-            document.getElementById("productName").innerHTML = `${data.name}`;
-            document.getElementById("productDescription").innerHTML = data.description;
-            document.getElementById("productPrice").innerHTML = `${data.cost} ${data.currency}`;
-            document.getElementById("productSoldCount").innerHTML = `${data.soldCount}`;
-            document.getElementById("productCategory").innerHTML = `${data.category}`;
-
-            let imagesContainer = document.getElementById("productImage");
-
-            data.images.forEach(imagen => {
-                let img = document.createElement("img");
-                img.src = imagen;
-                img.alt = data.name;
-                img.classList.add("img-fluid", "border", "m-2");
-
-                // Contenedor de columnas para las imágenes
-                let colDiv = document.createElement("div");
-                colDiv.classList.add("col");
-                colDiv.appendChild(img);
-
-                imagesContainer.appendChild(colDiv);
-            });
-
-        });
+    function showData(data){
+        divProductInfo.innerHTML = `
+        <div class="text-center p-4"">
+            <h2>${data.name}</h2></div>
+        <div class="list-group">
+            <div class="p-3 list-group-item">
+                <h5><span class="h4">Descripción: </span>${data.description}</h5></div>
+            <div class="p-3 list-group-item">
+                <h5><span class="h4">Precio: </span>${data.cost} ${data.currency}</h5></div>
+            <div class="p-3 list-group-item">
+                <h5><span class="h4">Cantidad vendidos: </span>${data.soldCount}</h5></div>
+            <div class="p-3 list-group-item">
+                <h5><span class="h4">Categoría: </span>${data.category}</h5></div>
+        <div>`
+        data.images.forEach(imagen => {
+            productImgs.innerHTML += `
+                <div class="col">
+                <img class="img-fluid border m-2" src="${imagen}" alt="${data.name}">
+                </div>`
+        })
+    }
 });
