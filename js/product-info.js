@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
 function estrellas(score) {
     let stars = '';
     const maxStars = 5;
-    const yellowStar = '⭐';
-    const blackStar = '★';
+    const yellowStar = '<span class="fa fa-star checked"></span>';
+    const blackStar = '<span class="fa fa-star"></span>';
 
     for (let i = 0; i < maxStars; i++) {
         if (i < score) {
@@ -54,21 +54,24 @@ function estrellas(score) {
 }
 
 // function que muestra los comentarios que vienen del JSON
+const comentarios = document.getElementById("comments");
+
 function comJson(comments){
-    let comentarios = document.getElementById("comments");
     for(let comment of comments){
         comentarios.innerHTML += `
         <div class="commentsHechos">
-          <div>
-            <p><strong>${comment.user}</strong></p>
-          </div>  
-          <div class="text-muted">
-            <small> &nbsp; - ${comment.dateTime} - &nbsp; </small>
-          </div>
-          <div>${estrellas(comment.score)}</div>
+            <ul class='list-group'>
+                <li class="list-group-item">
+                    <div>
+                        <strong>${comment.user}</strong>
+                        <small class='text-muted'> &nbsp; - ${comment.dateTime} - &nbsp; </small>
+                        ${estrellas(comment.score)}
+                        <br>
+                        ${comment.description}
+                    </div>
+                </li>
+            </ul>
         </div>
-        <div>${comment.description}</div> 
-        <hr>
     ` 
     }
 }
@@ -83,3 +86,45 @@ async function cargarComments(url) {
         console.error("Imposible cargar los comentarios, ha ocurrido un error inesperado:", error);
     }
 }
+
+// Inicio punto 4
+
+const commentForm = document.getElementById('commentForm');
+
+commentForm.addEventListener('submit', e => {
+    e.preventDefault()
+    const puntuacion = document.getElementById('puntuacion').value;
+    const opinion = document.getElementById('opinion').value;
+    const fechaHora = new Date();
+    const fechaFormateada = fechaHora.toISOString();
+    const actualUser = localStorage.getItem('usuario');
+    
+    let contador = 0;
+    let starClass = "";
+
+    for (let i = 0; i < puntuacion; i++) {
+        starClass += '<span class="fa fa-star checked"></span>';
+        contador++;
+    }
+    for (let i = contador; i < 5; i++) {
+        starClass += '<span class="fa fa-star"></span>';
+    }
+
+    comentarios.innerHTML += `
+    <li class="list-group-item">
+        <div>
+            <strong>${actualUser}</strong>
+            <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
+            ${starClass}
+            <br>
+            ${opinion}
+        </div>
+
+       
+    </li>`
+
+    commentForm.reset();
+
+})
+
+// Fin punto 4
