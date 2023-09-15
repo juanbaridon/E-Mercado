@@ -81,13 +81,23 @@ campoBusqueda.addEventListener("input", ()=>{
 })
 
 //Rango de precio
-btnFiltrar.addEventListener("click", function() {
-  const min = campoMin.value;
-  const max = campoMax.value;
-  const filtro = categoria.products.filter((element) => element.cost > min && element.cost < max);
-  categoria.products = filtro;
+btnFiltrar.addEventListener("click", function(){
+  const min = parseInt(campoMin.value, 10); 
+  const max = parseInt(campoMax.value, 10); 
+  const productosOriginales = categoriaOriginal.products;
+  const productosFiltrados = [];
+  
+  for (const producto of productosOriginales) {
+    if (min <= max && producto.cost >= min && producto.cost <= max) {
+      productosFiltrados.push(producto);
+    }
+  } 
+  
+  categoria.products = productosFiltrados;
   showData(categoria);
-})
+});
+
+
 
 //Limpiar
 btnLimpiar.addEventListener("click", function() { 
