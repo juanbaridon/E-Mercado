@@ -102,14 +102,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 ${opinion}
             </div>
         </li>`;
-
-        localStorage.setItem('comentario', comentarioHTML);
+        
+        const productId = localStorage.getItem('productId')
+        localStorage.setItem(`comentario ${productId}`, comentarioHTML);
 
         comentarios.innerHTML += comentarioHTML;
     }
 
-    //Se obtiene el comentario del localstorage y se muestra en
-    const comentarioCargado = localStorage.getItem('comentario');
+    //Se obtiene el comentario del localstorage y se muestra en pantalla
+    const productId = localStorage.getItem('productId')
+    const comentarioCargado = localStorage.getItem(`comentario ${productId}`);
     comentarios.innerHTML += comentarioCargado
 
     //Obtención de datos del formulario
