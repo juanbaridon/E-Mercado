@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    //Función que agrega el comentario
+    //Función que agrega el comentario y lo guarda en el localstorage
     function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
         const comentarioHTML = `
         <li class="list-group-item">
@@ -103,12 +103,18 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         </li>`;
 
+        localStorage.setItem('comentario', comentarioHTML);
+
         comentarios.innerHTML += comentarioHTML;
     }
 
-    const commentForm = document.getElementById('commentForm');
+    //Se obtiene el comentario del localstorage y se muestra en pantalla
+    const comentarioCargado = localStorage.getItem('comentario');
+    comentarios.innerHTML += comentarioCargado
 
     //Obtención de datos del formulario
+    const commentForm = document.getElementById('commentForm');
+    
     commentForm.addEventListener('submit', e => {
         e.preventDefault();
 
@@ -122,5 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         commentForm.reset();
     });
+
+    
 });
 
