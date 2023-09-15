@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
         comentarios.innerHTML += comentarioHTML;
     }
 
-    //Se obtiene el comentario del localstorage y se muestra en pantalla
+    //Se obtiene el comentario del localstorage y se muestra en
     const comentarioCargado = localStorage.getItem('comentario');
     comentarios.innerHTML += comentarioCargado
 
@@ -120,9 +120,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const puntuacion = document.getElementById('puntuacion').value;
         const opinion = document.getElementById('opinion').value;
-        const fechaHora = new Date();
-        const fechaFormateada = fechaHora.toISOString();
         const actualUser = localStorage.getItem('usuario');
+        const fechaHora = new Date();
+        const opciones = { timeZone: 'America/Argentina/Buenos_Aires' };
+        const fechaFormateada = fechaHora.toLocaleString('es-AR', opciones);
 
         agregarComentario(opinion, fechaFormateada, actualUser, puntuacion);
 
