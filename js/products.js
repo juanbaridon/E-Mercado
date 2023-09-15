@@ -1,6 +1,6 @@
 //  *** INICIO AGREGADO ***
 //URL de la API;
-PRODUCTS_URL += localStorage.getItem('catID') + '.json'; //Agrega el ID de la categoría;
+const productInfoUrl = PRODUCTS_URL + localStorage.getItem("catID") + EXT_TYPE;
 
 var categoria = [];
 const divProductos = document.getElementById('divProductos');
@@ -52,7 +52,7 @@ function showData(dataArray) {
 //Petición a la URL
 async function getJson() {
   try{
-    const response = await fetch(PRODUCTS_URL);
+    const response = await fetch(productInfoUrl);
     const json = await response.json();
     categoria = json;
     showData(categoria);

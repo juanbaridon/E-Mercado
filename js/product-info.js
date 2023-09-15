@@ -1,139 +1,126 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. Obtener el ID del producto en el local storage
-    let productId = localStorage.getItem("productId");
-    console.log(productId)
-    // 2. Fetch
-    let productInfoUrl = PRODUCT_INFO_URL + productId + EXT_TYPE;
-    // 3. Hacer la solicitud y mostrar la información
-    fetch(productInfoUrl)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("productName").innerHTML = `${data.name}`;
-            document.getElementById("productDescription").innerHTML = data.description;
-            document.getElementById("productPrice").innerHTML = `${data.cost} ${data.currency}`;
-            document.getElementById("productSoldCount").innerHTML = `${data.soldCount}`;
-            document.getElementById("productCategory").innerHTML = `${data.category}`;
-            let imagesContainer = document.getElementById("productImage");
-            data.images.forEach(imagen => {
-                let img = document.createElement("img");
-                img.src = imagen;
-                img.alt = data.name;
-                img.classList.add("img-fluid", "border", "m-2");
-                // Contenedor de columnas para las imágenes
-                let colDiv = document.createElement("div");
-                colDiv.classList.add("col");
-                colDiv.appendChild(img);
-                imagesContainer.appendChild(colDiv);
-            });
 
-            // 4. Cargar los comentarios de la api (punto 3)
-            const URLCOM = "https://japceibal.github.io/emercado-api/products_comments/" + productId + ".json";
-            cargarComments(URLCOM);
+    //Cargar información del producto y comentarios
+    const productInfoUrl = PRODUCT_INFO_URL + localStorage.getItem("productId") + EXT_TYPE;
+    const commentsUrl = PRODUCT_INFO_COMMENTS_URL + localStorage.getItem("productId") + EXT_TYPE;
+
+    async function getJson() {
+      try{
+        const responseProducto = await fetch(productInfoUrl);
+        const jsonProducto = await responseProducto.json();
+        showData(jsonProducto);
+        const responseComentario = await fetch(commentsUrl);
+        const jsonComentario = await responseComentario.json();
+        comJson(jsonComentario);
+      }
+      catch (error){
+        //Mensaje de error
+        console.error('Error al solicitar la información \n', error);
+        divProductInfo.innerHTML = `
+          <div class="bg-danger text-white text-center rounded p-4 m-4">
+            <h5>Lo sentimos, ha ocurrido un error.</h5>
+          </div>`
+      }
+    }
+    getJson();
+
+    //Mostrar la información del producto
+    const divProductInfo = document.getElementById('divProductInfo');
+    const productImgs = document.getElementById('productImgs');
+
+    function showData(data){
+        divProductInfo.innerHTML = `
+        <div class="text-center p-4"">
+            <h2>${data.name}</h2></div>
+        <div class="list-group">
+            <div class="p-3 list-group-item">
+                <h6><span class="h5">Descripción: </span>${data.description}</h6></div>
+            <div class="p-3 list-group-item">
+                <h6><span class="h5">Precio: </span>${data.cost} ${data.currency}</h6></div>
+            <div class="p-3 list-group-item">
+                <h6><span class="h5">Cantidad vendidos: </span>${data.soldCount}</h6></div>
+            <div class="p-3 list-group-item">
+                <h6><span class="h5">Categoría: </span>${data.category}</h6></div>
+        <div>`
+        data.images.forEach(imagen => {
+            productImgs.innerHTML += `
+                <div class="col">
+                <img class="img-fluid border m-2" src="${imagen}" alt="${data.name}">
+                </div>`
         })
-        .catch(error => {
-            console.error("Error al obtener la información del producto:", error);
-        });
-});
+    }
 
-// funcion de score y stars negras y amarillas 
+    //Función que muestra las estrellas
+    function estrellas(score) {
+        let stars = '';
+        const maxStars = 5;
+        const yellowStar = '<span class="fa fa-star checked"></span>';
+        const blackStar = '<span class="fa fa-star"></span>';
 
-function estrellas(score) {
-    let stars = '';
-    const maxStars = 5;
-    const yellowStar = '<span class="fa fa-star checked"></span>';
-    const blackStar = '<span class="fa fa-star"></span>';
+        for (let i = 0; i < maxStars; i++) {
+            if (i < score) {
+                stars += yellowStar;
+            } else {
+                stars += blackStar;
+            }
+        }
+        return stars;
+    }
 
-    for (let i = 0; i < maxStars; i++) {
-        if (i < score) {
-            stars += yellowStar;
-        } else {
-            stars += blackStar;
+    //Función que muestra los comentarios del JSON
+    const comentarios = document.getElementById("comments");
+
+    function comJson(comments){
+        for(let comment of comments){
+            comentarios.innerHTML += `
+            <div class="commentsHechos">
+                <ul class='list-group'>
+                    <li class="list-group-item">
+                        <div>
+                            <strong>${comment.user}</strong>
+                            <small class='text-muted'> &nbsp; - ${comment.dateTime} - &nbsp; </small>
+                            ${estrellas(comment.score)}
+                            <br>
+                            ${comment.description}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        ` 
         }
     }
-    return stars;
-}
 
-// function que muestra los comentarios que vienen del JSON
-const comentarios = document.getElementById("comments");
+    //Función que agrega el comentario
+    function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
+        const comentarioHTML = `
+        <li class="list-group-item">
+            <div>
+                <strong>${actualUser}</strong>
+                <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
+                ${estrellas(puntuacion)}
+                <br>
+                ${opinion}
+            </div>
+        </li>`;
 
-function comJson(comments){
-    for(let comment of comments){
-        comentarios.innerHTML += `
-        <div class="commentsHechos">
-            <ul class='list-group'>
-                <li class="list-group-item">
-                    <div>
-                        <strong>${comment.user}</strong>
-                        <small class='text-muted'> &nbsp; - ${comment.dateTime} - &nbsp; </small>
-                        ${estrellas(comment.score)}
-                        <br>
-                        ${comment.description}
-                    </div>
-                </li>
-            </ul>
-        </div>
-    ` 
-    }
-}
-
-// function que carga los comentarios pertenecientes al json 
-async function cargarComments(url) {
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        comJson(data);
-    } catch (error) {
-        console.error("Imposible cargar los comentarios, ha ocurrido un error inesperado:", error);
-    }
-}
-
-// Inicio punto 4
-
-function obtenerPuntuacionHTML(puntuacion) {
-    let starClass = "";
-
-    for (let i = 0; i < puntuacion; i++) {
-        starClass += '<span class="fa fa-star checked"></span>';
-    }
-    for (let i = puntuacion; i < 5; i++) {
-        starClass += '<span class="fa fa-star"></span>';
+        comentarios.innerHTML += comentarioHTML;
     }
 
-    return starClass;
-}
+    const commentForm = document.getElementById('commentForm');
 
-function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
-    const comentarioHTML = `
-    <li class="list-group-item">
-        <div>
-            <strong>${actualUser}</strong>
-            <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
-            ${obtenerPuntuacionHTML(puntuacion)}
-            <br>
-            ${opinion}
-        </div>
-    </li>`;
+    //Obtención de datos del formulario
+    commentForm.addEventListener('submit', e => {
+        e.preventDefault();
 
-    comentarios.innerHTML += comentarioHTML;
-}
+        const puntuacion = document.getElementById('puntuacion').value;
+        const opinion = document.getElementById('opinion').value;
+        const fechaHora = new Date();
+        const fechaFormateada = fechaHora.toISOString();
+        const actualUser = localStorage.getItem('usuario');
 
-const commentForm = document.getElementById('commentForm');
+        agregarComentario(opinion, fechaFormateada, actualUser, puntuacion);
 
-commentForm.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const puntuacion = document.getElementById('puntuacion').value;
-    const opinion = document.getElementById('opinion').value;
-    const fechaHora = new Date();
-    const fechaFormateada = fechaHora.toISOString();
-    const actualUser = localStorage.getItem('usuario');
-
-    agregarComentario(opinion, fechaFormateada, actualUser, puntuacion);
-
-    commentForm.reset();
+        commentForm.reset();
+    });
 });
 
-
-
-
-// Fin punto 4
