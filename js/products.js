@@ -129,4 +129,47 @@ btnRelevancia.addEventListener("click", function() {
   showData(categoria);
 })
 
+//  BUSQUEDA POR VOZ
+const voiceSearchButton = document.getElementById('voiceSearch');
+voiceSearchButton.addEventListener('click', startVoiceSearch);
+
+// Define la función startVoiceSearch para iniciar la búsqueda por voz
+function startVoiceSearch() {
+  console.log('Iniciando búsqueda por voz...');
+  const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+  recognition.lang = 'es-ES'; //  el idioma de reconocimiento
+
+  // Inicia el reconocimiento de voz
+  recognition.start();
+
+  // Evento que se dispara cuando se obtiene un resultado
+  recognition.onresult = function(event) {
+    const voiceResult = event.results[0][0].transcript;
+    // Establece el valor del campo de búsqueda con el resultado de voz
+    campoBusqueda.value = voiceResult;
+    // Ejecuta la búsqueda
+    executeSearch(voiceResult);
+  };
+
+  // Evento que se dispara cuando se detiene el reconocimiento de voz
+  recognition.onend = function() {
+    recognition.stop();
+  };
+}
+
+// Define la función executeSearch que realiza la búsqueda basada en el texto proporcionado
+function executeSearch(query) {
+ 
+  // Filtra y muestra los resultados de búsqueda según la consulta de voz
+  categoria = JSON.parse(JSON.stringify(categoriaOriginal));
+  const busqueda = query.toLowerCase();
+  const filtrado = categoria.products.filter(
+    (element) =>
+      element.name.toLowerCase().includes(busqueda) ||
+      element.description.toLowerCase().includes(busqueda)
+  );
+  categoria.products = filtrado;
+  showData(categoria);
+}
+
 //  *** FIN AGREGADO ***
