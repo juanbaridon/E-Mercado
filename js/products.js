@@ -1,5 +1,5 @@
-//  *** INICIO AGREGADO ***
-// URL de la API;
+//*** INICIO AGREGADO ***
+//URL de la API;
 const productInfoUrl = PRODUCTS_URL + localStorage.getItem("catID") + EXT_TYPE;
 
 var categoria = [];
@@ -14,18 +14,18 @@ const btnPrecioDesc = document.getElementById("sortDesc2");
 const btnRelevancia = document.getElementById("sortByCount2");
 const campoBusqueda = document.getElementById("buscador")
 
-// Función que almacena el id del producto y redirecciona a product-info.html
+//Función que almacena el id del producto y redirecciona a product-info.html
 function redirectProduct(prodId){
   localStorage.setItem("productId", prodId);
   window.location.href = "product-info.html";
 };
 
-// Función que muestra los productos;
+//Función que muestra los productos;
 function showData(dataArray) { 
   nombreCategoria.innerHTML = categoria.catName;
   divProductos.innerHTML = "";
 
-  // Listado de productos
+  //Listado de productos
   dataArray.products.forEach((prod)=>{
     divProductos.innerHTML +=
       `<div class="list-group-item list-group-item-action cursor-active"
@@ -48,7 +48,7 @@ function showData(dataArray) {
   });
 }
 
-// Petición a la URL
+//Petición a la URL
 async function getJson() {
   try{
     const response = await fetch(productInfoUrl);
@@ -68,8 +68,8 @@ async function getJson() {
 }
 getJson();
 
-// Buscador
-// La función se ejecuta al utilizar el input
+//Buscador
+//La función se ejecuta al utilizar el input
 campoBusqueda.addEventListener("input", ()=>{
   categoria = JSON.parse(JSON.stringify(categoriaOriginal));
   const busqueda = campoBusqueda.value.toLowerCase(); // Valor del input en minúsculas
@@ -79,7 +79,7 @@ campoBusqueda.addEventListener("input", ()=>{
   showData(categoria);
 });
 
-// Rango de precio
+//Rango de precio
 btnFiltrar.addEventListener("click", function(){
   const min = parseInt(campoMin.value, 10); 
   const max = parseInt(campoMax.value, 10); 
@@ -96,7 +96,7 @@ btnFiltrar.addEventListener("click", function(){
   showData(categoria);
 });
 
-// Limpiar
+//Limpiar
 btnLimpiar.addEventListener("click", function() { 
   campoMin.value = null;
   campoMax.value = null;
@@ -105,21 +105,21 @@ btnLimpiar.addEventListener("click", function() {
   showData(categoria);
 }); 
 
-// Precio ascendente
+//Precio ascendente
 btnPrecioAsc.addEventListener("click", function(){
   const productosOrdenados = categoria.products.sort((a, b) => a.cost - b.cost); 
   categoria.products = productosOrdenados;
   showData(categoria);
 });
 
-// Precio descendente
+//Precio descendente
 btnPrecioDesc.addEventListener("click", function() {
   const productosOrdenados = categoria.products.sort((a, b) => b.cost - a.cost); 
   categoria.products = productosOrdenados;
   showData(categoria);
 });
 
-// Relevancia
+//Relevancia
 btnRelevancia.addEventListener("click", function() {
   const productosOrdenados = categoria.products.sort((a, b) => b.soldCount - a.soldCount); 
   categoria.products = productosOrdenados;
@@ -172,4 +172,4 @@ function executeSearch(query) {
 }
 
     
-//  *** FIN AGREGADO ***
+//*** FIN AGREGADO ***
