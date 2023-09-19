@@ -1,4 +1,3 @@
-//  *** INICIO AGREGADO ***
 //URL de la API;
 const productInfoUrl = PRODUCTS_URL + localStorage.getItem("catID") + EXT_TYPE;
 
@@ -28,7 +27,7 @@ function showData(dataArray) {
   //Listado de productos
   dataArray.products.forEach((prod)=>{
     divProductos.innerHTML +=
-      `<div class="list-group-item list-group-item-action cursor-active"
+      `<div class="list-group-item list-group-item-action cursor-active bg-light"
         onclick="redirectProduct('${prod.id}')"
       >
         <div class="row">
@@ -47,6 +46,15 @@ function showData(dataArray) {
       </div>
       `
   })
+  //Mensaje si no se encuentran productos
+    if (dataArray.products.length === 0) {
+    divProductos.innerHTML +=
+      `<div class="text-center text-muted">
+      <h4>No se encuentran productos</h4></div>`
+  }
+
+  //Modo oscuro
+    modeListado()
 }
 
 //Petición a la URL
@@ -172,4 +180,3 @@ function executeSearch(query) {
   showData(categoria);
 }
 
-//  *** FIN AGREGADO ***

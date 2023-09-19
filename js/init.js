@@ -56,3 +56,82 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+/*  Modo oscuro  */
+
+//Botón light
+var lightMode = document.getElementById('lightMode');
+
+lightMode.addEventListener("click", ()=>{
+  localStorage.setItem("mode", "light");
+  changeMode()
+})
+
+//Botón dark
+var darkMode = document.getElementById('darkMode');
+
+darkMode.addEventListener("click", ()=>{
+  localStorage.setItem("mode", "dark");
+  changeMode()
+})
+
+function changeMode() {
+  //Elementos
+  var lightElementsBg = document.querySelectorAll(".bg-white, .bg-light, .btn-light");
+  var darkElementsBg = document.querySelectorAll(".bg-dark, .btn-dark");
+  var lightElementsText = document.querySelectorAll(".text-dark");
+  var darkElementsText = document.querySelectorAll(".text-light, .text-white");
+
+  //Dark
+  if (localStorage.getItem("mode") == "dark") {
+  lightElementsBg.forEach((element)=>{
+    element.classList.remove('bg-light', 'bg-white', 'btn-light');
+    element.classList.add('bg-dark', 'text-light');
+  })
+  lightElementsText.forEach((element)=>{
+    element.classList.remove('text-dark');
+    element.classList.add('text-white');
+  })
+  //Background
+  document.querySelector('body').style.backgroundColor = "#0d1117";
+  //Color botón
+  lightMode.classList.remove('btn-primary');
+  darkMode.classList.add('btn-primary');
+  }
+
+  //Light
+  else {
+  darkElementsBg.forEach((element)=>{
+    element.classList.remove('bg-dark', 'btn-dark');
+    element.classList.add('bg-light', 'text-dark');
+  })
+  darkElementsText.forEach((element)=>{
+    element.classList.remove('text-white', 'text-light');
+    element.classList.add('text-dark');
+  })
+  //Background
+  document.querySelector('body').style.backgroundColor = "#e2e2e2";
+  //Color botón
+  lightMode.classList.add('btn-primary');
+  darkMode.classList.remove('btn-primary');
+  }
+}
+
+changeMode()
+
+function modeListado() {
+    let categoryItem = document.querySelectorAll('.list-group-item');
+    console.log(categoryItem)
+    if (localStorage.getItem("mode") == "dark"){
+        categoryItem.forEach((element)=>{
+            element.classList.add('bg-dark', 'text-white');
+            element.classList.remove('bg-light', 'text-dark')
+        })
+    }
+    else{
+        categoryItem.forEach((element)=>{
+            element.classList.remove('bg-dark', 'text-white');
+            element.classList.add('bg-light', 'text-dark')
+        })
+    }
+}

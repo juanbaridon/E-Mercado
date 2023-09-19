@@ -30,24 +30,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showData(data){
         divProductInfo.innerHTML = `
-        <div class="text-center p-4"">
+        <div class="text-center p-4">
             <h2>${data.name}</h2></div>
         <div class="list-group">
-            <div class="p-3 list-group-item">
+            <div class="p-3 list-group-item bg-light">
                 <h6><span class="h5">Descripción: </span>${data.description}</h6></div>
-            <div class="p-3 list-group-item">
+            <div class="p-3 list-group-item bg-light">
                 <h6><span class="h5">Precio: </span>${data.cost} ${data.currency}</h6></div>
-            <div class="p-3 list-group-item">
+            <div class="p-3 list-group-item bg-light">
                 <h6><span class="h5">Cantidad vendidos: </span>${data.soldCount}</h6></div>
-            <div class="p-3 list-group-item">
+            <div class="p-3 list-group-item bg-light">
                 <h6><span class="h5">Categoría: </span>${data.category}</h6></div>
         <div>`
         data.images.forEach(imagen => {
             productImgs.innerHTML += `
-                <div class="col">
+                <div class="col bg-light">
                 <img class="img-fluid border m-2" src="${imagen}" alt="${data.name}">
                 </div>`
         })
+
+        //Modo oscuro
+        let categoryItem = document.querySelectorAll('.list-group-item');
+        console.log(categoryItem)
+        if (localStorage.getItem("mode") == "dark"){
+            categoryItem.forEach((element)=>{
+                element.classList.add('bg-dark', 'text-white');
+                element.classList.remove('bg-light', 'text-dark')
+            })
+        }
+        else{
+            categoryItem.forEach((element)=>{
+                element.classList.remove('bg-dark', 'text-white');
+                element.classList.add('bg-light', 'text-dark')
+            })
+        }
     }
 
     //Función que muestra las estrellas
@@ -75,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
             comentarios.innerHTML += `
             <div class="commentsHechos">
                 <ul class='list-group'>
-                    <li class="list-group-item">
+                    <li class="list-group-item bg-light">
                         <div>
                             <strong>${comment.user}</strong>
                             <small class='text-muted'> &nbsp; - ${comment.dateTime} - &nbsp; </small>
@@ -88,6 +104,8 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         ` 
         }
+        //Modo oscuro
+        modeListado()
     }
 
     //Función que agrega el comentario y lo guarda en el localstorage

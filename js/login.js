@@ -41,7 +41,7 @@ function submitForm(event){
   }
   
   } else {
-      errorMessage = "Usuario y contraseña requeridos";
+      errorMessage = "<li class='small'>Usuario y contraseña requeridos</li>";
   }
 
   if (!emailValido(usuario.value)) {
@@ -49,16 +49,16 @@ function submitForm(event){
   }
     
   if (contrasena.value.length < 8) {
-    errorMessage += "<li  class='small'>La contraseña debe tener al menos 8 caracteres</li>";
+    errorMessage += "<li class='small'>La contraseña debe tener al menos 8 caracteres</li>";
   }
   
   
   if (!/[A-Za-z]/.test(contrasena.value)) {
-    errorMessage += "<li  class='small'>Debe incluir al menos una letra</li>";
+    errorMessage += "<li class='small'>Debe incluir al menos una letra</li>";
   }
   
   if (!/\d/.test(contrasena.value)) {
-    errorMessage += "<li  class='small'>Debe incluir al menos un número</li>";
+    errorMessage += "<li class='small'>Debe incluir al menos un número</li>";
   }
 
     loginError.innerHTML = "<ul>" + errorMessage + "</ul>";
@@ -81,8 +81,6 @@ function mostrarPassword() {
   }
 }
 
-
-// inicio agregado
   function emailValido(email) {
     // valida correo electrónico de la forma hola@gmail.com
     var condicionDeEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -94,4 +92,32 @@ function contrasenaValida(password) {
   return condicionDecontrasena.test(password);
 }
 
-// final agregado
+
+  var lightElements = document.querySelectorAll(".bg-white");
+  var darkElements = document.querySelectorAll(".bg-dark");
+  var loginImg = document.querySelector('#loginImg');
+
+  //Dark
+  if (localStorage.getItem("mode") == "dark") {
+  lightElements.forEach((element)=>{
+    element.classList.remove('bg-white', 'text-dark');
+    element.classList.add('bg-dark', 'text-light');
+  })
+  //Background
+  document.querySelector('body').style.backgroundColor = "#0d1117";
+  //Imagen
+  loginImg.src = "img/login_dark.png";
+  }
+
+  //Light
+  else {
+  darkElements.forEach((element)=>{
+    element.classList.remove('bg-dark', 'text-light');
+    element.classList.add('bg-light', 'text-dark');
+  })
+  //Background
+  document.querySelector('body').style.backgroundColor = "#e2e2e2";
+  //Imagen
+  loginImg.src = "img/login_light.png";
+  }
+
