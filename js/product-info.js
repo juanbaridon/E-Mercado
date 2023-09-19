@@ -50,20 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
 
         //Modo oscuro
-        let categoryItem = document.querySelectorAll('.list-group-item');
-        console.log(categoryItem)
-        if (localStorage.getItem("mode") == "dark"){
-            categoryItem.forEach((element)=>{
-                element.classList.add('bg-dark', 'text-white');
-                element.classList.remove('bg-light', 'text-dark')
-            })
-        }
-        else{
-            categoryItem.forEach((element)=>{
-                element.classList.remove('bg-dark', 'text-white');
-                element.classList.add('bg-light', 'text-dark')
-            })
-        }
+        modeListado()
     }
 
     //Función que muestra las estrellas
@@ -125,6 +112,9 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem(`comentario ${productId}`, comentarioHTML);
 
         comentarios.innerHTML += comentarioHTML;
+        
+        //Modo oscuro
+        modeListado()
     }
 
     //Se obtiene el comentario del localstorage y se muestra en pantalla
