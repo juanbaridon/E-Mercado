@@ -263,5 +263,10 @@ nav{
   }
 }
 
+.catIcon{
+  height: 3rem;
+  background-color: transparent;
+  border: none;
+}
 
 /* Fin Agregado */

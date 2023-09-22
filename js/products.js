@@ -21,7 +21,7 @@ function redirectProduct(prodId){
 
 //Función que muestra los productos;
 function showData(dataArray) { 
-  nombreCategoria.innerHTML = categoria.catName;
+  nombreCategoria.innerHTML = categoria.catName + ` <img src="img/cat${localStorage.getItem("catID")}_1.png" class="catIcon p-2 pt-1">`;
   divProductos.innerHTML = ""
 
   //Listado de productos
