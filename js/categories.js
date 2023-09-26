@@ -41,14 +41,12 @@ function setCatID(id) {
 }
 
 function showCategoriesList(){
-
     let htmlContentToAppend = "";
     for(let i = 0; i < currentCategoriesArray.length; i++){
         let category = currentCategoriesArray[i];
 
         if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
             ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))){
-
             htmlContentToAppend += `
             <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
                 <div class="row">
@@ -60,7 +58,7 @@ function showCategoriesList(){
                             <h4 class="mb-1">${category.name}</h4>
                             <small class="text-muted">${category.productCount} artículos</small>
                         </div>
-                        <p class="mb-1">${category.description}</p>
+                        <p class="mb-1">${category.description}</p><small><img src="img/cat${category.id}_1.png" alt="${category.description}" class="catIcon float-end"></small>
                     </div>
                 </div>
             </div>
@@ -69,6 +67,10 @@ function showCategoriesList(){
 
         document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
     }
+
+    //Modo oscuro
+    modeListado()
+
 }
 
 function sortAndShowCategories(sortCriteria, categoriesArray){
