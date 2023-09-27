@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //Se obtiene el comentario del localstorage y se muestra en pantalla
     const productId = localStorage.getItem('productId')
     const comentarioCargado = localStorage.getItem(`comentario ${productId}`);
-    if(localStorage.getItem('opinion') != '') {
+    if(comentarioCargado != undefined) {
         comentarios.innerHTML += comentarioCargado
     }
 
