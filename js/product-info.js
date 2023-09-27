@@ -30,24 +30,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showData(data){
         divProductInfo.innerHTML = `
-        <div class="text-center p-4"">
+        <div class="text-center p-4">
             <h2>${data.name}</h2></div>
         <div class="list-group">
-            <div class="p-3 list-group-item">
+            <div class="p-3 list-group-item bg-light">
                 <h6><span class="h5">Descripción: </span>${data.description}</h6></div>
-            <div class="p-3 list-group-item">
+            <div class="p-3 list-group-item bg-light">
                 <h6><span class="h5">Precio: </span>${data.cost} ${data.currency}</h6></div>
-            <div class="p-3 list-group-item">
+            <div class="p-3 list-group-item bg-light">
                 <h6><span class="h5">Cantidad vendidos: </span>${data.soldCount}</h6></div>
-            <div class="p-3 list-group-item">
+            <div class="p-3 list-group-item bg-light">
                 <h6><span class="h5">Categoría: </span>${data.category}</h6></div>
         <div>`
-        data.images.forEach(imagen => {
-            productImgs.innerHTML += `
-                <div class="col">
-                <img class="img-fluid border m-2" src="${imagen}" alt="${data.name}">
-                </div>`
-        })
+
+        //Cambia el src de las imagenes del carrusel
+        let imgCarousel = document.querySelectorAll('.imgCarousel');
+        let i = 0
+        imgCarousel.forEach((element)=> element.src = data.images[i++])
+
+        //Modo oscuro
+        modeListado()
     }
 
     //Función que muestra las estrellas
@@ -75,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
             comentarios.innerHTML += `
             <div class="commentsHechos">
                 <ul class='list-group'>
-                    <li class="list-group-item">
+                    <li class="list-group-item bg-light">
                         <div>
                             <strong>${comment.user}</strong>
                             <small class='text-muted'> &nbsp; - ${comment.dateTime} - &nbsp; </small>
@@ -88,6 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         ` 
         }
+        //Modo oscuro
+        modeListado()
     }
 
     //Función que agrega el comentario y lo guarda en el localstorage
@@ -107,6 +111,9 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem(`comentario ${productId}`, comentarioHTML);
 
         comentarios.innerHTML += comentarioHTML;
+
+        //Modo oscuro
+        modeListado()
     }
 
     //Se obtiene el comentario del localstorage y se muestra en pantalla
