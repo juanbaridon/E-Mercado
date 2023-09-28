@@ -135,3 +135,33 @@ document.addEventListener("DOMContentLoaded", function () {
     
 });
 
+const prodUrl = PRODUCT_INFO_URL + localStorage.getItem("productId") + EXT_TYPE; 
+const relProds = document.getElementById("related-products"); 
+
+function setProdId(id) { 
+  localStorage.setItem("productId", id);
+  window.location.href = "product-info.html"; 
+} 
+
+async function getJsonData(url) { 
+  const response = await fetch(url); 
+  const data = await response.json(); 
+  showRelatedProducts(data); 
+} 
+
+function showRelatedProducts(array) { 
+  let relProductsHTML = ""; 
+  for (let i = 0; i < array.relatedProducts.length; i++) { 
+    relProductsHTML += ` 
+    <div class="col-md-2 img-thumbnail m-1" onclick="setProdId(${array.relatedProducts[i].id})"> 
+      <a href="#"> 
+        <img src="${array.relatedProducts[i].image}" class="img-fluid"> 
+        <h6>${array.relatedProducts[i].name}</h6> 
+      </a>  
+    </div>`; 
+  } 
+  relProds.innerHTML = relProductsHTML; 
+} 
+
+getJsonData(prodUrl);
+
