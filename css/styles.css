@@ -190,7 +190,7 @@ a.custom-card:hover {
 }
 
 .checked {
-  color: orange;
+  color: #fda638;
 }
 
 #loginContenedor{
@@ -272,6 +272,36 @@ nav{
 .imgCarousel{
   padding-right: 25vw;
   padding-left: 25vw;
+}
+
+/* Estrellas */
+
+#puntuacion input[type = "radio"]{
+  display:none;
+}
+
+/* Voltea las estrellas*/
+#puntuacion{
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+/* Selecciona la estrella que tocamos con el mouse y las siguientes, al voltearlas previamente se ven como las anteriores */
+/* Colorea las estrellas al pasar el mouse y al hacer click */
+#puntuacion label:hover, #puntuacion label:hover ~ label, #puntuacion input[type = "radio"]:checked ~ label{
+  color:#fda638;
+}
+
+#commentForm button{
+  margin-top: 50px;
+}
+
+.imgRelated{
+  width: 50%;
+}
+
+.imgRelated:hover{
+  cursor: pointer;
 }
 
 /* Fin Agregado */
