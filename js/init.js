@@ -120,7 +120,7 @@ function changeMode() {
 changeMode()
 
 function modeListado() {
-    let categoryItem = document.querySelectorAll('.list-group-item');
+    let categoryItem = document.querySelectorAll('.list-group-item, .card');
     if (localStorage.getItem("mode") == "dark"){
         categoryItem.forEach((element)=>{
             element.classList.add('bg-dark', 'text-white');

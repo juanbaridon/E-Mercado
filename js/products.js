@@ -27,23 +27,21 @@ function showData(dataArray) {
   //Listado de productos
   dataArray.products.forEach((prod)=>{
     divProductos.innerHTML +=
-      `<div class="list-group-item list-group-item-action cursor-active bg-light"
-        onclick="redirectProduct('${prod.id}')"
-      >
-        <div class="row">
-          <div class="col-3">
-            <img src="${prod.image}" class="img-thumbnail">
-          </div>
-          <div class="col">
-            <div class="d-flex w-100 justify-content-between">
-                <h4 class="mb-1">${prod.name}</h4>
-                <small class="text-muted">${prod.soldCount} vendidos</small>
+      `<div class="card bg-light m-3">
+          <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" class="card-img-top cursor-active" alt="imagen del producto">
+          <div class="card-body">
+            <h4 class="card-title text-center pb-2">${prod.name}</h4>
+              <button type="button" class="btn btn-success">${prod.cost} ${prod.currency}</button>
+            <div class="card-text">
+              <p>${prod.description}</p>
+              <small class="text-muted">${prod.soldCount} vendidos</small>
+              <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-danger"><i class="fa fa-heart"></i></button>
+                <button type="button" class="btn btn-danger border-0 cartIcon"><i class="fa fa-shopping-cart"></i></button>
+              </div>
             </div>
-            <h5 class="mb-1">${prod.cost} ${prod.currency}</h5>
-            <p class="mb-1">${prod.description}</p>
           </div>
         </div>
-      </div>
       `
   })
   //Mensaje si no se encuentran productos
