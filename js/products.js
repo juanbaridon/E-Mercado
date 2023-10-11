@@ -346,6 +346,7 @@ function showFavoritos(productosFavoritos) { // los muestra
     </div>`;
     }
   }
+   modeListado();
 }
 
 
