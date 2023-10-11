@@ -349,7 +349,7 @@ function showFavoritos(productosFavoritos) { // los muestra
 }
 
 
-
+// en construccion
 function updateFavoriteUI() {
   const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
   const favoritoButtons = document.querySelectorAll('[id^="addToFavorites_"]');
