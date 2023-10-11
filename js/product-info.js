@@ -76,10 +76,10 @@ const comentarios = document.getElementById("comments");
 function comJson(comments) {
 // Ordenar los comentarios del más nuevo al más antiguo
   comments.sort((a, b) => {
-    const fechaCompletaA = new Date(a.dateTime);
-    const fechaCompletaB = new Date(b.dateTime);
+    const fechaA = new Date(a.dateTime);
+    const fechaB = new Date(b.dateTime);
 
-    return fechaCompletaB - fechaCompletaA;
+    return fechaB - fechaA;
   });
     // -------------------------------- //
   for (let comment of comments) {
