@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function showData(data){
         divProductInfo.innerHTML = `
         <div class="text-center p-4">
-            <h2>${data.name}</h2></div>
+          <h2>${data.name} <button class="btn btn-link" id="addToFavorites" onclick="toggleFavorito('${data.catId}', '${data.id}')"><i class="far fa-heart fa-lg"></i></button></h2>
         <div class="list-group">
             <div class="p-3 list-group-item bg-light">
                 <h6><span class="h5">Descripción: </span>${data.description}</h6></div>
