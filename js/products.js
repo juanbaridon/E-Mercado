@@ -33,6 +33,9 @@ function showData(dataArray) {
 
     if (dataArray.products && dataArray.products.length > 0) {
       dataArray.products.forEach((prod) => {
+        const isFavorito = isProductInFavoritos(prod.catId, prod.id); // Verifica si el producto está en favoritos
+        const favoritoClass = isFavorito ? "favorito" : "";
+
         divProductos.innerHTML +=
           `<div class="list-group-item list-group-item-action cursor-active bg-light">
             <div class="row">
@@ -43,7 +46,7 @@ function showData(dataArray) {
                 <div class="d-flex w-100 justify-content-between">
                   <h4 class="mb-1">${prod.name}</h4>
                   <button class="btn btn-outline-primary" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
-                    <i class="fas fa-heart"></i> <!-- Icono de corazón -->
+                    <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
                   </button>
                 </div>
                 <small class="text-muted">${prod.soldCount} vendidos</small>
@@ -63,6 +66,12 @@ function showData(dataArray) {
   }
   //Modo oscuro
   modeListado();
+}
+
+// Función para verificar si un producto está en la lista de favoritos
+function isProductInFavoritos(catId, prodId) {
+  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+  return storedFavoritos.some(item => item.catId === catId && item.prodId === prodId);
 }
 
 //Petición a la URL
@@ -349,31 +358,6 @@ function showFavoritos(productosFavoritos) { // los muestra
    modeListado();
 }
 
-
-// en construccion
-function updateFavoriteUI() {
-  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-  const favoritoButtons = document.querySelectorAll('[id^="addToFavorites_"]');
-
-  favoritoButtons.forEach(button => {
-    const [catId, prodId] = button.id.split("_")[1].split("-");
-    const catIdNum = parseInt(catId, 10);
-    const prodIdNum = parseInt(prodId, 10);
-
-    // Verifica si existe un objeto en los favoritos con catId y prodId correspondientes
-    const isFavorite = storedFavoritos.some(item => item.catId === catIdNum && item.prodId === prodIdNum);
-
-    if (isFavorite) {
-      button.classList.add("favorito");
-      applyFavoritoStyle(button.querySelector("i.fa-heart"));
-    } else {
-      button.classList.remove("favorito");
-      removeFavoritoStyle(button.querySelector("i.fa-heart"));
-    }
-  });
-}
-
-updateFavoriteUI();
 
 loadFavoritos();
 
