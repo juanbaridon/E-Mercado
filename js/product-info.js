@@ -70,18 +70,26 @@ document.addEventListener("DOMContentLoaded", function () {
         return stars;
     }
 
-    //Función que muestra los comentarios del JSON
-    const comentarios = document.getElementById("comments");
+// Función que muestra los comentarios del JSON
+const comentarios = document.getElementById("comments");
 
-    function comJson(comments){
-        for(let comment of comments){
-            comentarios.innerHTML += `
+function comJson(comments) {
+// Ordenar los comentarios del más nuevo al más antiguo
+  comments.sort((a, b) => {
+    const fechaCompletaA = new Date(a.dateTime);
+    const fechaCompletaB = new Date(b.dateTime);
+
+    return fechaCompletaB - fechaCompletaA;
+  });
+    // -------------------------------- //
+  for (let comment of comments) {
+    comentarios.innerHTML += `
             <div class="commentsHechos">
                 <ul class='list-group'>
                     <li class="list-group-item bg-light">
                         <div>
                             <strong>${comment.user}</strong>
-                            <small class='text-muted'> &nbsp; - ${comment.dateTime} - &nbsp; </small>
+                            <small class='text-muted'>   - ${comment.dateTime} -   </small>
                             ${estrellas(comment.score)}
                             <br>
                             ${comment.description}
@@ -89,11 +97,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     </li>
                 </ul>
             </div>
-        ` 
-        }
-        //Modo oscuro
-        modeListado()
-    }
+        `;
+  }
+  // Modo oscuro
+  modeListado();
+}
+
 
     //Función que agrega el comentario y lo guarda en el localstorage
     function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
