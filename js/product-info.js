@@ -114,26 +114,26 @@ function comJson(comments) {
 
 
     //Función que agrega el comentario y lo guarda en el localstorage
-    function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
-        const comentarioHTML = `
-        <li class="list-group-item">
-            <div>
-                <strong>${actualUser}</strong>
-                <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
-                ${estrellas(puntuacion)}
-                <br>
-                ${opinion}
-            </div>
-        </li>`;
-        
-        const productId = localStorage.getItem('productId')
-        localStorage.setItem(`comentario ${productId}`, comentarioHTML);
-
-        comentarios.innerHTML += comentarioHTML;
-
-        //Modo oscuro
-        modeListado()
-    }
+function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
+    const comentarioHTML = `
+      <li class="list-group-item">
+        <div>
+          <strong>${actualUser}</strong>
+          <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
+          ${estrellas(puntuacion)}
+          <br>
+          ${opinion}
+        </div>
+      </li>`;
+    const productId = localStorage.getItem('productId');
+    localStorage.setItem(`comentario ${productId}`, comentarioHTML);
+  
+    const comentariosList = document.querySelector("#comments .commentsHechos ul");
+    comentariosList.insertAdjacentHTML('afterbegin', comentarioHTML);
+  
+    // Modo oscuro
+    modeListado();
+  }
 
     //Se obtiene el comentario del localstorage y se muestra en pantalla
     const productId = localStorage.getItem('productId')
