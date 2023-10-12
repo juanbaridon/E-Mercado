@@ -48,18 +48,15 @@ function showCategoriesList(){
         if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
             ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))){
             htmlContentToAppend += `
-            <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${category.imgSrc}" alt="${category.description}" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${category.name}</h4>
-                            <small class="text-muted">${category.productCount} artículos</small>
-                        </div>
-                        <p class="mb-1">${category.description}</p><small><img src="img/cat${category.id}_1.png" alt="${category.description}" class="catIcon float-end"></small>
-                    </div>
+            <div onclick="setCatID(${category.id})" class="card bg-light m-3 cursor-active">
+                <img src="${category.imgSrc}" class="card-img-top" alt="imagen del producto">
+                <div class="card-body">
+                <h4 class="card-title text-center pb-2">${category.name}</h4>
+                <div class="card-text">
+                    <p>${category.description}</p>
+                    <small class="text-muted">${category.productCount} artículos</small>
+                    <img src="img/cat${category.id}_1.png" alt="${category.description}" class="catIcon float-end">
+                </div>
                 </div>
             </div>
             `

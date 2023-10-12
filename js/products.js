@@ -37,25 +37,23 @@ function showData(dataArray) {
         const favoritoClass = isFavorito ? "favorito" : "";
 
         divProductos.innerHTML +=
-          `<div class="list-group-item list-group-item-action cursor-active bg-light">
-            <div class="row">
-              <div class="col-3">
-                <img src="${prod.image}" class="img-thumbnail">
-              </div>
-              <div class="col">
-                <div class="d-flex w-100 justify-content-between">
-                  <h4 class="mb-1">${prod.name}</h4>
-                  <button class="btn btn-outline-primary" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
-                    <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
-                  </button>
-                </div>
-                <small class="text-muted">${prod.soldCount} vendidos</small>
-                <h5 class="mb-1">${prod.cost} ${prod.currency}</h5>
-                <p class="mb-1">${prod.description}</p>
-                <button class="btn btn-primary" onclick="redirectProduct('${prod.id}')">Ver Detalles</button> <!-- redirigir a products.info -->
+          `<div class="card bg-light m-3">
+          <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" class="card-img-top cursor-active" alt="imagen del producto">
+          <div class="card-body">
+            <h4 class="card-title text-center pb-2">${prod.name}</h4>
+              <button type="button" class="btn btn-success">${prod.cost} ${prod.currency}</button>
+            <div class="card-text">
+              <p>${prod.description}</p>
+              <small class="text-muted">${prod.soldCount} vendidos</small>
+              <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
+                <button class="btn btn-primary" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
+                  <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
+                </button>
+                <button type="button" class="btn btn-danger border-0 cartIcon"><i class="fa fa-shopping-cart"></i></button>
               </div>
             </div>
-          </div>`;
+          </div>
+        </div>`;
       });
     } else {
       divProductos.innerHTML += `
@@ -126,7 +124,6 @@ btnFiltrar.addEventListener("click", function(){
 });
 }
 
-
 //Limpiar
 if (btnLimpiar) { 
 btnLimpiar.addEventListener("click", function() { 
@@ -164,33 +161,35 @@ btnRelevancia.addEventListener("click", function() {
 })
 }
 
-
-
 //  BUSQUEDA POR VOZ
+const voiceSearchButton = document.getElementById('voiceSearch');
+voiceSearchButton.addEventListener('click', startVoiceSearch);
 
-document.addEventListener('DOMContentLoaded', function () {
-  if (voiceSearchButton) {
-    voiceSearchButton.addEventListener('click', startVoiceSearch);
-  }
-});
-
+// Define la función startVoiceSearch para iniciar la búsqueda por voz
 function startVoiceSearch() {
   console.log('Iniciando búsqueda por voz...');
   const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
-  recognition.lang = 'es-ES'; 
+  recognition.lang = 'es-ES'; //  el idioma de reconocimiento
 
+  // Inicia el reconocimiento de voz
   recognition.start();
 
+  // Evento que se dispara cuando se obtiene un resultado
   recognition.onresult = function(event) {
     const voiceResult = event.results[0][0].transcript;
+    // Establece el valor del campo de búsqueda con el resultado de voz
     campoBusqueda.value = voiceResult;
+    // Ejecuta la búsqueda
     executeSearch(voiceResult);
   };
+
+  // Evento que se dispara cuando se detiene el reconocimiento de voz
   recognition.onend = function() {
     recognition.stop();
   };
 }
 
+// Define la función executeSearch que realiza la búsqueda basada en el texto proporcionado
 function executeSearch(query) {
  
   // Filtra y muestra los resultados de búsqueda según la consulta de voz
@@ -204,160 +203,4 @@ function executeSearch(query) {
   categoria.products = filtrado;
   showData(categoria);
 }
-
-
-//FAVORITOS
-
-  const divFavoritos = document.getElementById('divFavoritos');
-
-// Función para aplicar estilo de favorito
-function applyFavoritoStyle(icon) {
-  if (icon) {
-    icon.classList.add('favorito');
-    icon.parentElement.classList.add('favorito-button');
-  }
-}
-
-// Función para quitar estilo de favorito
-function removeFavoritoStyle(icon) {
-  if (icon) {
-    icon.classList.remove('favorito');
-    icon.parentElement.classList.remove('favorito-button');
-  }
-}
-
-// función para agregar o quitar un producto de favoritos
-function toggleFavorito(catId, prodId) {
-  const storedCatId = parseInt(localStorage.getItem("catID"), 10); 
-  const storedProdId = parseInt(prodId, 10); 
-  const button = document.getElementById(`addToFavorites_${catId}-${prodId}`);
-
-  if (!button) {
-    return;
-  }
-
-  const heartIcon = button.querySelector("i.fa-heart");
-  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-  const index = storedFavoritos.findIndex(item => item.catId === storedCatId && item.prodId === storedProdId);
-
-  if (index === -1) {
-    storedFavoritos.push({ catId: storedCatId, prodId: storedProdId });
-    button.classList.add("favorito");
-    if (heartIcon) {
-      applyFavoritoStyle(heartIcon);
-    }
-  } else {
-    storedFavoritos.splice(index, 1);
-    button.classList.remove("favorito");
-    if (heartIcon) {
-      removeFavoritoStyle(heartIcon);
-    }
-  }
-
-  localStorage.setItem("favoritos", JSON.stringify(storedFavoritos));
-}
-
-function removeFromFavoritos(catId, prodId) {
-  const storedCatId = parseInt(localStorage.getItem("catID"), 10); 
-  const storedProdId = parseInt(prodId, 10); 
-  const button = document.getElementById(`removeFromFavorites_${catId}-${prodId}`);
-
-  if (!button) {
-    return;
-  }
-
-  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-  const index = storedFavoritos.findIndex(item => item.catId === storedCatId && item.prodId === storedProdId);
-
-  if (index !== -1) {
-    // Elimina el producto de la lista de favoritos
-    storedFavoritos.splice(index, 1);
-    localStorage.setItem("favoritos", JSON.stringify(storedFavoritos));
-
-    loadFavoritos();
-  }
-}
-
-// carga los productos favoritos de la api 
-async function loadFavoritos() {
-  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-  if (storedFavoritos.length === 0) {
-    showFavoritos([]); 
-    return;
-  }
-
-  const promises = storedFavoritos.map(async (favorito) => {
-    const catId = favorito.catId;
-    const prodId = favorito.prodId;
-    const categoryUrl = `https://japceibal.github.io/emercado-api/cats_products/${catId}.json`;
-
-    try {
-      const categoryResponse = await fetch(categoryUrl);
-      const categoryData = await categoryResponse.json();
-      const productoFavorito = categoryData.products.find((prod) => prod.id === parseInt(prodId)); // Convertir prodId a número
-      
-      if (productoFavorito) {
-        return productoFavorito;
-      } else {
-        console.log(`No se encontró el producto favorito con id ${prodId} en la categoría con catId ${catId}.`);
-      }
-    } catch (error) {
-      console.error(`Error al cargar la categoría con catId ${catId}: ${error}`);
-    }
-  });
-
-  Promise.all(promises)
-    .then(productosFavoritos => {
-      productosFavoritos = productosFavoritos.filter(producto => producto);
-      showFavoritos(productosFavoritos);
-    })
-    .catch(error => {
-      console.error('Error al cargar productos favoritos:', error);
-    });
-}
-
-function showFavoritos(productosFavoritos) { // los muestra 
-  if (divFavoritos) {
-    divFavoritos.innerHTML = "";
-
-    if (productosFavoritos.length > 0) {
-      productosFavoritos.forEach((prod) => {
-        divFavoritos.innerHTML +=
-          `<div class="list-group-item list-group-item-action cursor-active bg-light">
-            <div class="row">
-              <div class="col-3">
-                <img src="${prod.image}" class="img-thumbnail">
-              </div>
-              <div class="col">
-                <div class="d-flex w-100 justify-content-between">
-                  <h4 class="mb-1">${prod.name}</h4>
-                  <button class="btn btn-danger" id="removeFromFavorites_${prod.catId}-${prod.id}" onclick="removeFromFavoritos('${prod.catId}', '${prod.id}')">
-                    Eliminar de mis Favoritos
-                  </button>
-                </div>
-                <small class="text-muted">${prod.soldCount} vendidos</small>
-                <h5 class="mb-1">${prod.cost} ${prod.currency}</h5>
-                <p class="mb-1">${prod.description}</p>
-                <button class="btn btn-primary" onclick="redirectProduct('${prod.id}')">Ver Detalles</button>
-              </div>
-            </div>
-          </div>`;
-      });
-    } else {
-      divFavoritos.innerHTML += `
-      <hr>
-      <div class="text-center text-muted">
-      <h4>No tienes productos favoritos.</h4>
-      <p>¿Quieres agregar productos favoritos? <a href="categories.html">Explora productos</a></p>
-    </div>`;
-    }
-  }
-   modeListado();
-}
-
-
-loadFavoritos();
 

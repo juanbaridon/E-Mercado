@@ -242,17 +242,17 @@ a.custom-card:hover {
 
 /* Cambios */
 
-nav{
+nav, .cartIcon{
   background-color: #ef9333;
 }
 
-.list-group-item{
-  animation: listar .5s forwards;
+.card{
+  animation: listar .3s forwards;
 }
 
 @keyframes listar{
   0%{
-    transform: scaleY(0);
+    transform: scaleY(.5);
     opacity: 0;
   }
   50%{
@@ -267,11 +267,6 @@ nav{
   height: 3rem;
   background-color: transparent;
   border: none;
-}
-
-.imgCarousel{
-  padding-right: 25vw;
-  padding-left: 25vw;
 }
 
 /* Estrellas */
@@ -304,4 +299,31 @@ nav{
   cursor: pointer;
 }
 
+.cartProductCount{
+  width: 4em;
+}
+
+.card:hover{
+  border: 1px solid #fda638;
+}
+
+.grid-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media screen and (max-width: 768px){
+  .grid-container{
+    grid-template-columns: 1fr 1fr;
+  }
+  .carousel-inner{
+    margin: 0 !important;
+  }
+}
+
+@media screen and (max-width: 576px){
+  .grid-container{
+    grid-template-columns: 1fr;
+  }
+}
 /* Fin Agregado */
