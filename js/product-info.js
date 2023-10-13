@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <p class="card-text">Vendidos: ${data.soldCount}</p>
               <p class="card-text">Categoría: ${data.category}</p>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
-                <button class="btn btn-primary" id="addToFavorites_${data.catId}-${data.id}" onclick="toggleFavorito('${data.catId}', '${data.id}')">
+                <button class="btn btn-primary favoriteBtn" id="addToFavorites_${data.catId}-${data.id}" onclick="toggleFavorito('${data.catId}', '${data.id}')">
                     <i class="fas fa-heart"></i> <!-- Icono de corazón -->
                 </button>
                 <button type="button" class="btn btn-danger border-0 cartIcon" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //Modo oscuro
         modeListado()
+         btnFavorite(prod.id)
     }
 
     //Función que muestra las estrellas
