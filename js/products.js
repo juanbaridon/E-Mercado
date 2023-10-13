@@ -46,7 +46,7 @@ function showData(dataArray) {
               <p>${prod.description}</p>
               <small class="text-muted">${prod.soldCount} vendidos</small>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
-                <button class="btn btn-primary" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
+                <button class="btn btn-primary favoriteBtn" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
                   <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
                 </button>
                 <button type="button" class="btn btn-danger border-0 cartIcon" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
@@ -54,6 +54,8 @@ function showData(dataArray) {
             </div>
           </div>
         </div>`;
+
+         btnFavorite(prod.id)
       });
     } else {
       divProductos.innerHTML += `
