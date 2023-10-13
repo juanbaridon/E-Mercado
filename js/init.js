@@ -134,3 +134,19 @@ function modeListado() {
         })
     }
 }
+
+  //Botón favoritos
+  function btnFavorite(prodId){
+    const favoriteElement = localStorage.getItem('favoritos')
+    if (favoriteElement){
+      const heartIcon = document.querySelectorAll('.favoriteBtn');
+        heartIcon.forEach((element) =>{
+          element.addEventListener('click', ()=>{
+            element.classList.toggle('text-danger')
+          })
+          if(favoriteElement.includes(prodId)){
+            element.classList.add('text-danger')
+          }
+        })
+    }
+  }
