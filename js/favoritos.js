@@ -1,21 +1,5 @@
 const divFavoritos = document.getElementById('divFavoritos');
 
-// Función para aplicar estilo de favorito
-function applyFavoritoStyle(icon) {
-  if (icon) {
-    icon.classList.add('text-danger');
-    icon.parentElement.classList.add('favorito-button');
-  }
-}
-
-// Función para quitar estilo de favorito
-function removeFavoritoStyle(icon) {
-  if (icon) {
-    icon.classList.remove('text-danger');
-    icon.parentElement.classList.remove('favorito-button');
-  }
-}
-
 // función para agregar o quitar un producto de favoritos
 function toggleFavorito(catId, prodId) {
   const storedCatId = parseInt(localStorage.getItem("catID"), 10); 
@@ -33,16 +17,8 @@ function toggleFavorito(catId, prodId) {
 
   if (index === -1) {
     storedFavoritos.push({ catId: storedCatId, prodId: storedProdId });
-    button.classList.add("favorito");
-    if (heartIcon) {
-      applyFavoritoStyle(heartIcon);
-    }
   } else {
     storedFavoritos.splice(index, 1);
-    button.classList.remove("favorito");
-    if (heartIcon) {
-      removeFavoritoStyle(heartIcon);
-    }
   }
 
   localStorage.setItem("favoritos", JSON.stringify(storedFavoritos));
