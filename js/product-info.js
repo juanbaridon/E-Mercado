@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //Modo oscuro
         modeListado()
-         btnFavorite(prod.id)
+         btnFavorite(data.id)
     }
 
     //Función que muestra las estrellas
