@@ -120,7 +120,7 @@ function changeMode() {
 changeMode()
 
 function modeListado() {
-    let categoryItem = document.querySelectorAll('.list-group-item');
+    let categoryItem = document.querySelectorAll('.list-group-item, .card');
     if (localStorage.getItem("mode") == "dark"){
         categoryItem.forEach((element)=>{
             element.classList.add('bg-dark', 'text-white');
@@ -134,3 +134,20 @@ function modeListado() {
         })
     }
 }
+
+  //Botón favoritos
+  function btnFavorite(prodId){
+    const favoriteElement = localStorage.getItem('favoritos')
+    if (favoriteElement){
+      const heartIcon = document.querySelectorAll('.favoriteBtn');
+        heartIcon.forEach((element) =>{
+          element.addEventListener('click', ()=>{
+            element.classList.toggle('text-danger')
+          })
+          if(favoriteElement.includes(prodId)){
+            element.classList.add('text-danger')
+          }
+        })
+    }
+  }
+

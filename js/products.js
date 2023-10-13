@@ -2,6 +2,8 @@
 const productInfoUrl = PRODUCTS_URL + localStorage.getItem("catID") + EXT_TYPE;
 
 var categoria = [];
+let categoriaOriginal = [];
+let favoritos = [];
 const divProductos = document.getElementById('divProductos');
 const nombreCategoria = document.getElementById('nombreCategoria');
 const campoMin = document.getElementById("rangeFilterCountMin2");
@@ -20,42 +22,53 @@ function redirectProduct(prodId){
 };
 
 //Función que muestra los productos;
-function showData(dataArray) { 
-  nombreCategoria.innerHTML = categoria.catName + ` <img src="img/cat${localStorage.getItem("catID")}_1.png" class="catIcon p-2 pt-1">`;
-  divProductos.innerHTML = ""
 
-  //Listado de productos
-  dataArray.products.forEach((prod)=>{
-    divProductos.innerHTML +=
-      `<div class="list-group-item list-group-item-action cursor-active bg-light"
-        onclick="redirectProduct('${prod.id}')"
-      >
-        <div class="row">
-          <div class="col-3">
-            <img src="${prod.image}" class="img-thumbnail">
-          </div>
-          <div class="col">
-            <div class="d-flex w-100 justify-content-between">
-                <h4 class="mb-1">${prod.name}</h4>
-                <small class="text-muted">${prod.soldCount} vendidos</small>
-            </div>
-            <h5 class="mb-1">${prod.cost} ${prod.currency}</h5>
-            <p class="mb-1">${prod.description}</p>
-          </div>
-        </div>
-      </div>
-      `
-  })
-  //Mensaje si no se encuentran productos
-    if (dataArray.products.length === 0) {
-    divProductos.innerHTML +=
-      `<div class="text-center text-muted">
-      <h4>No se encuentran productos</h4></div>`
+function showData(dataArray) {
+  if (nombreCategoria) {
+    nombreCategoria.innerHTML = categoria.catName + ` <img src="img/cat${localStorage.getItem("catID")}_1.png" class="catIcon p-2 pt-1">`;
   }
+/*
+  if (divProductos) {
+    divProductos.innerHTML = "";
+*/
+    if (dataArray.products && dataArray.products.length > 0) {
+      dataArray.products.forEach((prod) => {
+       // const isFavorito = isProductInFavoritos(prod.catId, prod.id); // Verifica si el producto está en favoritos
+        //const favoritoClass = isFavorito ? "favorito" : "";
 
+        divProductos.innerHTML +=
+          `<div class="card bg-light m-3">
+          <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" class="card-img-top cursor-active" alt="imagen del producto">
+          <div class="card-body">
+            <h4 class="card-title text-center pb-2">${prod.name}</h4>
+              <button type="button" class="btn btn-success">${prod.cost} ${prod.currency}</button>
+            <div class="card-text">
+              <p>${prod.description}</p>
+              <small class="text-muted">${prod.soldCount} vendidos</small>
+              <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
+                <button class="btn btn-primary favoriteBtn" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
+                  <i class="fas fa-heart"></i> <!-- Icono de corazón -->
+                </button>
+                <button type="button" class="btn btn-danger border-0 cartIcon"><i class="fa fa-shopping-cart"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+
+        btnFavorite(prod.id)
+      });
+      
+    } else {
+      divProductos.innerHTML += `
+        <div class="text-center text-muted">
+          <h4>No se encuentran productos</h4>
+        </div>`;
+    }
+  //}
   //Modo oscuro
-    modeListado()
-}
+  modeListado();
+
+  }
 
 //Petición a la URL
 async function getJson() {
@@ -79,6 +92,7 @@ getJson();
 
 //Buscador
 //La función se ejecuta al utilizar el input
+if (campoBusqueda) { 
 campoBusqueda.addEventListener("input", ()=>{
   categoria = JSON.parse(JSON.stringify(categoriaOriginal));
   const busqueda = campoBusqueda.value.toLowerCase(); //Valor del input en minúsculas
@@ -87,8 +101,10 @@ campoBusqueda.addEventListener("input", ()=>{
   categoria.products = filtrado
   showData(categoria)
 })
+}
 
 //Rango de precio
+if (btnFiltrar) {
 btnFiltrar.addEventListener("click", function(){
   const min = parseInt(campoMin.value, 10); 
   const max = parseInt(campoMax.value, 10); 
@@ -104,10 +120,10 @@ btnFiltrar.addEventListener("click", function(){
   categoria.products = productosFiltrados;
   showData(categoria);
 });
-
-
+}
 
 //Limpiar
+if (btnLimpiar) { 
 btnLimpiar.addEventListener("click", function() { 
   campoMin.value = null;
   campoMax.value = null;
@@ -115,27 +131,33 @@ btnLimpiar.addEventListener("click", function() {
   categoria = JSON.parse(JSON.stringify(categoriaOriginal)); // Guarda en categoria una copia de categoriaOriginal, asi quedan ambas en su estado original.
   showData(categoria);
 }) 
+}
 
 //Precio ascendente
+if (btnPrecioAsc) { 
 btnPrecioAsc.addEventListener("click", function(){
   const productosOrdenados = categoria.products.sort((a, b) => a.cost - b.cost); 
   categoria.products = productosOrdenados;
   showData(categoria);
 })
+}
 
 //Precio descendente
+if (btnPrecioDesc) { 
 btnPrecioDesc.addEventListener("click", function() {
   const productosOrdenados = categoria.products.sort((a, b) => b.cost - a.cost); 
   categoria.products = productosOrdenados;
   showData(categoria);
 })
-
+}
 //Relevancia
+if (btnRelevancia) { 
 btnRelevancia.addEventListener("click", function() {
   const productosOrdenados = categoria.products.sort((a, b) => b.soldCount - a.soldCount); 
   categoria.products = productosOrdenados;
   showData(categoria);
 })
+}
 
 //  BUSQUEDA POR VOZ
 const voiceSearchButton = document.getElementById('voiceSearch');
@@ -179,4 +201,5 @@ function executeSearch(query) {
   categoria.products = filtrado;
   showData(categoria);
 }
+
 

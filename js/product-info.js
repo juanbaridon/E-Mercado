@@ -4,6 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const productInfoUrl = PRODUCT_INFO_URL + localStorage.getItem("productId") + EXT_TYPE;
     const commentsUrl = PRODUCT_INFO_COMMENTS_URL + localStorage.getItem("productId") + EXT_TYPE;
 
+    // Función para verificar si un producto está en la lista de favoritos
+    function isProductInFavoritos(catId, prodId) {
+        const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        return storedFavoritos.some(item => item.catId === catId && item.prodId === prodId);
+    }
+
     async function getJson() {
       try{
         const responseProducto = await fetch(productInfoUrl);
@@ -28,29 +34,33 @@ document.addEventListener("DOMContentLoaded", function () {
     //Mostrar la información del producto
     const divProductInfo = document.getElementById('divProductInfo');
     const productImgs = document.getElementById('productImgs');
+    const productName = document.getElementById('productName');
 
     function showData(data){
+
+        productName.innerHTML = data.name
+        
         divProductInfo.innerHTML = `
-        <div class="text-center p-4">
-            <h2>${data.name}</h2></div>
-        <div class="list-group">
-            <div class="p-3 list-group-item bg-light">
-                <h6><span class="h5">Descripción: </span>${data.description}</h6></div>
-            <div class="p-3 list-group-item bg-light">
-                <h6><span class="h5">Precio: </span>${data.cost} ${data.currency}</h6></div>
-            <div class="p-3 list-group-item bg-light">
-                <h6><span class="h5">Cantidad vendidos: </span>${data.soldCount}</h6></div>
-            <div class="p-3 list-group-item bg-light">
-                <h6><span class="h5">Categoría: </span>${data.category}</h6></div>
-        <div>`
+        <h5 class="card-title">${data.description}</h5>
+              <p class="btn btn-success">${data.cost} ${data.currency}</p>
+              <p class="card-text">Vendidos: ${data.soldCount}</p>
+              <p class="card-text">Categoría: ${data.category}</p>
+              <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
+                <button class="btn btn-primary favoriteBtn" id="addToFavorites_${data.catId}-${data.id}" onclick="toggleFavorito('${data.catId}', '${data.id}')">
+                    <i class="fas fa-heart"></i> <!-- Icono de corazón -->
+                </button>
+                <button type="button" class="btn btn-danger border-0 cartIcon"><i class="fa fa-shopping-cart"></i></button>
+              </div>
+        `
 
         //Cambia el src de las imagenes del carrusel
         let imgCarousel = document.querySelectorAll('.imgCarousel');
-        let i = 0
-        imgCarousel.forEach((element)=> element.src = data.images[i++])
+        let i = 0;
+        imgCarousel.forEach((element)=> element.src = data.images[i++]);
 
         //Modo oscuro
         modeListado()
+        btnFavorite(data.id)
     }
 
     //Función que muestra las estrellas
@@ -70,18 +80,26 @@ document.addEventListener("DOMContentLoaded", function () {
         return stars;
     }
 
-    //Función que muestra los comentarios del JSON
-    const comentarios = document.getElementById("comments");
+// Función que muestra los comentarios del JSON
+const comentarios = document.getElementById("comments");
 
-    function comJson(comments){
-        for(let comment of comments){
-            comentarios.innerHTML += `
+function comJson(comments) {
+// Ordenar los comentarios del más nuevo al más antiguo
+  comments.sort((a, b) => {
+    const fechaA = new Date(a.dateTime);
+    const fechaB = new Date(b.dateTime);
+
+    return fechaB - fechaA;
+  });
+    // -------------------------------- //
+  for (let comment of comments) {
+    comentarios.innerHTML += `
             <div class="commentsHechos">
                 <ul class='list-group'>
                     <li class="list-group-item bg-light">
                         <div>
                             <strong>${comment.user}</strong>
-                            <small class='text-muted'> &nbsp; - ${comment.dateTime} - &nbsp; </small>
+                            <small class='text-muted'>   - ${comment.dateTime} -   </small>
                             ${estrellas(comment.score)}
                             <br>
                             ${comment.description}
@@ -89,11 +107,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     </li>
                 </ul>
             </div>
-        ` 
-        }
-        //Modo oscuro
-        modeListado()
-    }
+        `;
+  }
+  // Modo oscuro
+  modeListado();
+}
+
 
     //Función que agrega el comentario y lo guarda en el localstorage
     function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
@@ -151,12 +170,38 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const relProds = document.getElementById("related-products");
-    function showRelatedProducts(array) { 
+    function showRelatedProducts(array) {
         relProds.innerHTML = ""; 
         array.relatedProducts.forEach((element)=>
         relProds.innerHTML += ` 
-            <div class="m-3 col text-center" onclick="setProdId(${element.id})"> 
-                <img src="${element.image}" class="img-thumbnail imgRelated m-3"> 
-                <h4 class="ms-3">${element.name}</h4> 
-            </div>`)
+            <div class="card bg-light m-3">
+                <img onclick="setProdId(${element.id})" src="${element.image}" class="card-img-top cursor-active mt-2" alt="imagen del producto">
+                <div class="card-body">
+                <h4 class="card-title text-center pb-2">${element.name}</h4>
+                </div>
+            </div>
+        `)
+        relProds.innerHTML += `
+            <div class="card bg-light m-3">
+            <img id="emercadoImg" src="img/login_light.png" class="card-img-top cursor-active mt-2" alt="ver más">
+            <div class="card-body">
+                <h4 class="card-title text-center pb-2"><a href="products.html" class="btn btn-primary">Ver más ${array.category}</a></h4>
+            </div>
+            </div>`
+
+            //Modo oscuro
+            const emercadoImg = document.getElementById('emercadoImg');
+            if (localStorage.getItem("mode") == "dark") {
+                emercadoImg.src = 'img/login_dark.png';
+            }
+            else{
+                emercadoImg.src = 'img/login_light.png';
+            }
+            lightMode.addEventListener("click", ()=>{
+                emercadoImg.src = 'img/login_light.png';
+            })
+            darkMode.addEventListener("click", ()=>{
+                emercadoImg.src = 'img/login_dark.png';
+            })
+
     } 
