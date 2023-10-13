@@ -13,7 +13,7 @@ const btnLimpiar = document.getElementById("clearRangeFilter2");
 const btnPrecioAsc = document.getElementById("sortAsc2");
 const btnPrecioDesc = document.getElementById("sortDesc2");
 const btnRelevancia = document.getElementById("sortByCount2");
-const campoBusqueda = document.getElementById("buscador")
+const campoBusqueda = document.getElementById("buscador");
 
 //Funcion que almacena el id del producto y redirecciona a product-info.html
 function redirectProduct(prodId){
@@ -49,7 +49,7 @@ function showData(dataArray) {
                 <button class="btn btn-primary" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
                   <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
                 </button>
-                <button type="button" class="btn btn-danger border-0 cartIcon"><i class="fa fa-shopping-cart"></i></button>
+                <button type="button" class="btn btn-danger border-0 cartIcon" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
               </div>
             </div>
           </div>
@@ -79,10 +79,9 @@ async function getJson() {
     const json = await response.json();
     categoria = json;
     showData(categoria);
-    categoriaOriginal = JSON.parse(JSON.stringify(categoria)); // Crea una copia completa del json en categoria
+    categoriaOriginal = JSON.parse(JSON.stringify(categoria)); // Crea una copia profunda del json en categoria
   }
   catch (error){
-    //Mensaje de error
     console.error('Error al solicitar los productos \n', error);
     divProductos.innerHTML = `
       <div class="bg-danger text-white text-center rounded p-4 m-4">

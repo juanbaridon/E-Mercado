@@ -128,7 +128,7 @@ function showFavoritos(productosFavoritos) { // los muestra
                 <button class="btn btn-danger" id="removeFromFavorites_${prod.catId}-${prod.id}" onclick="removeFromFavoritos('${prod.catId}', '${prod.id}')">
                     X
                 </button>
-                <button type="button" class="btn btn-danger border-0 cartIcon"><i class="fa fa-shopping-cart"></i></button>
+                <button type="button" class="btn btn-danger border-0 cartIcon" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
               </div>
             </div>
           </div>
