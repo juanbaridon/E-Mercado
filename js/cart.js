@@ -82,7 +82,7 @@ function updateSubtotal(input, cost) {
 
   updateTotal()
 }
-
+// el precio final es una suma de pesos y dolares si hay artículos de ambos queda pendiente de corregir
 function updateTotal() {
   subtotalList = document.getElementsByClassName("subtotal")
   let totalPreDelivery = 0
