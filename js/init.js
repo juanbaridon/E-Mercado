@@ -81,17 +81,29 @@ function changeMode() {
   var darkElementsBg = document.querySelectorAll(".bg-dark, .btn-dark");
   var lightElementsText = document.querySelectorAll(".text-dark");
   var darkElementsText = document.querySelectorAll(".text-light, .text-white");
+  var navElement = document.getElementById("mainNav");            //**********************************************
+  var navLinks = navElement.querySelectorAll("a");                //**********************************************
+  var dropdownMenu = document.querySelectorAll(".dropdown-menu"); //**********************************************
 
   //Dark
   if (localStorage.getItem("mode") == "dark") {
   lightElementsBg.forEach((element)=>{
     element.classList.remove('bg-light', 'bg-white', 'btn-light');
     element.classList.add('bg-dark', 'text-light');
-  })
+  navElement.style.backgroundColor = "#9e764c";   //**********************************************
+            navElement.style.color = "#ffffff"; //**********************************************
+            dropdownMenu.forEach(menu => {  //**********************************************
+              menu.style.backgroundColor = "#9e764c";
+          });
+          document.getElementById('emailButton').style.color = "#ffffff";   //**********************************************
+        });
   lightElementsText.forEach((element)=>{
     element.classList.remove('text-dark');
     element.classList.add('text-white');
-  })
+  });
+  navLinks.forEach(link => {  //**********************************************
+      link.style.color = "#ffffff";
+  });
   //Background
   document.querySelector('body').style.backgroundColor = "#0d1117";
   //Color botón
@@ -104,11 +116,20 @@ function changeMode() {
   darkElementsBg.forEach((element)=>{
     element.classList.remove('bg-dark', 'btn-dark');
     element.classList.add('bg-light', 'text-dark');
-  })
+    navElement.style.backgroundColor = "#ef9333";   //**********************************************
+    navElement.style.color = "#ef9333"; //**********************************************
+    dropdownMenu.forEach(menu => {  //**********************************************
+      menu.style.backgroundColor = "#ef9333";
+  });
+  document.getElementById('emailButton').style.color = "#282828";   //**********************************************
+});
   darkElementsText.forEach((element)=>{
     element.classList.remove('text-white', 'text-light');
     element.classList.add('text-dark');
-  })
+  });
+  navLinks.forEach(link => {  //**********************************************
+    link.style.color = "#282828";
+});
   //Background
   document.querySelector('body').style.backgroundColor = "#e2e2e2";
   //Color botón
