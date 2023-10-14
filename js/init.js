@@ -150,3 +150,20 @@ function modeListado() {
         })
     }
   }
+ //Botón carrito
+  function btnCart(prodId){
+    const cartElement = localStorage.getItem('cartList')
+    if (cartElement){
+      const cartIcon = document.querySelectorAll('.cartIcon');
+        cartIcon.forEach((element) =>{
+          element.addEventListener('click', ()=>{
+            element.classList.add('text-danger');
+            element.classList.remove('text-white');
+          })
+          if(cartElement.includes(prodId)){
+            element.classList.add('text-danger');
+            element.classList.remove('text-white');
+          }
+        })
+    }
+  }
