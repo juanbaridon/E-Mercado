@@ -49,13 +49,14 @@ function showData(dataArray) {
                 <button class="btn btn-primary favoriteBtn" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
                   <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
                 </button>
-                <button type="button" class="btn btn-danger border-0 cartIcon" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
+                <button type="button" class="btn text-white border-0 cartIcon" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
               </div>
             </div>
           </div>
         </div>`;
 
          btnFavorite(prod.id)
+         btnCart(prod.id)
       });
     } else {
       divProductos.innerHTML += `
