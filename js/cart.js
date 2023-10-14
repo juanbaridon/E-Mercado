@@ -48,10 +48,10 @@ function fetchCart() {
 
    newRow.innerHTML = ` 
      <th scope="row"><img src="${data.images[0]}" style="height: 60px; min-width: 60px;" class="img-thumbnail" alt="imagen del producto"></th>  
-     <td>${data.name}</td>
-     <td>${data.currency} ${data.cost}</td>
-     <td><input min="0" name="quantity" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm""></td>
-     <td><span class="currency">${data.currency}</span> <span class="subtotal">${cost}</span></td>
+     <td class="text-dark">${data.name}</td>
+     <td class="text-dark">${data.currency} ${data.cost}</td>
+     <td class="text-dark"><input min="0" name="quantity" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm""></td>
+     <td class="text-dark"><span class="currency">${data.currency}</span> <span class="subtotal">${cost}</span></td>
      <td><button class="btn btn-danger" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')">Eliminar</button></td>
    `;
 
