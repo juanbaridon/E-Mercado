@@ -89,6 +89,8 @@ function changeMode() {
   var clearRangeButtons = document.querySelectorAll(".clearRangeButton");
   let searchButton = document.getElementById("searchButton");
   let voiceSearchButton = document.getElementById("voiceSearch");
+  let heartIcons = document.querySelectorAll(".favoriteBtn");
+
   
 
 
@@ -127,9 +129,14 @@ function changeMode() {
     });
     searchButton.style.backgroundColor = "#3276c4";
     searchButton.style.borderColor = "#3276c4"; 
-
     voiceSearchButton.style.backgroundColor = "#3276c4";
     voiceSearchButton.style.borderColor = "#3276c4";
+
+
+    heartIcons.forEach(heart => {
+      heart.classList.add("bg-custom-light");
+      heart.classList.remove("bg-custom-dark");
+    });
   }
 
   //Light
@@ -167,9 +174,14 @@ function changeMode() {
     });
     searchButton.style.backgroundColor = "#0d6efd";
     searchButton.style.borderColor = "#0d6efd"; 
-
     voiceSearchButton.style.backgroundColor = "#0d6efd";
     voiceSearchButton.style.borderColor = "#0d6efd";
+
+
+    heartIcons.forEach(heart => {
+      heart.classList.add("bg-custom-dark");
+      heart.classList.remove("bg-custom-light");
+    });
 
   }
 }
@@ -222,32 +234,5 @@ function btnCart(prodId) {
         element.classList.remove('text-white');
       }
     })
-  }
-}
-
-
-
-function setCartIconStyle(element, prodId) {
-  const cartElement = localStorage.getItem('cartList');
-
-  // Si el producto está en el carrito y estamos en modo oscuro
-  if (cartElement && cartElement.includes(prodId) && localStorage.getItem("mode") == "dark") {
-      element.classList.add('text-danger');
-      element.classList.remove('text-white', 'text-dark');
-  }
-  // Si el producto está en el carrito y estamos en modo claro
-  else if (cartElement && cartElement.includes(prodId)) {
-      element.classList.add('text-danger');
-      element.classList.remove('text-white', 'text-dark');
-  }
-  // Si el producto no está en el carrito y estamos en modo oscuro
-  else if (localStorage.getItem("mode") == "dark") {
-      element.classList.add('text-white');
-      element.classList.remove('text-danger', 'text-dark');
-  }
-  // Si el producto no está en el carrito y estamos en modo claro
-  else {
-      element.classList.add('text-dark');
-      element.classList.remove('text-danger', 'text-white');
   }
 }

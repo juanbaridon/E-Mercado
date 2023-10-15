@@ -34,3 +34,24 @@ if (localStorage.getItem("mode") == "dark") {
 else{
     headerImg.style.backgroundImage = "url('img/cover_back_light.png')";
 }
+
+
+//Responsive
+
+var headerImgResponsive = document.querySelector('.jumbotron-responsive');
+
+
+lightMode.addEventListener("click", ()=>{
+  headerImgrResponsive.style.backgroundImage = "url('img/login_light.png')";
+})
+
+darkMode.addEventListener("click", ()=>{
+  headerImgResponsive.style.backgroundImage = "url(img/login_dark.png)";
+})
+
+if (localStorage.getItem("mode") == "dark") {
+    headerImgResponsive.style.backgroundImage = "url('img/login_dark.png')";
+}
+else{
+    headerImgResponsive.style.backgroundImage = "url('img/login_light.png')";
+}
