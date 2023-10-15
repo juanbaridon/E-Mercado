@@ -87,9 +87,8 @@ function changeMode() {
   var dropdownMenu = document.querySelectorAll(".dropdown-menu"); 
   var rangeFilterButtons = document.querySelectorAll(".rangeFilterButton");
   var clearRangeButtons = document.querySelectorAll(".clearRangeButton");
-  var searchButton = document.getElementById("searchButton");
-  var voiceSearchButton = document.getElementById("voiceSearch");
-  
+  let searchButton = document.getElementById("searchButton");
+  let voiceSearchButton = document.getElementById("voiceSearch");
   
 
 
@@ -131,8 +130,6 @@ function changeMode() {
 
     voiceSearchButton.style.backgroundColor = "#3276c4";
     voiceSearchButton.style.borderColor = "#3276c4";
-
-    moonIcon.style.color = "red";
   }
 
   //Light
