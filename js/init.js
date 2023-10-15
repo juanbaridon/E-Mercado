@@ -84,10 +84,13 @@ function changeMode() {
   var navElement = document.getElementById("mainNav");            //**********************************************
   var navLinks = navElement.querySelectorAll("a");                //**********************************************
   var dropdownMenu = document.querySelectorAll(".dropdown-menu"); //**********************************************
-  var rangeFilterCount = document.getElementById("rangeFilterCount");  //*******************
-  var rangeFilterCount = document.getElementById("rangeFilterCount2");  //*******************
-  var clearRangeFilter = document.getElementById("clearRangeFilter"); //*******************
-  var clearRangeFilter = document.getElementById("clearRangeFilter2");
+  var rangeFilterCount = document.getElementById("rangeFilterCount");   //*******************
+  var rangeFilterCount2 = document.getElementById("rangeFilterCount2");  //*******************
+  var clearRangeFilter = document.getElementById("clearRangeFilter");   //*******************
+  var clearRangeFilter2 = document.getElementById("clearRangeFilter2");  //*******************
+
+  var rangeFilterButtons = document.querySelectorAll(".rangeFilterButton");
+  var clearRangeButtons = document.querySelectorAll(".clearRangeButton");
 
   //Dark
   if (localStorage.getItem("mode") == "dark") {
@@ -113,8 +116,9 @@ function changeMode() {
     //Color botón
     lightMode.classList.remove('btn-primary');
     darkMode.classList.add('btn-primary');
-    rangeFilterCount.style.backgroundColor = "#5251a3"; //filter 
-    clearRangeFilter.style.backgroundColor = "#9d4040"; //remove 
+
+    rangeFilterButtons.forEach(btn => btn.style.backgroundColor = "#5251a3"); //Filter
+    clearRangeButtons.forEach(btn => btn.style.backgroundColor = "#9d4040");  //Remove
   }
 
   //Light
@@ -141,9 +145,9 @@ function changeMode() {
     //Color botón
     lightMode.classList.add('btn-primary');
     darkMode.classList.remove('btn-primary');
-    
-    rangeFilterCount.style.backgroundColor = "#0d6efd"; //filter 
-    clearRangeFilter.style.backgroundColor = "#dc3545"; //remove 
+
+    rangeFilterButtons.forEach(btn => btn.style.backgroundColor = "#0d6efd"); //Filter
+    clearRangeButtons.forEach(btn => btn.style.backgroundColor = "#dc3545");  //Remove
   }
 }
 
