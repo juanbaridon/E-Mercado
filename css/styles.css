@@ -48,12 +48,11 @@ nav a {
   background-position: center;
   background-size: 100% auto;
 }
-}
 
 @media (min-width: 768px) {
   .jumbotron {
-    /* padding-top: 6rem;
-    padding-bottom: 6rem; */
+    padding-top: 6rem;
+    padding-bottom: 6rem;
   }
 }
 
