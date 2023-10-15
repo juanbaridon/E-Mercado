@@ -81,23 +81,24 @@ function changeMode() {
   var darkElementsBg = document.querySelectorAll(".bg-dark, .btn-dark");
   var lightElementsText = document.querySelectorAll(".text-dark");
   var darkElementsText = document.querySelectorAll(".text-light, .text-white");
-  var navElement = document.getElementById("mainNav");            //**********************************************
-  var navLinks = navElement.querySelectorAll("a");                //**********************************************
-  var dropdownMenu = document.querySelectorAll(".dropdown-menu"); //**********************************************
-  var rangeFilterCount = document.getElementById("rangeFilterCount");   //*******************
-  var rangeFilterCount2 = document.getElementById("rangeFilterCount2");  //*******************
-  var clearRangeFilter = document.getElementById("clearRangeFilter");   //*******************
-  var clearRangeFilter2 = document.getElementById("clearRangeFilter2");  //*******************
 
+  var navElement = document.getElementById("mainNav");            
+  var navLinks = navElement.querySelectorAll("a");                
+  var dropdownMenu = document.querySelectorAll(".dropdown-menu"); 
   var rangeFilterButtons = document.querySelectorAll(".rangeFilterButton");
   var clearRangeButtons = document.querySelectorAll(".clearRangeButton");
+  var searchButton = document.getElementById("searchButton");
+  var voiceSearchButton = document.getElementById("voiceSearch");
+  
+  
+
 
   //Dark
   if (localStorage.getItem("mode") == "dark") {
     lightElementsBg.forEach((element) => {
       element.classList.remove('bg-light', 'bg-white', 'btn-light');
       element.classList.add('bg-dark', 'text-light');
-      navElement.style.backgroundColor = "#9e764c";   //**********************************************
+      navElement.style.backgroundColor = "#BF7350";   //**********************************************
       navElement.style.color = "#ffffff"; //**********************************************
       dropdownMenu.forEach(menu => {  //**********************************************
         menu.style.backgroundColor = "#9e764c";
@@ -117,8 +118,21 @@ function changeMode() {
     lightMode.classList.remove('btn-primary');
     darkMode.classList.add('btn-primary');
 
-    rangeFilterButtons.forEach(btn => btn.style.backgroundColor = "#5251a3"); //Filter
-    clearRangeButtons.forEach(btn => btn.style.backgroundColor = "#9d4040");  //Remove
+    rangeFilterButtons.forEach(btn => {
+      btn.style.backgroundColor = "#3276c4";  //Filter
+      btn.style.borderColor = "#3276c4";      //Remove
+    });
+    clearRangeButtons.forEach(btn => {
+      btn.style.backgroundColor = "#C14B3F";
+      btn.style.borderColor = "#C14B3F"; // Ajusta el borde
+    });
+    searchButton.style.backgroundColor = "#3276c4";
+    searchButton.style.borderColor = "#3276c4"; 
+
+    voiceSearchButton.style.backgroundColor = "#3276c4";
+    voiceSearchButton.style.borderColor = "#3276c4";
+
+    moonIcon.style.color = "red";
   }
 
   //Light
@@ -146,8 +160,20 @@ function changeMode() {
     lightMode.classList.add('btn-primary');
     darkMode.classList.remove('btn-primary');
 
-    rangeFilterButtons.forEach(btn => btn.style.backgroundColor = "#0d6efd"); //Filter
-    clearRangeButtons.forEach(btn => btn.style.backgroundColor = "#dc3545");  //Remove
+    rangeFilterButtons.forEach(btn => {         //Filter
+      btn.style.backgroundColor = "#0d6efd";
+      btn.style.borderColor = "#0d6efd"; 
+    });
+    clearRangeButtons.forEach(btn => {      //Remove
+      btn.style.backgroundColor = "#dc3545";
+      btn.style.borderColor = "#dc3545"; 
+    });
+    searchButton.style.backgroundColor = "#0d6efd";
+    searchButton.style.borderColor = "#0d6efd"; 
+
+    voiceSearchButton.style.backgroundColor = "#0d6efd";
+    voiceSearchButton.style.borderColor = "#0d6efd";
+
   }
 }
 
