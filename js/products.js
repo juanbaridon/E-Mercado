@@ -1,11 +1,11 @@
-//URL de la API;
+//API URL;
 const productInfoUrl = PRODUCTS_URL + localStorage.getItem("catID") + EXT_TYPE;
 
-var categoria = [];
-let categoriaOriginal = [];
+var category = [];
+let originalCategory = [];
 let favoritos = [];
 const divProductos = document.getElementById('divProductos');
-const nombreCategoria = document.getElementById('nombreCategoria');
+const CategoryName = document.getElementById('nombreCategoria');
 const campoMin = document.getElementById("rangeFilterCountMin2");
 const campoMax = document.getElementById("rangeFilterCountMax2");
 const btnFiltrar = document.getElementById("rangeFilterCount2");
@@ -15,17 +15,17 @@ const btnPrecioDesc = document.getElementById("sortDesc2");
 const btnRelevancia = document.getElementById("sortByCount2");
 const campoBusqueda = document.getElementById("buscador");
 
-//Funcion que almacena el id del producto y redirecciona a product-info.html
+//Function that stores the product id and redirects to product-info.html
 function redirectProduct(prodId){
   localStorage.setItem("productId", prodId);
   window.location.href = "product-info.html";
 };
 
-//Función que muestra los productos;
+//Show Data
 
 function showData(dataArray) {
-  if (nombreCategoria) {
-    nombreCategoria.innerHTML = categoria.catName + ` <img src="img/cat${localStorage.getItem("catID")}_1.png" class="catIcon p-2 pt-1">`;
+  if (CategoryName) {
+    CategoryName.innerHTML = category.catName + ` <img src="img/cat${localStorage.getItem("catID")}_1.png" class="catIcon p-2 pt-1">`;
   }
 
   if (divProductos) {
@@ -33,7 +33,7 @@ function showData(dataArray) {
 
     if (dataArray.products && dataArray.products.length > 0) {
       dataArray.products.forEach((prod) => {
-        const isFavorito = isProductInFavoritos(prod.catId, prod.id); // Verifica si el producto está en favoritos
+        const isFavorito = isProductInFavoritos(prod.catId, prod.id);
         const favoritoClass = isFavorito ? "favorito" : "";
 
         divProductos.innerHTML +=
@@ -66,23 +66,23 @@ function showData(dataArray) {
     }
   }
   //Modo oscuro
-  modeListado();
+  modeList();
 }
 
-// Función para verificar si un producto está en la lista de favoritos
+// Function to check if a product is in the favorites list
 function isProductInFavoritos(catId, prodId) {
-  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-  return storedFavoritos.some(item => item.catId === catId && item.prodId === prodId);
+  const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+  return storedFavorites.some(item => item.catId === catId && item.prodId === prodId);
 }
 
-//Petición a la URL
+//URL Request
 async function getJson() {
   try{
     const response = await fetch(productInfoUrl);
     const json = await response.json();
-    categoria = json;
-    showData(categoria);
-    categoriaOriginal = JSON.parse(JSON.stringify(categoria)); // Crea una copia profunda del json en categoria
+    category = json;
+    showData(category);
+    originalCategory = JSON.parse(JSON.stringify(category)); // Create copy of json in category
   }
   catch (error){
     console.error('Error al solicitar los productos \n', error);
@@ -94,25 +94,25 @@ async function getJson() {
 }
 getJson();
 
-//Buscador
-//La función se ejecuta al utilizar el input
+//Search
+//Function is executed when using the input
 if (campoBusqueda) { 
 campoBusqueda.addEventListener("input", ()=>{
-  categoria = JSON.parse(JSON.stringify(categoriaOriginal));
+  category = JSON.parse(JSON.stringify(originalCategory));
   const busqueda = campoBusqueda.value.toLowerCase(); //Valor del input en minúsculas
-  const filtrado = categoria.products.filter((element) => element.name.toLowerCase().includes(busqueda) || element.description.toLowerCase().includes(busqueda));
+  const filtrado = category.products.filter((element) => element.name.toLowerCase().includes(busqueda) || element.description.toLowerCase().includes(busqueda));
   //Filtro: si el valor del buscador está incluido en el nombre o descripción del producto
-  categoria.products = filtrado
-  showData(categoria)
+  category.products = filtrado
+  showData(category)
 })
 }
 
-//Rango de precio
+//Price Range
 if (btnFiltrar) {
 btnFiltrar.addEventListener("click", function(){
   const min = parseInt(campoMin.value, 10); 
   const max = parseInt(campoMax.value, 10); 
-  const productosOriginales = categoriaOriginal.products;
+  const productosOriginales = originalCategory.products;
   const productosFiltrados = [];
   
   for (const producto of productosOriginales) {
@@ -121,62 +121,62 @@ btnFiltrar.addEventListener("click", function(){
     }
   } 
   
-  categoria.products = productosFiltrados;
-  showData(categoria);
+  category.products = productosFiltrados;
+  showData(category);
 });
 }
 
-//Limpiar
+//Remove
 if (btnLimpiar) { 
 btnLimpiar.addEventListener("click", function() { 
   campoMin.value = null;
   campoMax.value = null;
   campoBusqueda.value = null
-  categoria = JSON.parse(JSON.stringify(categoriaOriginal)); // Guarda en categoria una copia de categoriaOriginal, asi quedan ambas en su estado original.
-  showData(categoria);
+  category = JSON.parse(JSON.stringify(originalCategory)); // Save a copy of categoryOriginal in category, so both remain in their original state.
+  showData(category);
 }) 
 }
 
-//Precio ascendente
+//Ascending price
 if (btnPrecioAsc) { 
 btnPrecioAsc.addEventListener("click", function(){
-  const productosOrdenados = categoria.products.sort((a, b) => a.cost - b.cost); 
-  categoria.products = productosOrdenados;
-  showData(categoria);
+  const productosOrdenados = category.products.sort((a, b) => a.cost - b.cost); 
+  category.products = productosOrdenados;
+  showData(category);
 })
 }
 
-//Precio descendente
+//Descending price
 if (btnPrecioDesc) { 
 btnPrecioDesc.addEventListener("click", function() {
-  const productosOrdenados = categoria.products.sort((a, b) => b.cost - a.cost); 
-  categoria.products = productosOrdenados;
-  showData(categoria);
+  const productosOrdenados = category.products.sort((a, b) => b.cost - a.cost); 
+  category.products = productosOrdenados;
+  showData(category);
 })
 }
-//Relevancia
+//Relevance
 if (btnRelevancia) { 
 btnRelevancia.addEventListener("click", function() {
-  const productosOrdenados = categoria.products.sort((a, b) => b.soldCount - a.soldCount); 
-  categoria.products = productosOrdenados;
-  showData(categoria);
+  const productosOrdenados = category.products.sort((a, b) => b.soldCount - a.soldCount); 
+  category.products = productosOrdenados;
+  showData(category);
 })
 }
 
-//  BUSQUEDA POR VOZ
+//  Voice Search
 const voiceSearchButton = document.getElementById('voiceSearch');
 voiceSearchButton.addEventListener('click', startVoiceSearch);
 
-// Define la función startVoiceSearch para iniciar la búsqueda por voz
+// Defines the startVoiceSearch function to start voice search
 function startVoiceSearch() {
   console.log('Iniciando búsqueda por voz...');
   const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
   recognition.lang = 'es-ES'; //  el idioma de reconocimiento
 
-  // Inicia el reconocimiento de voz
+  // Start Voice Search
   recognition.start();
 
-  // Evento que se dispara cuando se obtiene un resultado
+  // Event that starts when a result is obtained
   recognition.onresult = function(event) {
     const voiceResult = event.results[0][0].transcript;
     // Establece el valor del campo de búsqueda con el resultado de voz
@@ -185,24 +185,24 @@ function startVoiceSearch() {
     executeSearch(voiceResult);
   };
 
-  // Evento que se dispara cuando se detiene el reconocimiento de voz
+  // Event that starts when speech recognition stops
   recognition.onend = function() {
     recognition.stop();
   };
 }
 
-// Define la función executeSearch que realiza la búsqueda basada en el texto proporcionado
+// Defines the executeSearch function that performs the search based on the provided text
 function executeSearch(query) {
  
-  // Filtra y muestra los resultados de búsqueda según la consulta de voz
-  categoria = JSON.parse(JSON.stringify(categoriaOriginal));
+  // Filter and display search results based on voice query
+  category = JSON.parse(JSON.stringify(originalCategory));
   const busqueda = query.toLowerCase();
-  const filtrado = categoria.products.filter(
+  const filtrado = category.products.filter(
     (element) =>
       element.name.toLowerCase().includes(busqueda) ||
       element.description.toLowerCase().includes(busqueda)
   );
-  categoria.products = filtrado;
-  showData(categoria);
+  category.products = filtrado;
+  showData(category);
 }
 

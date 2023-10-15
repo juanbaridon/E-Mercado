@@ -26,7 +26,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light p-1">
+  <nav class="navbar navbar-expand-lg navbar-light p-1" id="mainNav">         
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@
           </li>
           <li class="nav-item">
 
-        <!--Menú de usuario-->
+        <!--User Menu-->
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="emailButton" data-bs-toggle="dropdown"aria-expanded="false">
               Usuario</button>
@@ -60,7 +60,7 @@
                 <a class="dropdown-item" href="favoritos.html" id="favotitos">Mis favoritos</a>
               </li>
               <li>
-                <a class="dropdown-item" href="login.html" id="cerrarSesion">Cerrar sesión</a>
+                <a class="dropdown-item" href="login.html" id="logoutSession">Cerrar sesión</a>
               </li>
             </ul>
           </div>            
@@ -80,7 +80,7 @@
   
   <main class="mb-5">
   
-    <!-- Información del producto -->
+    <!-- Product Info -->
     <div class="container text-white">
       <div class="text-center mb-4 p-4 text-white">
         <h2 id="productName"></h2>
@@ -88,7 +88,7 @@
       <div class="card mb-3 mt-3 bg-dark text-light text-white">
         <div class="row g-0">
           <div class="col-md-4">
-            <!--Carrusel-->
+            <!--Carousel-->
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
@@ -127,19 +127,19 @@
         </div>
       </div>
 
-      <!-- Recomendación -->
+      <!-- Recommendation -->
       <div class="container mt-4 text-white">
         <h5>Productos Relacionados</h5>
       </div>
       <div class="grid-container" id="related-products"></div>
 
-      <!-- Comentarios -->
+      <!-- Comments -->
       <div class="container mt-4 text-white" id="comments">
         <h5>Comentarios</h5>
       </div>
       <br>
     
-      <!-- Formulario de comentario -->
+      <!-- Comments Form -->
       <div class="container p-3 bg-dark text-light text-white">
         <h5>Comentar</h5>
         <form id="commentForm">

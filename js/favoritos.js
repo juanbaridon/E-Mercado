@@ -1,9 +1,9 @@
 const divFavoritos = document.getElementById('divFavoritos');
 
-// función para agregar o quitar un producto de favoritos
+// Function to add or remove a product from favorites
 function toggleFavorito(catId, prodId) {
-  const storedCatId = parseInt(localStorage.getItem("catID"), 10); 
-  const storedProdId = parseInt(prodId, 10); 
+  const storedCatId = parseInt(localStorage.getItem("catID"), 10);
+  const storedProdId = parseInt(prodId, 10);
   const button = document.getElementById(`addToFavorites_${catId}-${prodId}`);
 
   if (!button) {
@@ -11,51 +11,52 @@ function toggleFavorito(catId, prodId) {
   }
 
   const heartIcon = button.querySelector("i.fa-heart");
-  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+  const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
 
-  const index = storedFavoritos.findIndex(item => item.catId === storedCatId && item.prodId === storedProdId);
+  const index = storedFavorites.findIndex(item => item.catId === storedCatId && item.prodId === storedProdId);
 
   if (index === -1) {
-    storedFavoritos.push({ catId: storedCatId, prodId: storedProdId });
+    storedFavorites.push({ catId: storedCatId, prodId: storedProdId });
   } else {
-    storedFavoritos.splice(index, 1);
+    storedFavorites.splice(index, 1);
   }
 
-  localStorage.setItem("favoritos", JSON.stringify(storedFavoritos));
+  localStorage.setItem("favoritos", JSON.stringify(storedFavorites));
 }
 
 function removeFromFavoritos(catId, prodId) {
-  const storedCatId = parseInt(localStorage.getItem("catID"), 10); 
-  const storedProdId = parseInt(prodId, 10); 
+  const storedCatId = parseInt(localStorage.getItem("catID"), 10);
+  const storedProdId = parseInt(prodId, 10);
   const button = document.getElementById(`removeFromFavorites_${catId}-${prodId}`);
 
   if (!button) {
     return;
   }
 
-  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+  const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
 
-  const index = storedFavoritos.findIndex(item => item.catId === storedCatId && item.prodId === storedProdId);
+  const index = storedFavorites.findIndex(item => item.catId === storedCatId && item.prodId === storedProdId);
 
   if (index !== -1) {
-    // Elimina el producto de la lista de favoritos
-    storedFavoritos.splice(index, 1);
-    localStorage.setItem("favoritos", JSON.stringify(storedFavoritos));
 
-    loadFavoritos();
+    // Remove the product from the favorites list
+    storedFavorites.splice(index, 1);
+    localStorage.setItem("favoritos", JSON.stringify(storedFavorites));
+
+    loadFavorites();
   }
 }
 
-// carga los productos favoritos de la api 
-async function loadFavoritos() {
-  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+// Load favorite products from the api
+async function loadFavorites() {
+  const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
 
-  if (storedFavoritos.length === 0) {
-    showFavoritos([]); 
+  if (storedFavorites.length === 0) {
+    showFavorites([]);
     return;
   }
 
-  const promises = storedFavoritos.map(async (favorito) => {
+  const promises = storedFavorites.map(async (favorito) => {
     const catId = favorito.catId;
     const prodId = favorito.prodId;
     const categoryUrl = `https://japceibal.github.io/emercado-api/cats_products/${catId}.json`;
@@ -63,10 +64,10 @@ async function loadFavoritos() {
     try {
       const categoryResponse = await fetch(categoryUrl);
       const categoryData = await categoryResponse.json();
-      const productoFavorito = categoryData.products.find((prod) => prod.id === parseInt(prodId)); // Convertir prodId a número
-      
-      if (productoFavorito) {
-        return productoFavorito;
+      const favoriteProduct = categoryData.products.find((prod) => prod.id === parseInt(prodId)); // Convert prodId to number
+
+      if (favoriteProduct) {
+        return favoriteProduct;
       } else {
         console.log(`No se encontró el producto favorito con id ${prodId} en la categoría con catId ${catId}.`);
       }
@@ -76,21 +77,21 @@ async function loadFavoritos() {
   });
 
   Promise.all(promises)
-    .then(productosFavoritos => {
-      productosFavoritos = productosFavoritos.filter(producto => producto);
-      showFavoritos(productosFavoritos);
+    .then(favoriteProducts => {
+      favoriteProducts = favoriteProducts.filter(product => product);
+      showFavorites(favoriteProducts);
     })
     .catch(error => {
       console.error('Error al cargar productos favoritos:', error);
     });
 }
 
-function showFavoritos(productosFavoritos) { // los muestra 
+function showFavorites(favoriteProducts) { // Show favorites 
   if (divFavoritos) {
     divFavoritos.innerHTML = "";
 
-    if (productosFavoritos.length > 0) {
-      productosFavoritos.forEach((prod) => {
+    if (favoriteProducts.length > 0) {
+      favoriteProducts.forEach((prod) => {
         divFavoritos.innerHTML +=
           `<div class="card bg-light m-3">
           <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" class="card-img-top cursor-active" alt="imagen del producto">
@@ -119,8 +120,8 @@ function showFavoritos(productosFavoritos) { // los muestra
     </div>`;
     }
   }
-   modeListado();
+  modeList();
 }
 
 
-loadFavoritos();
+loadFavorites();

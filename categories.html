@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light p-1">
+  <nav class="navbar navbar-expand-lg navbar-light p-1" id="mainNav">          
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@
           </li>
           <li class="nav-item">
 
-        <!--Menú de usuario-->
+        <!--User Menu-->
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="emailButton" data-bs-toggle="dropdown"aria-expanded="false">
               Usuario</button>
@@ -48,7 +48,7 @@
                 <a class="dropdown-item" href="favoritos.html" id="favotitos">Mis favoritos</a>
               </li>
               <li>
-                <a class="dropdown-item" href="login.html" id="cerrarSesion">Cerrar sesión</a>
+                <a class="dropdown-item" href="login.html" id="logoutSession">Cerrar sesión</a>
               </li>
             </ul>
           </div>           
@@ -98,8 +98,8 @@
             </div>
             <div class="col-3 p-0">
               <div class="btn-group" role="group">
-                <button class="btn btn-primary btn-block" id="rangeFilterCount">Filtrar</button>
-                <button class="btn btn-danger btn-sm" id="clearRangeFilter">Limpiar</button>
+                <button class="btn btn-primary btn-block rangeFilterButton" id="rangeFilterCount">Filtrar</button>
+                <button class="btn btn-danger btn-sm clearRangeButton" id="clearRangeFilter">Limpiar</button>
               </div>
             </div>
           </div>

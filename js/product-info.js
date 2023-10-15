@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    //Cargar información del producto y comentarios
+    //Upload product info and comments
     const productInfoUrl = PRODUCT_INFO_URL + localStorage.getItem("productId") + EXT_TYPE;
     const commentsUrl = PRODUCT_INFO_COMMENTS_URL + localStorage.getItem("productId") + EXT_TYPE;
 
-    // Función para verificar si un producto está en la lista de favoritos
+    // Check if a product is in favorites list
     function isProductInFavoritos(catId, prodId) {
-        const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-        return storedFavoritos.some(item => item.catId === catId && item.prodId === prodId);
+        const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+        return storedFavorites.some(item => item.catId === catId && item.prodId === prodId);
     }
 
     async function getJson() {
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         comJson(jsonComentario);
       }
       catch (error){
-        //Mensaje de error
+        //Error Message
         console.error('Error al solicitar la información \n', error);
         divProductInfo.innerHTML = `
           <div class="bg-danger text-white text-center rounded p-4 m-4">
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     getJson();
 
-    //Mostrar la información del producto
+    //Show Product Info
     const divProductInfo = document.getElementById('divProductInfo');
     const productImgs = document.getElementById('productImgs');
     const productName = document.getElementById('productName');
@@ -53,17 +53,17 @@ document.addEventListener("DOMContentLoaded", function () {
               </div>
         `
 
-        //Cambia el src de las imagenes del carrusel
+        //Change the src of the carousel images
         let imgCarousel = document.querySelectorAll('.imgCarousel');
         let i = 0;
         imgCarousel.forEach((element)=> element.src = data.images[i++]);
 
-        //Modo oscuro
-        modeListado()
+        //Dark Mode
+        modeList()
          btnFavorite(data.id)
     }
 
-    //Función que muestra las estrellas
+    // Shows Stars
     function estrellas(score) {
         let stars = '';
         const maxStars = 5;
@@ -80,11 +80,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return stars;
     }
 
-// Función que muestra los comentarios del JSON
+//  Display JSON comments
 const comentarios = document.getElementById("comments");
 
 function comJson(comments) {
-// Ordenar los comentarios del más nuevo al más antiguo
+// Sort comments from newest to oldest
   comments.sort((a, b) => {
     const fechaA = new Date(a.dateTime);
     const fechaB = new Date(b.dateTime);
@@ -109,12 +109,12 @@ function comJson(comments) {
             </div>
         `;
   }
-  // Modo oscuro
-  modeListado();
+  // Dark Mode
+  modeList();
 }
 
 
-    //Función que agrega el comentario y lo guarda en el localstorage
+    //Add comment and save it to localstorage
 function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
     const comentarioHTML = `
       <li class="list-group-item">
@@ -132,18 +132,18 @@ function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
     const comentariosList = document.querySelector("#comments .commentsHechos ul");
     comentariosList.insertAdjacentHTML('afterbegin', comentarioHTML);
   
-    // Modo oscuro
-    modeListado();
+    // Dark Mode
+    modeList();
   }
 
-    //Se obtiene el comentario del localstorage y se muestra en pantalla
+    //The comment is obtained from localstorage and displayed on the screen
     const productId = localStorage.getItem('productId')
     const comentarioCargado = localStorage.getItem(`comentario ${productId}`);
     if(comentarioCargado != undefined) {
         comentarios.innerHTML += comentarioCargado
     }
 
-    //Obtención de datos del formulario
+    //Get data from Form
     const commentForm = document.getElementById('commentForm');
     
     commentForm.addEventListener('submit', e => {
@@ -151,7 +151,7 @@ function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
 
         let puntuacion = document.querySelector('input[name="estrellas"]:checked').value;
         const opinion = document.getElementById('opinion').value;
-        const actualUser = localStorage.getItem('usuario');
+        const actualUser = localStorage.getItem('user');
         const fechaHora = new Date();
         const opciones = { timeZone: 'America/Argentina/Buenos_Aires' };
         const fechaFormateada = fechaHora.toLocaleString('es-AR', opciones);
@@ -163,7 +163,7 @@ function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
 
 });
 
-//Productos relacionados
+//Related Products
     function setProdId(id){
         localStorage.setItem("productId", id);
         window.location.href = "product-info.html"; 
@@ -189,7 +189,7 @@ function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
             </div>
             </div>`
 
-            //Modo oscuro
+            //Dark Mode
             const emercadoImg = document.getElementById('emercadoImg');
             if (localStorage.getItem("mode") == "dark") {
                 emercadoImg.src = 'img/login_dark.png';
