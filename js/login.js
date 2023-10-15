@@ -24,20 +24,20 @@ document.addEventListener("input", ()=>{
   }
 })
 
-//Guardar usuario
+//Save User
 function submitForm(event){
     event.preventDefault();
 
   if (user.value !== "" && contrasena.value !== "") {
 
-    if (emailValido(user.value) && contrasenaValida(contrasena.value)) { //linea agregada
+    if (emailValido(user.value) && contrasenaValida(contrasena.value)) {
           localStorage.setItem("user", user.value);
           window.location.href = "index.html";
     } 
   
-  //Mensajes de error
+  //Error Message
   else {
-      errorMessage = "Datos de inicio de sesión no válidos"; //linea agregada
+      errorMessage = "Datos de inicio de sesión no válidos";
   }
   
   } else {
@@ -64,7 +64,7 @@ function submitForm(event){
     loginError.innerHTML = "<ul>" + errorMessage + "</ul>";
 }
 
-//Mostrar contraseña
+//Show Password
 function mostrarPassword() {
   var show_eye = document.getElementById("show_eye");
   var hide_eye = document.getElementById("hide_eye");
@@ -82,7 +82,7 @@ function mostrarPassword() {
 }
 
   function emailValido(email) {
-    // valida correo electrónico de la forma hola@gmail.com
+    // Validate email
     var condicionDeEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return condicionDeEmail.test(email);
 }
@@ -105,7 +105,7 @@ function contrasenaValida(password) {
   })
   //Background
   document.querySelector('body').style.backgroundColor = "#0d1117";
-  //Imagen
+  //Image
   loginImg.src = "img/login_dark.png";
   }
 
@@ -117,7 +117,7 @@ function contrasenaValida(password) {
   })
   //Background
   document.querySelector('body').style.backgroundColor = "#e2e2e2";
-  //Imagen
+  //Image
   loginImg.src = "img/login_light.png";
   }
 
