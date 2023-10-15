@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Función para verificar si un producto está en la lista de favoritos
     function isProductInFavoritos(catId, prodId) {
-        const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-        return storedFavoritos.some(item => item.catId === catId && item.prodId === prodId);
+        const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+        return storedFavorites.some(item => item.catId === catId && item.prodId === prodId);
     }
 
     async function getJson() {
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         imgCarousel.forEach((element)=> element.src = data.images[i++]);
 
         //Modo oscuro
-        modeListado()
+        modeList()
          btnFavorite(data.id)
     }
 
@@ -110,7 +110,7 @@ function comJson(comments) {
         `;
   }
   // Modo oscuro
-  modeListado();
+  modeList();
 }
 
 
@@ -133,7 +133,7 @@ function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
     comentariosList.insertAdjacentHTML('afterbegin', comentarioHTML);
   
     // Modo oscuro
-    modeListado();
+    modeList();
   }
 
     //Se obtiene el comentario del localstorage y se muestra en pantalla
@@ -151,7 +151,7 @@ function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
 
         let puntuacion = document.querySelector('input[name="estrellas"]:checked').value;
         const opinion = document.getElementById('opinion').value;
-        const actualUser = localStorage.getItem('usuario');
+        const actualUser = localStorage.getItem('user');
         const fechaHora = new Date();
         const opciones = { timeZone: 'America/Argentina/Buenos_Aires' };
         const fechaFormateada = fechaHora.toLocaleString('es-AR', opciones);

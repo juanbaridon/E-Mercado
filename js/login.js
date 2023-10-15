@@ -1,19 +1,19 @@
-let usuario = document.getElementById("usuario");
+let user = document.getElementById("user");
 let contrasena = document.getElementById("contrasena");
 let loginError = document.getElementById("loginError");
 let errorMessage = "";
 
 document.addEventListener("input", ()=>{
-  //Mostrar que el usuario es válido
-  if (!emailValido(usuario.value)) {
-    usuario.classList.add('is-invalid');
-    usuario.classList.remove('is-valid');
+//Show that user is valid
+  if (!emailValido(user.value)) {
+    user.classList.add('is-invalid');
+    user.classList.remove('is-valid');
     }
   else{
-    usuario.classList.add('is-valid');
-    usuario.classList.remove('is-invalid');
+    user.classList.add('is-valid');
+    user.classList.remove('is-invalid');
   }
-  //Mostrar que la contraseña es válida
+//Show that password is valid
   if (!contrasenaValida(contrasena.value)) {
     contrasena.classList.add('is-invalid');
     contrasena.classList.remove('is-valid');
@@ -28,10 +28,10 @@ document.addEventListener("input", ()=>{
 function submitForm(event){
     event.preventDefault();
 
-  if (usuario.value !== "" && contrasena.value !== "") {
+  if (user.value !== "" && contrasena.value !== "") {
 
-    if (emailValido(usuario.value) && contrasenaValida(contrasena.value)) { //linea agregada
-          localStorage.setItem("usuario", usuario.value);
+    if (emailValido(user.value) && contrasenaValida(contrasena.value)) { //linea agregada
+          localStorage.setItem("user", user.value);
           window.location.href = "index.html";
     } 
   
@@ -44,7 +44,7 @@ function submitForm(event){
       errorMessage = "<li class='small'>Usuario y contraseña requeridos</li>";
   }
 
-  if (!emailValido(usuario.value)) {
+  if (!emailValido(user.value)) {
       errorMessage += "<li class='small'>Formato de correo electrónico incorrecto</li>";
   }
     

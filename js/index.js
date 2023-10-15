@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 });
 
-//Modo oscuro
+//Dark Mode
 var headerImg = document.querySelector('.jumbotron');
 
 var lightMode = document.getElementById('lightMode');
@@ -36,7 +36,7 @@ else{
 }
 
 
-//Responsive
+//Responsive Jumbotron
 
 var headerImgResponsive = document.querySelector('.jumbotron-responsive');
 

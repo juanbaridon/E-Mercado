@@ -57,7 +57,7 @@ function fetchCart() {
 
    cartProducts.appendChild(newRow); 
    updateTotal();
-   modeListado();
+   modeList();
  }
 
  function removeCartItem(row, id) {
@@ -82,7 +82,7 @@ function updateSubtotal(input, cost) {
 
   updateTotal()
 }
-// el precio final es una suma de pesos y dolares si hay artículos de ambos queda pendiente de corregir
+// the final price is a sum of pesos and dollars, if there are items from both, it remains to be corrected
 function updateTotal() {
   subtotalList = document.getElementsByClassName("subtotal")
   let totalPreDelivery = 0

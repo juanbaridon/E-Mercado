@@ -15,20 +15,20 @@ let hideSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
-//Guarda el usuario en localStorage y lo muestra en el menú
+//Save the user in localStorage and show it in the menu
 document.addEventListener("DOMContentLoaded", function () {
-  var usuario = localStorage.getItem("usuario");
-  if (usuario === null) {
+  var user = localStorage.getItem("user");
+  if (user === null) {
     window.location.href = "login.html";
   } else {
-    document.getElementById("emailButton").innerHTML = localStorage.getItem("usuario");
+    document.getElementById("emailButton").innerHTML = localStorage.getItem("user");
   }
 });
 
-//Borra el usuario del localStorage
-const cerrarSesion = document.getElementById('cerrarSesion');
-cerrarSesion.addEventListener("click", () => {
-  localStorage.removeItem("usuario");
+//Delete user from localStorage
+const logoutSession = document.getElementById('logoutSession');
+logoutSession.addEventListener("click", () => {
+  localStorage.removeItem("user");
 })
 
 
@@ -57,9 +57,9 @@ let getJSONData = function (url) {
     });
 }
 
-/*  Modo oscuro  */
+//Dark Mode
 
-//Botón light
+//Light Button
 var lightMode = document.getElementById('lightMode');
 
 lightMode.addEventListener("click", () => {
@@ -67,7 +67,7 @@ lightMode.addEventListener("click", () => {
   changeMode()
 })
 
-//Botón dark
+//Dark Button
 var darkMode = document.getElementById('darkMode');
 
 darkMode.addEventListener("click", () => {
@@ -76,12 +76,11 @@ darkMode.addEventListener("click", () => {
 })
 
 function changeMode() {
-  //Elementos
+  //Elements
   var lightElementsBg = document.querySelectorAll(".bg-white, .bg-light, .btn-light");
   var darkElementsBg = document.querySelectorAll(".bg-dark, .btn-dark");
   var lightElementsText = document.querySelectorAll(".text-dark");
   var darkElementsText = document.querySelectorAll(".text-light, .text-white");
-
   var navElement = document.getElementById("mainNav");            
   var navLinks = navElement.querySelectorAll("a");                
   var dropdownMenu = document.querySelectorAll(".dropdown-menu"); 
@@ -115,7 +114,7 @@ function changeMode() {
     });
     //Background
     document.querySelector('body').style.backgroundColor = "#0d1117";
-    //Color botón
+    //Color Button
     lightMode.classList.remove('btn-primary');
     darkMode.classList.add('btn-primary');
 
@@ -125,14 +124,12 @@ function changeMode() {
     });
     clearRangeButtons.forEach(btn => {
       btn.style.backgroundColor = "#C14B3F";
-      btn.style.borderColor = "#C14B3F"; // Ajusta el borde
+      btn.style.borderColor = "#C14B3F";
     });
     searchButton.style.backgroundColor = "#3276c4";
     searchButton.style.borderColor = "#3276c4"; 
     voiceSearchButton.style.backgroundColor = "#3276c4";
     voiceSearchButton.style.borderColor = "#3276c4";
-
-
     heartIcons.forEach(heart => {
       heart.classList.add("bg-custom-light");
       heart.classList.remove("bg-custom-dark");
@@ -144,18 +141,18 @@ function changeMode() {
     darkElementsBg.forEach((element) => {
       element.classList.remove('bg-dark', 'btn-dark');
       element.classList.add('bg-light', 'text-dark');
-      navElement.style.backgroundColor = "#ef9333";   //**********************************************
-      navElement.style.color = "#ef9333"; //**********************************************
-      dropdownMenu.forEach(menu => {  //**********************************************
+      navElement.style.backgroundColor = "#ef9333";   
+      navElement.style.color = "#ef9333"; 
+      dropdownMenu.forEach(menu => {  
         menu.style.backgroundColor = "#ef9333";
       });
-      document.getElementById('emailButton').style.color = "#282828";   //**********************************************
+      document.getElementById('emailButton').style.color = "#282828";   
     });
     darkElementsText.forEach((element) => {
       element.classList.remove('text-white', 'text-light');
       element.classList.add('text-dark');
     });
-    navLinks.forEach(link => {  //**********************************************
+    navLinks.forEach(link => {  
       link.style.color = "#282828";
     });
     //Background
@@ -164,11 +161,11 @@ function changeMode() {
     lightMode.classList.add('btn-primary');
     darkMode.classList.remove('btn-primary');
 
-    rangeFilterButtons.forEach(btn => {         //Filter
+    rangeFilterButtons.forEach(btn => { //Filter
       btn.style.backgroundColor = "#0d6efd";
       btn.style.borderColor = "#0d6efd"; 
     });
-    clearRangeButtons.forEach(btn => {      //Remove
+    clearRangeButtons.forEach(btn => {  //Remove
       btn.style.backgroundColor = "#dc3545";
       btn.style.borderColor = "#dc3545"; 
     });
@@ -176,19 +173,16 @@ function changeMode() {
     searchButton.style.borderColor = "#0d6efd"; 
     voiceSearchButton.style.backgroundColor = "#0d6efd";
     voiceSearchButton.style.borderColor = "#0d6efd";
-
-
     heartIcons.forEach(heart => {
       heart.classList.add("bg-custom-dark");
       heart.classList.remove("bg-custom-light");
     });
-
   }
 }
 
 changeMode()
 
-function modeListado() {
+function modeList() {
   let categoryItem = document.querySelectorAll('.list-group-item, .card');
   if (localStorage.getItem("mode") == "dark") {
     categoryItem.forEach((element) => {
@@ -204,7 +198,7 @@ function modeListado() {
   }
 }
 
-//Botón favoritos
+//Favorites Button
 function btnFavorite(prodId) {
   const favoriteElement = localStorage.getItem('favoritos')
   if (favoriteElement) {
@@ -219,7 +213,7 @@ function btnFavorite(prodId) {
     })
   }
 }
-//Botón carrito
+//Chart Button
 function btnCart(prodId) {
   const cartElement = localStorage.getItem('cartList')
   if (cartElement) {

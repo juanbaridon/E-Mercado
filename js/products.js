@@ -66,13 +66,13 @@ function showData(dataArray) {
     }
   }
   //Modo oscuro
-  modeListado();
+  modeList();
 }
 
 // Función para verificar si un producto está en la lista de favoritos
 function isProductInFavoritos(catId, prodId) {
-  const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-  return storedFavoritos.some(item => item.catId === catId && item.prodId === prodId);
+  const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+  return storedFavorites.some(item => item.catId === catId && item.prodId === prodId);
 }
 
 //Petición a la URL
