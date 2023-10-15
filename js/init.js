@@ -224,3 +224,30 @@ function btnCart(prodId) {
     })
   }
 }
+
+
+
+function setCartIconStyle(element, prodId) {
+  const cartElement = localStorage.getItem('cartList');
+
+  // Si el producto está en el carrito y estamos en modo oscuro
+  if (cartElement && cartElement.includes(prodId) && localStorage.getItem("mode") == "dark") {
+      element.classList.add('text-danger');
+      element.classList.remove('text-white', 'text-dark');
+  }
+  // Si el producto está en el carrito y estamos en modo claro
+  else if (cartElement && cartElement.includes(prodId)) {
+      element.classList.add('text-danger');
+      element.classList.remove('text-white', 'text-dark');
+  }
+  // Si el producto no está en el carrito y estamos en modo oscuro
+  else if (localStorage.getItem("mode") == "dark") {
+      element.classList.add('text-white');
+      element.classList.remove('text-danger', 'text-dark');
+  }
+  // Si el producto no está en el carrito y estamos en modo claro
+  else {
+      element.classList.add('text-dark');
+      element.classList.remove('text-danger', 'text-white');
+  }
+}
