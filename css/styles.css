@@ -1,4 +1,4 @@
-body{
+body {
   background-color: #e2e2e2;
 }
 
@@ -44,7 +44,7 @@ nav a {
   color: black;
   font-weight: bold;
   background-size: contain;
-  background-repeat: no-repeat;  
+  background-repeat: no-repeat;
   background-position: center;
   background-size: 100% auto;
 }
@@ -197,11 +197,12 @@ a.custom-card:hover {
   color: #fda638;
 }
 
-#loginContenedor{
+#loginContenedor {
   width: 350px;
 }
-      
-#loginContenedor h1, #loginSubmit{
+
+#loginContenedor h1,
+#loginSubmit {
   background-color: #f09334;
   color: #fff;
   border-radius: .25rem;
@@ -209,124 +210,130 @@ a.custom-card:hover {
   width: 100%;
 }
 
-#loginContenedor h1{
+#loginContenedor h1 {
   font-size: 1.8rem;
 }
 
-#loginSubmit{
+#loginSubmit {
   font-size: 1.3rem;
 }
 
-#loginError ul{
-  color: red; 
+#loginError ul {
+  color: red;
 }
 
 
-/* Inicio Agregado */
 
-/* Modo oscuro */
-.btn-mode{
+/* Dark Mode */
+.btn-mode {
   background-color: #db760d;
   border-radius: 20px;
 }
 
-.sun, .moon{
+.sun,
+.moon {
   padding: 5px 15px;
 }
 
-.sun{
+.sun {
   border-bottom-left-radius: 20px;
   border-top-left-radius: 20px;
 }
 
-.moon{
+.moon {
   border-bottom-right-radius: 20px;
   border-top-right-radius: 20px;
 }
 
 /* Cambios */
 
-nav, .cartIcon{
+nav,
+.cartIcon {
   background-color: #ef9333;
 }
 
-.card{
+.card {
   animation: listar .3s forwards;
 }
 
-@keyframes listar{
-  0%{
+@keyframes listar {
+  0% {
     transform: scaleY(.5);
     opacity: 0;
   }
-  50%{
+
+  50% {
     transform: scaleY(1);
   }
-  100%{
+
+  100% {
     opacity: 100%;
   }
 }
 
-.catIcon{
+.catIcon {
   height: 3rem;
   background-color: transparent;
   border: none;
 }
 
-/* Estrellas */
+/* Stars */
 
-#puntuacion input[type = "radio"]{
-  display:none;
+#puntuacion input[type="radio"] {
+  display: none;
 }
 
-/* Voltea las estrellas*/
-#puntuacion{
-    direction: rtl;
-    unicode-bidi: bidi-override;
+/* Flip stars*/
+#puntuacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
 }
 
-/* Selecciona la estrella que tocamos con el mouse y las siguientes, al voltearlas previamente se ven como las anteriores */
-/* Colorea las estrellas al pasar el mouse y al hacer click */
-#puntuacion label:hover, #puntuacion label:hover ~ label, #puntuacion input[type = "radio"]:checked ~ label{
-  color:#fda638;
+/* Select stars */
+/* click and hover stars color*/
+#puntuacion label:hover,
+#puntuacion label:hover~label,
+#puntuacion input[type="radio"]:checked~label {
+  color: #fda638;
 }
 
-#commentForm button{
+#commentForm button {
   margin-top: 50px;
 }
 
-.imgRelated{
+.imgRelated {
   width: 50%;
 }
 
-.imgRelated:hover{
+.imgRelated:hover {
   cursor: pointer;
 }
 
-.cartProductCount{
+.cartProductCount {
   width: 4em;
 }
 
-.card:hover{
+.card:hover {
   border: 1px solid #fda638;
 }
 
-.grid-container{
+.grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-@media screen and (max-width: 768px){
-  .grid-container{
+@media screen and (max-width: 768px) {
+  .grid-container {
     grid-template-columns: 1fr 1fr;
   }
-  .carousel-inner{
+
+  .carousel-inner {
     margin: 0 !important;
   }
 }
 
-@media screen and (max-width: 576px){
-  .grid-container{
+@media screen and (max-width: 576px) {
+  .grid-container {
     grid-template-columns: 1fr;
   }
 }
@@ -338,55 +345,30 @@ nav, .cartIcon{
 
 
 .bg-custom-dark {
-  background-color: #0d6efd;  /* Color de fondo oscuro personalizado */
+  background-color: #0d6efd;
 }
 
 .bg-custom-light {
-  background-color: #3276c4;  /* Color de fondo claro personalizado */
+  background-color: #3276c4;
 }
 
-
-
-/* @media (max-width: 575.98px) {
-  .jumbotron {
-    margin: -10rem 0 -13rem 0;
-  }
-}
-
-@media (min-width: 576px) and (max-width: 767.98px) {
-  .jumbotron {
-    margin: -7rem 0 -10rem 0;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .jumbotron {
-    margin: -4rem 0 -8rem 0;
-  }
-}
-
-@media (min-width: 992px) and (max-width: 1199.98px) {
-  .jumbotron {
-    margin: -2rem 0 -6rem 0;
-  }
-} */
 
 .jumbotron-responsive {
 
-background-size: contain;
-background-repeat: no-repeat;  
-background-position: center;
-background-size: 100% auto;
-    height: 300px;  /* O el alto que prefieras para tu jumbotron */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% auto;
+  height: 300px;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 360px) {
   .jumbotron {
     display: none;
   }
 }
 
-@media (min-width: 577px) {
+@media (min-width: 361px) {
   .jumbotron-responsive {
     display: none;
   }
