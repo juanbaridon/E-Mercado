@@ -128,46 +128,51 @@
       </div>
 
       <!-- Recommendation -->
-      <div class="container mt-4 text-white">
+      <div class="container mt-4 text-dark">
         <h5>Productos Relacionados</h5>
       </div>
       <div class="grid-container" id="related-products"></div>
 
       <!-- Comments -->
-      <div class="container mt-4 text-white" id="comments">
-        <h5>Comentarios</h5>
-      </div>
-      <br>
-    
-      <!-- Comments Form -->
-      <div class="container p-3 bg-dark text-light text-white">
-        <h5>Comentar</h5>
-        <form id="commentForm">
-          <label for="opinion">Tu opinion:</label>
-          <textarea class="form-control" id="opinion" name="opinion"></textarea>
-          <br>
-        
-          <div class="col">
-            <label>Tu puntuación:</label>
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item bg-light text-dark">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button bg-light text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <h5>Comentarios</h5>
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div id="comments"></div>
+              <!-- Comments Form -->
+              <div class="m-3">
+                <h5 class="mt-4">Comentar</h5>
+                <form id="commentForm">
+                  <label for="opinion">Tu opinion:</label>
+                  <textarea class="form-control" id="opinion" name="opinion"></textarea>
+                  <br>
+                  <div class="col">
+                    <label>Tu puntuación:</label>
+                  </div>
+                    <div id="puntuacion" class="position-absolute left-0">
+                      <input id="radio1" type="radio" name="estrellas" value="5">
+                      <label for="radio1"><span class="fa fa-star estrella"></span></label>
+                      <input id="radio2" type="radio" name="estrellas" value="4">
+                      <label for="radio2"><span class="fa fa-star estrella"></span></label>
+                      <input id="radio3" type="radio" name="estrellas" value="3">
+                      <label for="radio3"><span class="fa fa-star estrella"></span></label>
+                      <input id="radio4" type="radio" name="estrellas" value="2">
+                      <label for="radio4"><span class="fa fa-star estrella"></span></label>
+                      <input id="radio5" type="radio" name="estrellas" value="1">
+                      <label for="radio5"><span class="fa fa-star estrella"></span></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-3" id="btn">Enviar</button>
+                </form>
+              </div>
+            </div>
           </div>
-
-          <div id="puntuacion" class="position-absolute left-0 col">
-            <input id="radio1" type="radio" name="estrellas" value="5">
-            <label for="radio1"><span class="fa fa-star estrella"></span></label>
-            <input id="radio2" type="radio" name="estrellas" value="4">
-            <label for="radio2"><span class="fa fa-star estrella"></span></label>
-            <input id="radio3" type="radio" name="estrellas" value="3">
-            <label for="radio3"><span class="fa fa-star estrella"></span></label>
-            <input id="radio4" type="radio" name="estrellas" value="2">
-            <label for="radio4"><span class="fa fa-star estrella"></span></label>
-            <input id="radio5" type="radio" name="estrellas" value="1">
-            <label for="radio5"><span class="fa fa-star estrella"></span></label>
-          </div>
-
-          <button type="submit" class="btn btn-primary" id="btn">Enviar</button>
-        </form>
+        </div>
       </div>
-  </div>
 
   </main>
   <footer class="text-muted bg-white">

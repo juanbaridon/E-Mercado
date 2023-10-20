@@ -1,3 +1,7 @@
+if(!localStorage.getItem("cartList")){
+  localStorage.setItem("cartList", null)
+}
+
 const cartProducts = document.getElementById('cartProducts');
 let cost;
 
@@ -37,8 +41,9 @@ function fetchCart() {
   });
 }
 
- fetchCart()
- 
+if(localStorage.getItem("cartList") !== null && cartProducts){
+  fetchCart()
+}
 
  function showCart(data) {
    const cartProducts = document.getElementById("cartProducts");
