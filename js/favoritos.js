@@ -1,7 +1,3 @@
-if(!localStorage.getItem("favoritos")){
-  localStorage.setItem("favoritos", null)
-}
-
 const divFavoritos = document.getElementById('divFavoritos');
 
 // Function to add or remove a product from favorites
@@ -105,9 +101,12 @@ function showFavorites(favoriteProducts) { // Show favorites
             <div class="card-text">
               <p>${prod.description}</p>
               <small class="text-muted">${prod.soldCount} vendidos</small>
-                <button class="btn btn-danger float-end" id="removeFromFavorites_${prod.catId}-${prod.id}" onclick="removeFromFavoritos('${prod.catId}', '${prod.id}')">
-                    Eliminar
+              <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
+                <button class="btn btn-danger" id="removeFromFavorites_${prod.catId}-${prod.id}" onclick="removeFromFavoritos('${prod.catId}', '${prod.id}')">
+                    X
                 </button>
+                <button type="button" class="btn btn-danger border-0 cartIcon" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
+              </div>
             </div>
           </div>
         </div>`;
