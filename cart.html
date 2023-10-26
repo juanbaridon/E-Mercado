@@ -127,18 +127,18 @@
                                          <h5 id="finalPrice">0</h5> <!--finalPrice container -->
                                     </div>   
      
-                                    <form>
+                                    <form id="shippingForm">
                                       <div class="mb-3">
                                           <label for="name" class="form-label">Nombre</label>
-                                          <input type="text" class="form-control" id="name" placeholder="Nombre">
+                                          <input type="text" class="form-control" id="name" placeholder="Nombre" required>
                                       </div>
                                       <div class="mb-3">
                                           <label for="street" class="form-label">Calle</label>
-                                          <input type="text" class="form-control" id="street" placeholder="Calle">
+                                          <input type="text" class="form-control" id="street" placeholder="Calle" required>
                                       </div>
                                       <div class="mb-3">
                                           <label for="intersection" class="form-label">Esquina</label>
-                                          <input type="text" class="form-control" id="intersection" placeholder="Esquina">
+                                          <input type="text" class="form-control" id="intersection" placeholder="Esquina" required>
                                       </div>
                                       <div class="mb-3">
                                         <label for="details" class="form-label">Mas detalles</label>
@@ -146,7 +146,7 @@
                                     </div>
                                   </form>
                                   
-                                  <button type="button" class="btn btn-primary btn-block btn-lg" data-mdb-ripple-color="dark">Comprar</button> 
+                                  <button id="buyBtn" type="button" class="btn btn-primary btn-block btn-lg" data-mdb-ripple-color="dark">Comprar</button> 
                                 </div>
                             </div>
                         </div>

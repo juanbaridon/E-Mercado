@@ -107,3 +107,12 @@ function updateTotal() {
   const finalPriceContainer = document.getElementById("finalPrice")
   finalPriceContainer.textContent = total;
 }
+
+
+const buyBtn = document.querySelector('#buyBtn');
+buyBtn.addEventListener('click', function() {
+  const shippingForm = document.getElementById("shippingForm")
+  shippingForm.checkValidity() //Corregir esta line
+
+});
+
