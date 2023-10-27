@@ -55,7 +55,7 @@ if(localStorage.getItem("cartList") !== null && cartProducts){
      <th scope="row"><img src="${data.images[0]}" style="height: 60px; min-width: 60px;" class="img-thumbnail" alt="imagen del producto"></th>  
      <td class="text-dark">${data.name}</td>
      <td class="text-dark">${data.currency} ${data.cost}</td>
-     <td class="text-dark"><input min="0" name="quantity" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm""></td>
+     <td class="text-dark"><input min="1" name="quantity" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm" id="qForm" required></td>
      <td class="text-dark"><span class="currency">${data.currency}</span> <span class="subtotal">${cost}</span></td>
      <td><button class="btn btn-danger" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')">Eliminar</button></td>
    `;
@@ -108,14 +108,34 @@ function updateTotal() {
   finalPriceContainer.textContent = total;
 }
 
-
 const buyBtn = document.getElementById('buyBtn');
 
-function shippingValidation() {
-  const shippingForm = document.getElementById("shippingForm");
-  shippingForm.reportValidity();
+
+// Validation function
+function shippingValidation(event) {
+  const shippingData = document.getElementById("shippingData");
+  const qForm = document.getElementById('qForm');
+  const shippingType = document.getElementById('shippingType');
+  const purchaseAlert = document.getElementById('purchaseAlert');
+
+  // Purchase validation
+  if (!shippingData.checkValidity() && !qForm.checkValidity() && !shippingType.checkValidity()) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  shippingData.classList.add('was-validated');
+
+  // Succesfully purchase alert
+  if (shippingData.checkValidity() && qForm.checkValidity() && shippingType.checkValidity()) {
+    purchaseAlert.innerHTML = `<div class="alert alert-success alert-dismissible" role="alert">
+    Compra realizada con éxito!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>`
+    
+  }
 
 }
 
 buyBtn.addEventListener('click', shippingValidation)
+
 
