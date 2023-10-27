@@ -109,10 +109,13 @@ function updateTotal() {
 }
 
 
-const buyBtn = document.querySelector('#buyBtn');
-buyBtn.addEventListener('click', function() {
-  const shippingForm = document.getElementById("shippingForm")
-  shippingForm.checkValidity() //Corregir esta line
+const buyBtn = document.getElementById('buyBtn');
 
-});
+function shippingValidation() {
+  const shippingForm = document.getElementById("shippingForm");
+  shippingForm.reportValidity();
+
+}
+
+buyBtn.addEventListener('click', shippingValidation)
 
