@@ -57,7 +57,7 @@ if(localStorage.getItem("cartList") !== null && cartProducts){
      <td class="text-dark">${data.currency} ${data.cost}</td>
      <td class="text-dark"><input min="1" name="quantity" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm" id="qForm" required></td>
      <td class="text-dark"><span class="currency">${data.currency}</span> <span class="subtotal">${cost}</span></td>
-     <td><button class="btn btn-danger" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')">Eliminar</button></td>
+     <td><button class="btn border border-danger" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')"><i class="bi bi-trash text-danger fa-lg"></i></button></td>
    `;
 
    cartProducts.appendChild(newRow); 
