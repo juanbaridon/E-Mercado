@@ -68,7 +68,7 @@ function removeCartItem(row, id) {
 //Recalculates the subtotal, and updates the overall subtotal, delivery cost, and total.
 function updateSubtotal(input, cost) {
   const quantity = parseInt(input.value);
-  const subtotal = quantity * cost;
+  const subtotal = Math.round(quantity * cost);
   const subtotalElement = input.closest("tr").querySelector(".subtotal");
   subtotalElement.textContent = `${subtotal}`;
   updateGeneralSubtotal();
