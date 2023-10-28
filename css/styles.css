@@ -420,12 +420,15 @@ nav, .cartIcon{
   backface-visibility: hidden; 
    border-radius: 10px; 
    position: absolute;
-     background: linear-gradient(45deg, #010201, #29294e) !important;
+    background: linear-gradient(45deg, #010201, #29294e) !important;
 
 }
 
-.card-back {
-  transform: rotateY(180deg);
+ .card-back {
+  transform: rotateY(180deg); 
+    display: none;
+  transition: opacity 0.3s, transform 0.5s ease-in-out; /* Agregar transición para transform */
+
 }
 
 .cardNumber{
@@ -475,6 +478,12 @@ nav, .cartIcon{
   max-width: 120%;
   max-height: 120%;
 }
+.chip img {
+  max-width: 110%; /* Asegura que la imagen no se desborde del contenedor */
+  height: auto; /* Mantiene la proporción original de la imagen */
+  margin-bottom: 350%;
+}
+
 
 #cvv-preview{
 
@@ -507,4 +516,6 @@ padding-top: 0%;
   height: 8;
 }
 /*  *************** END - CODE FOR PAYMENT METHODS**********************/
+
+
 
