@@ -41,7 +41,7 @@ function showCart(data) {
     <th scope="row"><img src="${data.images[0]}" style="height: 60px; min-width: 60px;" class="img-thumbnail" alt="imagen del producto"></th>
     <td class="text-dark">${data.name}</td>
     <td class="text-dark">${data.currency} ${data.cost}</td>
-    <td class="text-dark"><input min="0" name="quantity" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm"></td>
+    <td class="text-dark"><input min="0" name="quantity" id="qForm" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm"></td>
     <td class="text-dark"><span class="currency">USD</span> <span class="subtotal">${subtotal}</span></td>
     <td><button class="btn btn-danger" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')">Eliminar</button></td>
   `;
@@ -86,36 +86,6 @@ function updateDeliveryCost() {
   deliveryCostContainer.textContent = `USD ${deliveryCost.toFixed(0)}`;
   updateTotal();
 }
-
-const buyBtn = document.getElementById('buyBtn');
-
-
-// Validation function
-function shippingValidation(event) {
-  const shippingData = document.getElementById("shippingData");
-  const qForm = document.getElementById('qForm');
-  const shippingType = document.getElementById('shippingType');
-  const purchaseAlert = document.getElementById('purchaseAlert');
-
-  // Purchase validation
-  if (!shippingData.checkValidity() && !qForm.checkValidity() && !shippingType.checkValidity()) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-  shippingData.classList.add('was-validated');
-
-  // Succesfully purchase alert
-  if (shippingData.checkValidity() && qForm.checkValidity() && shippingType.checkValidity()) {
-    purchaseAlert.innerHTML = `<div class="alert alert-success alert-dismissible" role="alert">
-    Compra realizada con éxito!
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>`
-    
-  }
-
-}
-
-buyBtn.addEventListener('click', shippingValidation)
 
 
 //Calculates the general subtotal by summing individual subtotals and updates the total.
@@ -539,3 +509,47 @@ document.getElementById('selectPayment').addEventListener('click', function () {
 
 
 // *************** END - CODE FOR PAYMENT METHODS*********************
+
+
+const buyBtn = document.getElementById('buyBtn');
+
+
+// Validation function
+function shippingValidation(event) {
+  const shippingData = document.getElementById("shippingData");
+  const qForm = document.getElementById('qForm');
+  const shippingType = document.getElementById('shippingType');
+  const purchaseAlert = document.getElementById('purchaseAlert');
+  const invalidMethodContainer = document.getElementById('invalidMethod');
+
+  let payment = localStorage.getItem('completeData');
+  let validPayment = false;
+
+  if (payment == 'si') {
+    validPayment = true;
+    invalidMethodContainer.innerHTML = ""
+  }
+  else {
+    invalidMethodContainer.innerHTML = `<p class="text-danger text-sm m-1">Debes seleccionar un método de pago.</p>`
+  }
+
+
+  // Purchase validation
+  if (!shippingData.checkValidity() && !qForm.checkValidity() && !shippingType.checkValidity()) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  shippingData.classList.add('was-validated');
+
+  // Succesfully purchase alert
+  if (shippingData.checkValidity() && qForm.checkValidity() && shippingType.checkValidity() && validPayment) {
+    purchaseAlert.innerHTML = `<div class="alert alert-success alert-dismissible" role="alert">
+    Compra realizada con éxito!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>`
+    
+  }
+
+}
+
+buyBtn.addEventListener('click', shippingValidation)
