@@ -100,7 +100,7 @@ function updateGeneralSubtotal() {
   updateTotal();
 }
 
-//calcula the total cost by adding the general subtotal and delivery cost, and updates the displayed total.
+//calculate the total cost by adding the general subtotal and delivery cost, and updates the displayed total.
 function updateTotal() {
   const subtotalGeneral = parseFloat(document.getElementById("subtotalGen").textContent.replace(/[^\d.-]/g, "")) || 0;
   const deliveryCost = parseFloat(document.getElementById("deliveryCost").textContent.replace(/[^\d.-]/g, "")) || 0;
@@ -108,7 +108,6 @@ function updateTotal() {
   const finalPriceContainer = document.getElementById("finalPrice");
   finalPriceContainer.textContent = `USD ${total.toFixed(0)}`;
 }
-
 
 
 // ***************CODE FOR PAYMENT METHODS*********************
@@ -359,6 +358,19 @@ cvvInput.addEventListener('input', function () {
   }
 });
 
+
+const cardBack = document.querySelector(".card-back");
+
+cvvInput.addEventListener("mouseover", () => {
+  cardBack.style.display = "block";
+});
+
+cvvInput.addEventListener("mouseout", () => {
+ 
+  cardBack.style.display = "none";
+});
+
+
 //validity cardnumber
 cardNumberInput.addEventListener('input', function () {
   const cardNumber = cardNumberInput.value.replace(/\D/g, '');
@@ -443,7 +455,6 @@ document.getElementById('selectPayment').addEventListener('click', function () {
 
 
 
-
 document.getElementById('selectPayment').addEventListener('click', function () {
         const selectedPayment = localStorage.getItem('metodoPago');
 
@@ -489,6 +500,11 @@ document.getElementById('selectPayment').addEventListener('click', function () {
             warningMessage.style.display = 'block';
         }
     });
+
+
+
 }); 
+
+
 
 // *************** END - CODE FOR PAYMENT METHODS*********************
