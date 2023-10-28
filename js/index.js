@@ -42,16 +42,16 @@ var headerImgResponsive = document.querySelector('.jumbotron-responsive');
 
 
 lightMode.addEventListener("click", ()=>{
-  headerImgResponsive.style.backgroundImage = "url('img/login_light.png')";
+  headerImgrResponsive.style.backgroundImage = "url('img/cover_back_light_responsive.png')";      // GASTÓN - IMAGEN RESPONSIVE
 })
 
 darkMode.addEventListener("click", ()=>{
-  headerImgResponsive.style.backgroundImage = "url(img/login_dark.png)";
+  headerImgResponsive.style.backgroundImage = "url('img/cover_back_dark_responsive.png')";        // GASTÓN - IMAGEN RESPONSIVE
 })
 
 if (localStorage.getItem("mode") == "dark") {
-    headerImgResponsive.style.backgroundImage = "url('img/login_dark.png')";
+    headerImgResponsive.style.backgroundImage = "url('img/cover_back_dark_responsive.png')";      // GASTÓN - IMAGEN RESPONSIVE
 }
 else{
-    headerImgResponsive.style.backgroundImage = "url('img/login_light.png')";
+    headerImgResponsive.style.backgroundImage = "url('img/cover_back_light_responsive.png')";     // GASTÓN - IMAGEN RESPONSIVE
 }
