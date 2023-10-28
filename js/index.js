@@ -42,7 +42,7 @@ var headerImgResponsive = document.querySelector('.jumbotron-responsive');
 
 
 lightMode.addEventListener("click", ()=>{
-  headerImgrResponsive.style.backgroundImage = "url('img/cover_back_light_responsive.png')";    
+  headerImgResponsive.style.backgroundImage = "url('img/cover_back_light_responsive.png')";    
 })
 
 darkMode.addEventListener("click", ()=>{
