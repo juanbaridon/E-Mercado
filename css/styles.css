@@ -1,5 +1,6 @@
 body{
   background-color: #e2e2e2;
+  transition: all .5s;
 }
 
 .jumbotron,
@@ -15,6 +16,16 @@ body{
 
 nav a {
   text-decoration: none;
+}
+
+.nav-item{
+  border-top: 1px solid #ef9333;
+  border-bottom: 2px solid #ef9333;
+  transition: all .4s;
+}
+.nav-item:hover{
+  border-top: 1px solid #db760d;
+  border-bottom: 2px solid #db760d;
 }
 
 .bd-placeholder-img {

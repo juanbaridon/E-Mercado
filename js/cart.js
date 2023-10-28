@@ -30,7 +30,9 @@ async function fetchCart() {
   }
 }
 
-fetchCart();
+if(localStorage.getItem("cartList") !== null && cartProducts){
+  fetchCart()
+}
 
 //Displays and updates product details, including the subtotal, in a table row, considering the currency exchange rate for UYU.
 function showCart(data) {
@@ -39,10 +41,10 @@ function showCart(data) {
   const newRow = document.createElement("tr");
   newRow.innerHTML = `
     <th scope="row"><img src="${data.images[0]}" style="height: 60px; min-width: 60px;" class="img-thumbnail" alt="imagen del producto"></th>
-    <td class="text-dark">${data.name}</td>
-    <td class="text-dark">${data.currency} ${data.cost}</td>
-    <td class="text-dark"><input min="0" name="quantity" id="qForm" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm"></td>
-    <td class="text-dark"><span class="currency">USD</span> <span class="subtotal">${subtotal}</span></td>
+    <td>${data.name}</td>
+    <td>${data.currency} ${data.cost}</td>
+    <td><input min="0" name="quantity" id="qForm" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm"></td>
+    <td><span class="currency">USD</span> <span class="subtotal">${subtotal}</span></td>
     <td><button class="btn btn-danger" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')">Eliminar</button></td>
   `;
   cartProducts.appendChild(newRow);
@@ -112,7 +114,7 @@ function updateTotal() {
 
 
 // ***************CODE FOR PAYMENT METHODS*********************
-
+if(document.getElementById('transferFields')){
    document.addEventListener('DOMContentLoaded', function () {
       
         const transferFields = document.getElementById('transferFields');
@@ -501,15 +503,8 @@ document.getElementById('selectPayment').addEventListener('click', function () {
             warningMessage.style.display = 'block';
         }
     });
-
-
-
-}); 
-
-
-
+}); }
 // *************** END - CODE FOR PAYMENT METHODS*********************
-
 
 const buyBtn = document.getElementById('buyBtn');
 
@@ -552,4 +547,6 @@ function shippingValidation(event) {
 
 }
 
-buyBtn.addEventListener('click', shippingValidation)
+if(buyBtn){
+  buyBtn.addEventListener('click', shippingValidation)
+}
