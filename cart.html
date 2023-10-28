@@ -71,7 +71,7 @@
         <h2>Carrito de compras <i class="fa fa-shopping-cart text-primary"></i></h2>
       </div>
           <div class="col-12">
-            <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card card-registration card-registration-2 mb-4" style="border-radius: 15px;">
               <div class="card-body p-0">
                 <div class="row g-0">
                   <div class="col-lg-8">
@@ -161,31 +161,134 @@
                             </div>
                         </div>
                       </form>
-                        <!-- "Mas detalles" line is off the form tag to avoid bootstrap visual validation -->
-                        <div class="mb-5">
-                          <label for="details" class="form-label">Mas detalles</label>
-                          <input type="text" class="form-control" id="details" placeholder="Indicaciones para identificar el lugar">
+                      <!-- "Mas detalles" line is off the form tag to avoid bootstrap visual validation -->
+                      <div class="mb-5">
+                        <label for="details" class="form-label">Mas detalles</label>
+                        <input type="text" class="form-control" id="details" placeholder="Indicaciones para identificar el lugar">
+                      </div>
+
+                      <div class="mb-3">
+                        <div id="purchaseAlert"></div>
+                      </div>
+
+                      <div class="mb-3">
+                        <button type="button" class="btn custom-payment-button" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                          <i class="fas fa-credit-card"></i> Seleccione una forma de pago
+                        </button>
+                        <div id="invalidMethod">
+                          
                         </div>
 
-                        <div class="mb-3">
-                          <div id="purchaseAlert"></div>
+                        <div id="warningMessage" class="alert alert-warning" style="display: none;">
+                          No se han completado los datos de pago.
                         </div>
+                      </div>
 
-                        <div class="mb-3">
-                          <button type="button" class="btn custom-payment-button" data-bs-toggle="modal" data-bs-target="#paymentModal">
-                            <i class="fas fa-credit-card"></i> Seleccione una forma de pago
-                          </button>
-                          <div id="invalidMethod">
-                            
+                      <button id="buyBtn" type="button" class="btn btn-primary btn-block btn-md mt-2" data-mdb-ripple-color="dark">Finalizar compra</button> 
+                        
+                      <!-- Modal para la forma de pago -->
+                      <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="paymentModalLabel">Selecciona una forma de pago</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                        <!-- Modal content -->
+                                        <form class="needs-validation" novalidate>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="paymentMethod" id="transfer" value="transfer">
+                                                <label class="form-check-label" for="transfer">
+                                                    Transferencia bancaria
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="paymentMethod" id="card" value="card">
+                                                <label class="form-check-label" for="card">
+                                                    Tarjeta de crédito
+                                                </label>
+                                            </div>
+                                            <div class="form-group" id="transferFields" style="display: none;">
+                                                <label for="bankSelect">Banco:</label>
+                                                <select class="form-control" id="bankSelect">
+                                                    <option value="">Seleccionar un banco</option>
+                                                    <option value="banco1">BROU</option>
+                                                    <option value="banco2">ITAÚ</option>
+                                                    <option value="banco3">SANTANDER</option>
+                                                    <option value="banco4">SCOTIABANK</option>
+                                                    <option value="banco5">HSBC</option>
+                                                </select>
+                                                <label for="accountNumber">Número de cuenta :</label>
+                                                <input type="text" class="form-control" id="accountNumber" maxlength="12">
+                                                <div class="invalid-feedback">
+                                                    Complete este campo
+                                                </div>
+                                                  <div id="successMessage" class="alert alert-success" style="display: none;">
+                                                El método de pago se ha guardado con éxito.
+                                                  </div>
+                                            </div>
+                                            <div class="form-group" id="cardFields" style="display: none;">
+                                                <label for="cardNumber">Nombre titular :</label>
+                                                <input type="text" class="form-control uppercase" id="cardHolderName" placeholder="Nombre completo" >
+                                                <div class="invalid-feedback">
+                                                    Complete este campo
+                                                </div>
+                                                <label for="cardNumber">Número de tarjeta :</label>
+                                                <input type="text" class="form-control" id="cardNumber" maxlength="19">
+                                                <div class="invalid-feedback">
+                                                    Complete este campo
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="expirationDate">Vencimiento :</label>
+                                                        <input type="text" class="form-control" id="expirationDate" maxlength="7" placeholder="MM/YYYY">
+                                                        <div class="invalid-feedback">
+                                                            Complete este campo
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="cvv">Código de seguridad :</label>
+                                                        <input type="text" class="form-control" id="cvv" maxlength="3" placeholder="XXX">
+                                                        <div class="invalid-feedback">
+                                                            Complete este campo
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>           
+                                            <div class="card-container card-hidden" id="cardContainer">
+                                              <div class="card card-front"  id="cardfront">
+                                              
+                                                  <div class="name" id="cardHolderNameDisplay">Nombre del Titular</div>
+                                                  <div class="number" id="formattedCardNumberDisplay">#### #### #### ####</div>
+                                                  <div class="expiry">
+                                                      <small class="validity-text">Válido hasta</small>
+                                              <span id="expirationDate" class="expiry">MM/YY</span>
+                                                  </div>
+                                                  <div class="chip">
+                                            <img src="img/chip.png" alt="Chip de tarjeta">
+                                                </div>
+                                                  
+                                              </div>
+                                              <div class="card card-back" id="cardback">
+                                                  <span id="cvv-preview">XXX</span>
+                                                  <div class="barcode" id="barcodeDisplay">1234567890888888988888888888</div>
+                                              </div>
+                                          </div>
+                                          </form>
+                                          <div id="successMessag" class="alert alert-success" style="display: none;">
+                                            El método de pago se ha guardado con éxito.
+                                          </div>
+                                    </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
+                                  <button type="button" class="btn btn-primary" id="selectPayment">Seleccionar</button>
+                                </div>
                           </div>
-  
-                          <div id="warningMessage" class="alert alert-warning" style="display: none;">
-                            No se han completado los datos de pago.
-                          </div>
                         </div>
-
-                      <button id="buyBtn" type="button" class="btn btn-primary btn-block btn-md mt-2" data-mdb-ripple-color="dark">Finalizar compra</button>      
-                      
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -196,6 +299,11 @@
       </div>
     </div>
   </main>
+
+  
+
+
+
   <footer class="text-muted bg-white">
     <div class="container">
       <p class="float-end">
@@ -210,112 +318,6 @@
       <div></div>
       <div></div>
       <div></div>
-    </div>
-  </div>
-
-  
-
-  <!-- Modal para la forma de pago -->
-  <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="paymentModalLabel">Selecciona una forma de pago</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-         <div class="modal-body">
-                    <!-- Modal content -->
-                    <form class="needs-validation" novalidate>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="transfer" value="transfer">
-                            <label class="form-check-label" for="transfer">
-                                Transferencia bancaria
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="card" value="card">
-                            <label class="form-check-label" for="card">
-                                Tarjeta de crédito
-                            </label>
-                        </div>
-                        <div class="form-group" id="transferFields" style="display: none;">
-                            <label for="bankSelect">Banco:</label>
-                            <select class="form-control" id="bankSelect">
-                                <option value="">Seleccionar un banco</option>
-                                <option value="banco1">BROU</option>
-                                <option value="banco2">ITAÚ</option>
-                                <option value="banco3">SANTANDER</option>
-                                <option value="banco4">SCOTIABANK</option>
-                                <option value="banco5">HSBC</option>
-                            </select>
-                            <label for="accountNumber">Número de cuenta :</label>
-                            <input type="text" class="form-control" id="accountNumber" maxlength="12">
-                            <div class="invalid-feedback">
-                                Complete este campo
-                            </div>
-                              <div id="successMessage" class="alert alert-success" style="display: none;">
-                            El método de pago se ha guardado con éxito.
-                              </div>
-                        </div>
-                        <div class="form-group" id="cardFields" style="display: none;">
-                            <label for="cardNumber">Nombre titular :</label>
-                            <input type="text" class="form-control uppercase" id="cardHolderName" placeholder="Nombre completo" >
-                            <div class="invalid-feedback">
-                                Complete este campo
-                            </div>
-                            <label for="cardNumber">Número de tarjeta :</label>
-                            <input type="text" class="form-control" id="cardNumber" maxlength="19">
-                            <div class="invalid-feedback">
-                                Complete este campo
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col">
-                                    <label for="expirationDate">Vencimiento :</label>
-                                    <input type="text" class="form-control" id="expirationDate" maxlength="7" placeholder="MM/YYYY">
-                                    <div class="invalid-feedback">
-                                        Complete este campo
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <label for="cvv">Código de seguridad :</label>
-                                    <input type="text" class="form-control" id="cvv" maxlength="3" placeholder="XXX">
-                                    <div class="invalid-feedback">
-                                        Complete este campo
-                                    </div>
-                                </div>
-
-
-                            </div>           
-                        <div class="card-container card-hidden" id="cardContainer">
-                          <div class="card card-front"  id="cardfront">
-                          
-                              <div class="name" id="cardHolderNameDisplay">Nombre del Titular</div>
-                              <div class="number" id="formattedCardNumberDisplay">#### #### #### ####</div>
-                              <div class="expiry">
-                                   <small class="validity-text">Válido hasta</small>
-                           <span id="expirationDate" class="expiry">MM/YY</span>
-                              </div>
-                               <div class="chip">
-                        <img src="img/chip.png" alt="Chip de tarjeta">
-                            </div>
-                              
-                          </div>
-                          <div class="card card-back" id="cardback">
-                              <span id="cvv-preview">XXX</span>
-                              <div class="barcode" id="barcodeDisplay">1234567890888888988888888888</div>
-                          </div>
-                      </div>
-                      </form>
-                      <div id="successMessag" class="alert alert-success" style="display: none;">
-                        El método de pago se ha guardado con éxito.
-                      </div>
-                </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
-         <button type="button" class="btn btn-primary" id="selectPayment">Seleccionar</button>
-        </div>
-      </div>
     </div>
   </div>
 
