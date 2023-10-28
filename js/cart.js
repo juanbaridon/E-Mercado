@@ -109,3 +109,386 @@ function updateTotal() {
   finalPriceContainer.textContent = `USD ${total.toFixed(0)}`;
 }
 
+
+
+// ***************CODE FOR PAYMENT METHODS*********************
+
+   document.addEventListener('DOMContentLoaded', function () {
+      
+        const transferFields = document.getElementById('transferFields');
+        const cardFields = document.getElementById('cardFields');
+        const cardContainer = document.getElementById('cardContainer');
+
+        // expiration date format
+        document.getElementById('expirationDate').addEventListener('input', function () {
+            const value = this.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                this.value = value.slice(0, 2) + '/' + value.slice(2, 6);
+            } else {
+                this.value = value;
+            }
+        })
+
+        function onlyNumbers(element) {
+            element.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '');
+            });
+        }
+
+        onlyNumbers(document.getElementById('cvv'));
+        onlyNumbers(document.getElementById('cardNumber'));
+        onlyNumbers(document.getElementById('accountNumber'));
+     
+  const paymentMethod = document.querySelectorAll('input[name="paymentMethod"]');
+let selectedPayment = null;
+
+paymentMethod.forEach(function (radio) {
+    radio.addEventListener('change', function () {
+        if (radio.value === 'transfer') {
+            transferFields.style.display = 'block';
+            cardFields.style.display = 'none';
+            cardContainer.style.display = 'none';
+            selectedPayment = "transfer";
+        } else if (radio.value === 'card') {
+            transferFields.style.display = 'none';
+            cardFields.style.display = 'block';
+            cardContainer.style.display = 'block';
+            selectedPayment = "card";
+        } else {
+            transferFields.style.display = 'none';
+            cardFields.style.display = 'none';
+            cardContainer.style.display = 'none';
+            selectedPayment = null;
+        }
+        
+        localStorage.setItem('metodoPago', selectedPayment);
+    });
+});
+
+        function checkField(field, maxLength) {
+            if (field.value.length === maxLength) {
+                field.classList.add('is-valid');
+            } else {
+                field.classList.remove('is-valid');
+            }
+        }
+
+        const formFields = document.querySelectorAll('.form-control');
+        formFields.forEach(function (field) {
+            field.addEventListener('input', function () {
+                checkField(field, field.maxLength);
+            });
+        });
+
+        document.getElementById('selectPayment').addEventListener('click', function () {
+            let allFieldsValid = true;
+            formFields.forEach(function (field) {
+                checkField(field, field.maxLength);
+                if (field.value.length < field.maxLength) {
+                    allFieldsValid = false;
+                    field.classList.add('is-invalid');
+                }
+            });
+
+            if (allFieldsValid) {
+                formFields.forEach(function (field) {
+                    field.classList.remove('is-invalid');
+                });
+            }
+        });
+
+   
+function isFieldEmpty(field) {
+    return field.value.trim() === '';
+}
+
+const cardHolderNameInput = document.getElementById('cardHolderName');
+
+
+ document.getElementById('cardNumber').addEventListener('input', function () {
+    const value = this.value.replace(/\D/g, '');
+    this.value = value.replace(/(\d{4}(?=\d))/g, '$1 ');
+});
+        const cardNumberInput = document.getElementById('cardNumber');
+        const formattedCardNumberElement = document.getElementById('formattedCardNumber');
+        const expirationDateInput = document.getElementById('expirationDate');
+        const cvvInput = document.getElementById('cvv');
+
+        const cardNumberElement = document.querySelector('.card .number');
+        const cardHolderNameElement = document.querySelector('.card .name');
+        const expirationDateElement = document.querySelector('.card .expiry');
+        const cvvElement = document.getElementById('cvv');
+
+        cardNumberInput.addEventListener('input', updateCardNumber);
+        cardHolderNameInput.addEventListener('input', updateCardHolderName);
+        expirationDateInput.addEventListener('input', updateExpirationDate);
+        cvvInput.addEventListener('input', updateCvv);
+
+
+document.addEventListener('DOMContentLoaded', function () {
+        cardNumberInput.addEventListener('input', function () {
+            const cardNumber = cardNumberInput.value;
+            const formattedCardNumber = formatCardNumber(cardNumber);
+            formattedCardNumberElement.textContent = formattedCardNumber;
+        });
+         });
+
+        function updateCardNumber() {
+            cardNumberElement.textContent = cardNumberInput.value || '#### #### #### ####';
+        }
+
+        function updateCardHolderName() {
+            const cardHolderName = cardHolderNameInput.value || 'Nombre del Titular';
+            cardHolderNameElement.textContent = cardHolderName.toUpperCase();
+        }
+
+        function updateExpirationDate() {
+            expirationDateElement.textContent = expirationDateInput.value || 'MM/YY';
+        }
+
+        function updateCvv() {
+            cvvElement.textContent = cvvInput.value || 'XXX';
+        }
+
+        updateCardNumber();
+        updateCardHolderName();
+        updateExpirationDate();
+        updateCvv();
+  
+
+   function formatCardNumber(cardNumber) {
+    return cardNumber.replace(/\D/g, '')
+}
+
+document.getElementById('cvv').addEventListener('mouseenter', function () {
+  const cardbacks = document.getElementsByClassName('card-back');
+  for (let i = 0; i < cardbacks.length; i++) {
+      cardbacks[i].style.transition = 'transform 0.5s';
+       cardbacks[i].style.transform = 'rotateY(0deg)';
+  }
+
+});
+
+document.getElementById('cvv').addEventListener('mouseleave', function () {
+  const cardbacks = document.getElementsByClassName('card-back');
+  for (let i = 0; i < cardbacks.length; i++) {
+        cardbacks[i].style.transition = 'transform 0.5s';
+    cardbacks[i].style.transform = 'rotateY(180deg)';
+  }
+});
+
+const cvvInpu = document.getElementById('cvv');
+const cvvElemen = document.getElementById('cvv-preview');
+
+
+
+cvvInput.addEventListener('input', function () {
+    const cvv = cvvInpu.value || 'XXX';
+    cvvElemen.textContent = cvv;
+   
+});
+
+
+// cardnumber format
+document.getElementById('cardNumber').addEventListener('input', function () {
+    const value = this.value.replace(/\D/g, '');
+    let formattedValue = '';
+    for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+            formattedValue += ' ';
+        }
+        formattedValue += value[i];
+    }
+    this.value = formattedValue;
+});
+
+
+const selectPaymentButton = document.getElementById('selectPayment');
+
+selectPaymentButton.addEventListener('click', function () {
+  const cardNumber = cardNumberInput.value.replace(/\D/g, '');
+
+  if (cardNumber.length === 16) {
+    cardNumberInput.classList.remove('is-invalid');
+    cardNumberInput.classList.add('is-valid');
+  } else {
+    cardNumberInput.classList.remove('is-valid');
+    cardNumberInput.classList.add('is-invalid');
+  }
+});
+
+//validity card num
+
+cardNumberInput.addEventListener('input', function () {
+  const cardNumber = this.value.replace(/\D/g, '');
+
+  if (cardNumber.length === 16) {
+    this.classList.remove('is-invalid');
+    this.classList.add('is-valid');
+  } else {
+    this.classList.remove('is-valid');
+    this.classList.add('is-invalid');
+  }
+});
+
+//validity name
+
+cardHolderNameInput.addEventListener('input', function () {
+  if (!isFieldEmpty(cardHolderNameInput)) {
+    cardHolderNameInput.classList.remove('is-invalid');
+    cardHolderNameInput.classList.add('is-valid');
+  } else {
+    cardHolderNameInput.classList.remove('is-valid');
+    cardHolderNameInput.classList.add('is-invalid');
+  }
+});
+
+
+
+//validity cvv
+
+cvvInput.addEventListener('input', function () {
+  const cvv = cvvInput.value.replace(/\D/g, '');
+
+  if (cvv.length === 3 ) {
+    cvvInput.classList.remove('is-invalid');
+    cvvInput.classList.add('is-valid');
+  } else {
+    cvvInput.classList.remove('is-valid');
+    cvvInput.classList.add('is-invalid');
+  }
+});
+
+//validity cardnumber
+cardNumberInput.addEventListener('input', function () {
+  const cardNumber = cardNumberInput.value.replace(/\D/g, '');
+
+  if (cardNumber.length === 16) {
+    cardNumberInput.classList.remove('is-invalid');
+    cardNumberInput.classList.add('is-valid');
+  } else {
+    cardNumberInput.classList.remove('is-valid');
+    cardNumberInput.classList.add('is-invalid');
+  }
+});
+
+
+//validity experation
+
+expirationDateInput.addEventListener('input', function () {
+  const expirationDate = expirationDateInput.value.replace(/\D/g, '');
+
+  if (expirationDate.length === 6) {
+    expirationDateInput.classList.remove('is-invalid');
+    expirationDateInput.classList.add('is-valid');
+  } else {
+    expirationDateInput.classList.remove('is-valid');
+    expirationDateInput.classList.add('is-invalid');
+  }
+});
+
+const accountNumberInput = document.getElementById('accountNumber');
+
+accountNumberInput.addEventListener('input', function () {
+  const accountNumber = accountNumberInput.value.trim(); 
+
+  if (accountNumber.length > 5) {
+    accountNumberInput.classList.remove('is-invalid');
+    accountNumberInput.classList.add('is-valid');
+  } else {
+    accountNumberInput.classList.remove('is-valid');
+    accountNumberInput.classList.add('is-invalid');
+  }
+});
+
+//  empty or full field?
+function isFieldValid(field) {
+    return field.value.trim() !== '' && field.classList.contains('is-valid');
+}
+
+function arePaymentFieldsValid(selectedPayment) {
+    if (selectedPayment === 'transfer') {
+        // Verify transfer field
+        const accountNumberInput = document.getElementById('accountNumber');
+        return isFieldValid(accountNumberInput);
+    } else if (selectedPayment === 'card') {
+          // Verify card field
+        const cardNumberInput = document.getElementById('cardNumber');
+        const expirationDateInput = document.getElementById('expirationDate');
+        const cvvInput = document.getElementById('cvv');
+        return (
+            isFieldValid(cardNumberInput) &&
+            
+            isFieldValid(expirationDateInput) &&
+            isFieldValid(cvvInput)
+        );
+    }
+    return false; 
+}
+
+// check when we press SELECCIONAR botton 
+document.getElementById('selectPayment').addEventListener('click', function () {
+    const selectedPayment = localStorage.getItem('metodoPago');
+
+    if (arePaymentFieldsValid(selectedPayment)) {
+       
+        const completeData = {
+            selectedPayment,
+        };
+        localStorage.setItem('completeData', 'si');
+    } else {
+         localStorage.setItem('completeData', 'no');
+    }
+});
+
+
+
+
+document.getElementById('selectPayment').addEventListener('click', function () {
+        const selectedPayment = localStorage.getItem('metodoPago');
+
+        if (arePaymentFieldsValid(selectedPayment)) {
+            const completeData = {
+                selectedPayment,
+            };
+            localStorage.setItem('completeData', 'si');
+
+            // success message
+            const successMessage = document.getElementById('successMessage');
+            const successMessage2 = document.getElementById('successMessag');
+            successMessage.style.display = 'block';
+            successMessage2.style.display = 'block';
+
+            setTimeout(function () {
+                successMessage.style.display = 'none';
+                   successMessage2.style.display = 'none';
+                  }, 3000); 
+        } else {
+            localStorage.setItem('completeData', 'no');
+        }
+    });
+
+    document.getElementById('selectPayment').addEventListener('click', function () {
+        const selectedPayment = localStorage.getItem('metodoPago');
+
+        if (arePaymentFieldsValid(selectedPayment)) {
+            const completeData = {
+                selectedPayment,
+            };
+            localStorage.setItem('completeData', 'si');
+
+            
+            // hide warning message
+            const warningMessage = document.getElementById('warningMessage');
+            warningMessage.style.display = 'none';
+        } else {
+            localStorage.setItem('completeData', 'no');
+            
+            // show warning message
+            const warningMessage = document.getElementById('warningMessage');
+            warningMessage.style.display = 'block';
+        }
+    });
+}); 
+
+// *************** END - CODE FOR PAYMENT METHODS*********************
