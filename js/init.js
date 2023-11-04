@@ -176,7 +176,7 @@ function modeList() {
 
 //Favorites Button
 function btnFavorite(prodId) {
-  const favoriteElement = localStorage.getItem('favoritos')
+  const favoriteElement = localStorage.getItem('favoritos-'+localStorage.getItem("user"))
   if (favoriteElement) {
     const heartIcon = document.querySelectorAll('.favoriteBtn');
     heartIcon.forEach((element) => {
@@ -191,7 +191,7 @@ function btnFavorite(prodId) {
 }
 //Chart Button
 function btnCart(prodId) {
-  const cartElement = localStorage.getItem('cartList')
+  const cartElement = localStorage.getItem('cartList-'+localStorage.getItem("user"))
   if (cartElement) {
     const cartIcon = document.querySelectorAll('.cartIcon');
     cartIcon.forEach((element) => {

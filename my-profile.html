@@ -84,11 +84,59 @@
     </div>
   </nav>
 
-  <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+  <main class="pb-5">
+    <div class="text-center text-dark bg-light mb-4 p-4">
+      <h2>Perfil</h2>
+    </div>
+    <div class="row mb-3" id="perfilHeader">
+      <!-- Foto de perfil -->
+      <div class="profile d-flex justify-content-end col m-2">
+        <label for="profilePic" class="form-label p-0 bg-light">
+          <img src="img/img_perfil.png" alt="Foto de perfil" class="p-0" id="picture">
+          <span class="p-2">Cambiar</span>
+        </label>
+        <input type="file" accept="image/*" class="form-control" id="profilePic">
       </div>
+      <!-- Usuario -->
+      <div class="col p-0 d-flex justify-content-start align-items-center m-2">
+        <h5 class="text-dark" id="user">Usuario</h5>
+      </div>
+    </div>
+    <div class="container d-flex justify-content-center">
+      <!-- Formulario -->
+      <form class="formProfile text-dark" id="changeProfile">
+        <div class="row mb-4">
+          <div class="mb-3 col">
+            <label for="firstname" class="form-label">Primer Nombre <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="firstname" required>
+          </div>
+          <div class="mb-3 col">
+            <label for="secondname" class="form-label">Segundo Nombre</label>
+            <input type="text" class="form-control" id="secondname">
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="mb-3 col">
+            <label for="surname" class="form-label">Primer Apellido <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="surname" required>
+          </div>
+          <div class="mb-3 col">
+            <label for="secondsurname" class="form-label">Segundo Apellido</label>
+            <input type="text" class="form-control" id="secondsurname">
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="mb-3 col">
+            <label for="telephone" class="form-label">Teléfono de Contacto <span class="text-danger">*</span></label>
+            <input type="tel" class="form-control" id="telephone" required>
+          </div>
+          <div class="mb-3 col">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100" id="saveProfile">Guardar cambios</button>
+      </form>
     </div>
   </main>
   <footer class="text-muted bg-white">

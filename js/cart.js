@@ -3,15 +3,15 @@ const exchangeRate = 0.04;
 
 //Adds an item to the shopping cart by storing its ID in the cart list stored in the browser's local storage.
 function addToCart(itemId) {
-  const cartList = JSON.parse(localStorage.getItem("cartList")) || [];
+  const cartList = JSON.parse(localStorage.getItem("cartList-"+localStorage.getItem("user"))) || [];
   if (!cartList.includes(itemId)) {
     cartList.push(itemId);
-    localStorage.setItem("cartList", JSON.stringify(cartList));
+    localStorage.setItem("cartList-"+localStorage.getItem("user"), JSON.stringify(cartList));
   }
 }
 
 async function fetchCart() {
-  const cartList = JSON.parse(localStorage.getItem("cartList")) || [];
+  const cartList = JSON.parse(localStorage.getItem("cartList-"+localStorage.getItem("user"))) || [];
   try {
     for (const element of cartList) {
       const response = await fetch(`${PRODUCT_INFO_URL}${element}${EXT_TYPE}`);
@@ -30,7 +30,7 @@ async function fetchCart() {
   }
 }
 
-if(localStorage.getItem("cartList") !== null && cartProducts){
+if(localStorage.getItem("cartList-"+localStorage.getItem("user")) !== null && cartProducts){
   fetchCart()
 }
 
@@ -56,11 +56,11 @@ function showCart(data) {
 //Removes a product's row from the cart, updates the cart list in local storage, and refreshes the general subtotal, delivery cost, and total.
 function removeCartItem(row, id) {
   cartProducts.removeChild(row);
-  const cartList = JSON.parse(localStorage.getItem("cartList")) || [];
+  const cartList = JSON.parse(localStorage.getItem("cartList-"+localStorage.getItem("user"))) || [];
   const index = cartList.indexOf(id);
   if (index !== -1) {
     cartList.splice(index, 1);
-    localStorage.setItem("cartList", JSON.stringify(cartList));
+    localStorage.setItem("cartList-"+localStorage.getItem("user"), JSON.stringify(cartList));
   }
   updateGeneralSubtotal();
   updateDeliveryCost();
