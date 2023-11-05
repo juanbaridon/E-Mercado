@@ -1,5 +1,5 @@
-if(!localStorage.getItem("favoritos")){
-  localStorage.setItem("favoritos", null)
+if(!localStorage.getItem("favoritos-"+localStorage.getItem("user"))){
+  localStorage.setItem("favoritos-"+localStorage.getItem("user"), null)
 }
 
 const divFavoritos = document.getElementById('divFavoritos');
@@ -15,7 +15,7 @@ function toggleFavorito(catId, prodId) {
   }
 
   const heartIcon = button.querySelector("i.fa-heart");
-  const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+  const storedFavorites = JSON.parse(localStorage.getItem("favoritos-"+localStorage.getItem("user"))) || [];
 
   const index = storedFavorites.findIndex(item => item.catId === storedCatId && item.prodId === storedProdId);
 
@@ -25,7 +25,7 @@ function toggleFavorito(catId, prodId) {
     storedFavorites.splice(index, 1);
   }
 
-  localStorage.setItem("favoritos", JSON.stringify(storedFavorites));
+  localStorage.setItem("favoritos-"+localStorage.getItem("user"), JSON.stringify(storedFavorites));
 }
 
 function removeFromFavoritos(catId, prodId) {
@@ -37,7 +37,7 @@ function removeFromFavoritos(catId, prodId) {
     return;
   }
 
-  const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+  const storedFavorites = JSON.parse(localStorage.getItem("favoritos-"+localStorage.getItem("user"))) || [];
 
   const index = storedFavorites.findIndex(item => item.catId === storedCatId && item.prodId === storedProdId);
 
@@ -45,7 +45,7 @@ function removeFromFavoritos(catId, prodId) {
 
     // Remove the product from the favorites list
     storedFavorites.splice(index, 1);
-    localStorage.setItem("favoritos", JSON.stringify(storedFavorites));
+    localStorage.setItem("favoritos-"+localStorage.getItem("user"), JSON.stringify(storedFavorites));
 
     loadFavorites();
   }
@@ -53,7 +53,7 @@ function removeFromFavoritos(catId, prodId) {
 
 // Load favorite products from the api
 async function loadFavorites() {
-  const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+  const storedFavorites = JSON.parse(localStorage.getItem("favoritos-"+localStorage.getItem("user"))) || [];
 
   if (storedFavorites.length === 0) {
     showFavorites([]);
