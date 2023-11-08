@@ -354,7 +354,8 @@ nav, .cartIcon{
   backface-visibility: hidden; 
    border-radius: 10px; 
    position: absolute;
-    background: linear-gradient(45deg, #010201, #29294e) !important;
+  background: linear-gradient(45deg, #010201, #29294e) !important;
+  color:   #fff !important;
 
 }
 

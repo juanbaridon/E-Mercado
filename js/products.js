@@ -22,7 +22,6 @@ function redirectProduct(prodId){
 };
 
 //Show Data
-
 function showData(dataArray) {
   if (CategoryName) {
     CategoryName.innerHTML = category.catName + ` <img src="img/cat${localStorage.getItem("catID")}_1.png" class="catIcon p-2 pt-1">`;
@@ -32,31 +31,52 @@ function showData(dataArray) {
     divProductos.innerHTML = "";
 
     if (dataArray.products && dataArray.products.length > 0) {
-      dataArray.products.forEach((prod) => {
+      dataArray.products.forEach(async (prod) => {
         const isFavorito = isProductInFavoritos(prod.catId, prod.id);
         const favoritoClass = isFavorito ? "favorito" : "";
 
-        divProductos.innerHTML +=
-          `<div class="card bg-light m-3">
-          <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" class="card-img-top cursor-active" alt="imagen del producto">
-          <div class="card-body">
-            <h4 class="card-title text-center pb-2">${prod.name}</h4>
-              <button type="button" class="btn btn-success">${prod.cost} ${prod.currency}</button>
-            <div class="card-text">
-              <p>${prod.description}</p>
-              <small class="text-muted">${prod.soldCount} vendidos</small>
-              <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
-                <button class="btn btn-primary favoriteBtn" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
-                  <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
-                </button>
-                <button type="button" class="btn text-white border-0 cartIcon" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>`;
+        try {
+          const responseComm = await fetch(PRODUCT_INFO_COMMENTS_URL + prod.id + EXT_TYPE);
+          const comments = await responseComm.json();
 
-         btnFavorite(prod.id)
-         btnCart(prod.id)
+          let totalScore = 0;
+
+          if (comments && comments.length > 0) {
+            comments.forEach((comment) => {
+              totalScore += comment.score;
+            });
+            const averageScore = totalScore / comments.length;
+            prod.averageScore = averageScore;
+          } else {
+            prod.averageScore = 0;
+          }
+        } catch (error) {
+          console.error("Error fetching comments for product", prod.id, error);
+          prod.averageScore = 0; 
+        }
+
+        divProductos.innerHTML += `
+          <div class="card bg-light m-3">
+            <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" class="card-img-top cursor-active" alt="imagen del producto">
+            <div class="card-body">
+              <h4 class="card-title text-center pb-2">${prod.name}</h4>
+              <button type="button" class="btn btn-success">${prod.cost} ${prod.currency}</button>
+              <div class="card-text">
+                <p>${prod.description}</p>
+                <small class="text-muted">${prod.soldCount} vendidos</small>
+                <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
+                  <button class="btn btn-primary favoriteBtn" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
+                    <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
+                  </button>
+                  <button type="button" class="btn text-white border-0 cartIcon" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
+                </div>
+              </div>
+              ${estrellas(prod.averageScore)}
+            </div>
+          </div>`;
+
+        btnFavorite(prod.id);
+        btnCart(prod.id);
       });
     } else {
       divProductos.innerHTML += `
@@ -65,7 +85,7 @@ function showData(dataArray) {
         </div>`;
     }
   }
-  //Modo oscuro
+
   modeList();
 }
 

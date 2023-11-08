@@ -64,22 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
         btnCart(data.id)
     }
 
-    // Shows Stars
-    function estrellas(score) {
-        let stars = '';
-        const maxStars = 5;
-        const yellowStar = '<span class="fa fa-star checked"></span>';
-        const blackStar = '<span class="fa fa-star"></span>';
-
-        for (let i = 0; i < maxStars; i++) {
-            if (i < score) {
-                stars += yellowStar;
-            } else {
-                stars += blackStar;
-            }
-        }
-        return stars;
-    }
 
 //  Display JSON comments
 const comentarios = document.getElementById("comments");
