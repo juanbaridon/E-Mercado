@@ -84,31 +84,34 @@ document.addEventListener("DOMContentLoaded", function () {
 //  Display JSON comments
 const comentarios = document.getElementById("comments");
 
+function formatDate(date) {
+    return date.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+
 function comJson(comments) {
 // Sort comments from newest to oldest
   comments.sort((a, b) => {
     const fechaA = new Date(a.dateTime);
     const fechaB = new Date(b.dateTime);
-
     return fechaB - fechaA;
   });
     // -------------------------------- //
   for (let comment of comments) {
+    const formattedDate = formatDate(new Date(comment.dateTime));
     comentarios.innerHTML += `
             <div class="commentsHechos">
                 <ul class='list-group'>
                     <li class="list-group-item bg-light">
                         <div>
                             <strong>${comment.user}</strong>
-                            <small class='text-muted'>   - ${comment.dateTime} -   </small>
+                            <small class='text-muted'>   - ${formattedDate} -   </small>
                             ${estrellas(comment.score)}
                             <br>
                             ${comment.description}
                         </div>
                     </li>
                 </ul>
-            </div>
-        `;
+            </div>`;
   }
   // Dark Mode
   modeList();
@@ -116,26 +119,32 @@ function comJson(comments) {
 
 
     //Add comment and save it to localstorage
-function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
-    const comentarioHTML = `
-      <li class="list-group-item">
-        <div>
-          <strong>${actualUser}</strong>
-          <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
-          ${estrellas(puntuacion)}
-          <br>
-          ${opinion}
-        </div>
-      </li>`;
-    const productId = localStorage.getItem('productId');
-    localStorage.setItem(`comentario ${productId}`, comentarioHTML);
-  
-    const comentariosList = document.querySelector("#comments .commentsHechos ul");
-    comentariosList.insertAdjacentHTML('afterbegin', comentarioHTML);
-  
-    // Dark Mode
-    modeList();
-  }
+    function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
+        const comentarioHTML = `
+          <li class="list-group-item">
+            <div>
+              <strong>${actualUser}</strong>
+              <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
+              ${estrellas(puntuacion)}
+              <br>
+              ${opinion}
+            </div>
+          </li>`;
+        const productId = localStorage.getItem('productId');
+        const comentarioAnterior = localStorage.getItem(`comentario ${productId}`);
+      
+        if (comentarioAnterior) {
+          localStorage.setItem(`comentario ${productId}`, comentarioHTML);
+          window.location.reload(); 
+        } else {
+          const comentariosList = document.querySelector("#comments .commentsHechos ul");
+          comentariosList.insertAdjacentHTML('afterbegin', comentarioHTML);
+          localStorage.setItem(`comentario ${productId}`, comentarioHTML);
+        }
+      
+        // Dark Mode
+        modeList();
+      }
 
     //The comment is obtained from localstorage and displayed on the screen
     const productId = localStorage.getItem('productId')
