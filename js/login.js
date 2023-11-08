@@ -81,15 +81,13 @@ function mostrarPassword() {
   }
 }
 
-  function emailValido(email) {
-    // Validate email
-    var condicionDeEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return condicionDeEmail.test(email);
+function emailValido(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+
 function contrasenaValida(password) {
-  var condicionDecontrasena = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\-!"#$%&()*,./:;?@[\]^_`{|}~+<=>]{8,}$/;
-  return condicionDecontrasena.test(password);
+  return /\w*\d/.test(password) && password.length >= 8;
 }
 
 
