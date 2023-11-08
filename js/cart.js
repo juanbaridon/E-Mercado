@@ -56,8 +56,8 @@ function showCart(data) {
   const newRow = document.createElement("tr");
   newRow.innerHTML = `
     <td>${data.name}</td>
-    <td class="costCart">${data.currency} ${data.cost}</td>
-    <td><input min="0" name="quantity" id="qForm" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm"></td>
+    <td>${data.currency} ${data.cost}</td>
+    <td><input min="0" name="quantity" onclick="updateProductQuantity(${data.id})" id="qForm${data.id}" value="${localStorage.getItem(`${data.id} quantity`)}" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm qForm"></td>
     <td><span class="currency">USD</span> <span class="subtotal">${subtotal}</span></td>
     <td class="text-center"><button class="btn btn-danger" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')"><i class="fa fa-times"></i></button></td>
   `;
@@ -66,6 +66,14 @@ function showCart(data) {
   updateTotal();
   modeList();
 }
+
+
+function updateProductQuantity(id) {
+  const qForm = document.getElementById(`qForm${id}`);
+  localStorage.setItem(`${id} quantity`, qForm.value);
+  
+}
+
 
 //Removes a product's row from the cart, updates the cart list in local storage, and refreshes the general subtotal, delivery cost, and total.
 function removeCartItem(row, id) {
@@ -100,16 +108,9 @@ function updateSubtotal(input, cost) {
 
 //Calculates the delivery cost basado on the general subtotal, updates the displayed delivery cost, and also triggers the update of the total.
 function updateDeliveryCost() {
-  const subtotalGeneral =
-    parseFloat(
-      document.getElementById("subtotalGen").textContent.replace(/[^\d.-]/g, "")
-    ) || 0;
-  const selectedDelivery = document.querySelector(
-    'input[name="flexRadioDefault"]:checked'
-  );
-  const percentageDelivery = parseFloat(
-    selectedDelivery.getAttribute("data-percentage")
-  );
+  const subtotalGeneral = parseFloat(document.getElementById("subtotalGen").textContent.replace(/[^\d.-]/g, "")) || 0;
+  const selectedDelivery = document.querySelector('input[name="flexRadioDefault"]:checked');
+  const percentageDelivery = parseInt(selectedDelivery.getAttribute("data-percentage")); 
   const deliveryCost = (subtotalGeneral * percentageDelivery) / 100;
   const deliveryCostContainer = document.getElementById("deliveryCost");
   deliveryCostContainer.textContent = `USD ${deliveryCost.toFixed(0)}`;
