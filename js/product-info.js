@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Check if a product is in favorites list
     function isProductInFavoritos(catId, prodId) {
-        const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+        const storedFavorites = JSON.parse(localStorage.getItem("favoritos-"+localStorage.getItem("user"))) || [];
         return storedFavorites.some(item => item.catId === catId && item.prodId === prodId);
     }
 

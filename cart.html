@@ -1,5 +1,6 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,37 +13,57 @@
   <link rel="icon" href="icon/IconoInvi.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
+
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light p-1" id="mainNav">
+  <div class="d-flex m-0 top-nav">
+    <div class="nav-img">
+      <a class="nav-link" href="index.html"><img src="img/nav-img.png" class="img-fluid me-3"></a>
+    </div>
+    <div class="input-group me-auto">
+      <button type="button" title="Buscar" class="btn border border-0" id="searchButton">
+        <i class="fas fa-search"></i>
+      </button>
+      <div class="dropdown">
+        <input type="text" list="options" title="Buscador" name="buscador" id="searchNav" placeholder="Buscar..."
+          class="form-control dropdown-toggle border-0" data-bs-toggle="dropdown">
+        <ul class="dropdown-menu" aria-labelledby="searchNav" id="optionsList"></ul>
+      </div>
+    </div>
+    <div class="btn-group btn-mode ms-3 ps-4" role="group">
+      <button type="button" class="sun" id="lightMode" title="Modo claro"><i class="fas fa-sun"></i></button>
+      <button type="button" class="moon" id="darkMode" title="Modo oscuro"><i class="fas fa-moon"></i></button>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-light p-2" id="mainNav">
     <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link active" href="index.html">Inicio</a>
+          <li class="nav-item ps-2 pe-2">
+            <a class="nav-link" href="index.html"><i class="fa fa-home p-1"></i> Inicio</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
+          <li class="nav-item ps-2 pe-2">
+            <a class="nav-link" href="categories.html"><i class="fa fa-th-large p-1"></i> Categorias</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
+          <li class="nav-item ps-2 pe-2">
+            <a class="nav-link" href="sell.html"><span class="fw-bold p-1">$</span> Vender</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="favoritos.html" title="Favoritos"><i class="fa fa-heart"></i></a>
+          <li class="nav-item ps-2 pe-2">
+            <a class="nav-link" href="favoritos.html"><i class="fa fa-heart p-1"></i> Favoritos</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="cart.html" title="Carrito"><i class="fa fa-shopping-cart"></i></a>
+          <li class="nav-item ps-2 pe-2">
+            <a class="nav-link" href="cart.html"><i class="fa fa-shopping-cart p-1"></i> Carrito</a>
           </li>
-          <li class="nav-item">
-            <!--User menu-->
+          <li class="nav-item p-0">
+            <!-- User Menu -->
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="emailButton" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Usuario
-              </button>
-              <ul class="dropdown-menu dropdown-menu" aria-labelledby="emailButton">
+              <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+                  class="fa fa-user p-i"></i>
+                <span id="emailButton"> Usuario</span></button>
+              <ul class="dropdown-menu" aria-labelledby="emailButton">
                 <li>
                   <a class="dropdown-item" href="my-profile.html" id="linkPerfil">Perfil</a>
                 </li>
@@ -50,16 +71,6 @@
                   <a class="dropdown-item" href="login.html" id="logoutSession">Cerrar sesión</a>
                 </li>
               </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div class="btn-mode row float-end">
-              <div id="lightMode" class="btn-primary col sun">
-                <i class="fas fa-sun"></i>
-              </div>
-              <div id="darkMode" class="col moon">
-                <i class="fas fa-moon"></i>
-              </div>
             </div>
           </li>
         </ul>
@@ -80,14 +91,14 @@
             </div>
             <hr class="my-4">
             <!-- Cart item container <div class="list-group grid-container" id="cartProducts"></div>-->
-            <table class="table">
+            <table class="table tableCart">
               <thead>
                 <tr>
-                  <th class="text-dark" scope="col"></th>
                   <th class="text-dark" scope="col">Nombre</th>
-                  <th class="text-dark" scope="col">Costo</th>
+                  <th class="text-dark costCart" scope="col">Costo</th>
                   <th class="text-dark" scope="col">Cantidad</th>
                   <th class="text-dark" scope="col">Subtotal</th>
+                  <th class="text-dark text-center" scope="col">Eliminar</th>
                 </tr>
               </thead>
               <tbody id="cartProducts" class="text-dark">
@@ -164,7 +175,7 @@
             </form>
             <!-- "Mas detalles" line is off the form tag to avoid bootstrap visual validation -->
             <div class="mb-5">
-              <label for="details" class="form-label">Mas detalles</label>
+              <label for="details" class="form-label">Mas detalles <span class="text-muted">(opcional)</span></label>
               <input type="text" class="form-control" id="details" placeholder="Indicaciones para identificar el lugar">
             </div>
 
@@ -298,7 +309,7 @@
     </div>
   </main>
 
-  
+
 
 
 
