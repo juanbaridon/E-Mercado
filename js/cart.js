@@ -43,7 +43,7 @@ function showCart(data) {
     <th scope="row"><img src="${data.images[0]}" style="height: 60px; min-width: 60px;" class="img-thumbnail" alt="imagen del producto"></th>
     <td>${data.name}</td>
     <td>${data.currency} ${data.cost}</td>
-    <td><input min="0" name="quantity" id="qForm" value="1" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm"></td>
+    <td><input min="0" name="quantity" onclick="updateProductQuantity(${data.id})" id="qForm${data.id}" value="${localStorage.getItem(`${data.id} quantity`)}" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm qForm"></td>
     <td><span class="currency">USD</span> <span class="subtotal">${subtotal}</span></td>
     <td><button class="btn btn-danger" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')">Eliminar</button></td>
   `;
@@ -52,6 +52,14 @@ function showCart(data) {
   updateTotal();
   modeList();
 }
+
+
+function updateProductQuantity(id) {
+  const qForm = document.getElementById(`qForm${id}`);
+  localStorage.setItem(`${id} quantity`, qForm.value);
+  
+}
+
 
 //Removes a product's row from the cart, updates the cart list in local storage, and refreshes the general subtotal, delivery cost, and total.
 function removeCartItem(row, id) {
@@ -82,7 +90,7 @@ function updateSubtotal(input, cost) {
 function updateDeliveryCost() {
   const subtotalGeneral = parseFloat(document.getElementById("subtotalGen").textContent.replace(/[^\d.-]/g, "")) || 0;
   const selectedDelivery = document.querySelector('input[name="flexRadioDefault"]:checked');
-  const percentageDelivery = parseFloat(selectedDelivery.getAttribute("data-percentage"));
+  const percentageDelivery = parseInt(selectedDelivery.getAttribute("data-percentage")); 
   const deliveryCost = (subtotalGeneral * percentageDelivery) / 100;
   const deliveryCostContainer = document.getElementById("deliveryCost");
   deliveryCostContainer.textContent = `USD ${deliveryCost.toFixed(0)}`;
