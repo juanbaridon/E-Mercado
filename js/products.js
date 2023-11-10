@@ -57,7 +57,7 @@ function showData(dataArray) {
 
         divProductos.innerHTML += `
           <div class="card bg-light m-3">
-            <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" class="card-img-top cursor-active" alt="imagen del producto">
+            <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" aria-label="Imágen ilustrativa de ${prod.name}" class="card-img-top cursor-active" alt="imagen del producto">
             <div class="card-body">
               <h4 class="card-title text-center pb-2">${prod.name}</h4>
               <button type="button" class="btn btn-success">${prod.cost} ${prod.currency}</button>
@@ -65,13 +65,13 @@ function showData(dataArray) {
                 <p>${prod.description}</p>
                 <small class="text-muted">${prod.soldCount} vendidos</small>
                 <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
-                  <button class="btn btn-primary favoriteBtn" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
+                  <button class="btn btn-primary favoriteBtn" aria-label="Agregar o quitar de favoritos" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
                     <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
                   </button>
-                  <button type="button" class="btn text-white border-0 cartIcon" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
+                  <button type="button" class="btn text-white border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
                 </div>
               </div>
-              ${estrellas(prod.averageScore)}
+              <label aria-label="Puntuación de ${prod.averageScore.toFixed(1)} estrellas">${estrellas(prod.averageScore)}</label>
             </div>
           </div>`;
 

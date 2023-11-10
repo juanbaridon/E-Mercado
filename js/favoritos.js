@@ -98,14 +98,14 @@ function showFavorites(favoriteProducts) { // Show favorites
       favoriteProducts.forEach((prod) => {
         divFavoritos.innerHTML +=
           `<div class="card bg-light m-3">
-          <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" class="card-img-top cursor-active" alt="imagen del producto">
+          <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" aria-label="Imágen ilustrativa de ${prod.name}" class="card-img-top cursor-active" alt="imagen del producto">
           <div class="card-body">
             <h4 class="card-title text-center pb-2">${prod.name}</h4>
               <button type="button" class="btn btn-success">${prod.cost} ${prod.currency}</button>
             <div class="card-text">
               <p>${prod.description}</p>
               <small class="text-muted">${prod.soldCount} vendidos</small>
-                <button class="btn btn-secondary float-end" id="removeFromFavorites_${prod.catId}-${prod.id}" onclick="removeFromFavoritos('${prod.catId}', '${prod.id}')">
+                <button class="btn btn-secondary float-end" aria-label="Remover del carrito" id="removeFromFavorites_${prod.catId}-${prod.id}" onclick="removeFromFavoritos('${prod.catId}', '${prod.id}')">
                     <i class="fa fa-times"></i>
                 </button>
             </div>

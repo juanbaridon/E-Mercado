@@ -48,7 +48,7 @@ function showCategoriesList() {
             ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))) {
             htmlContentToAppend += `
             <div onclick="setCatID(${category.id})" class="card bg-light m-3 cursor-active">
-                <img src="${category.imgSrc}" class="card-img-top" alt="imagen del producto">
+                <img src="${category.imgSrc}" class="card-img-top" aria-label="Imagen representativa de ${category.name}" alt="imagen del producto">
                 <div class="card-body">
                 <h4 class="card-title text-center pb-2">${category.name}</h4>
                 <div class="card-text">

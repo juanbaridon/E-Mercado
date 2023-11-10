@@ -57,9 +57,10 @@ function showCart(data) {
   newRow.innerHTML = `
     <td>${data.name}</td>
     <td>${data.currency} ${data.cost}</td>
-    <td><input min="0" name="quantity" onclick="updateProductQuantity(${data.id})" id="qForm${data.id}" value="${localStorage.getItem(`${data.id} quantity`)}" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm qForm"></td>
+    <td><input min="0" name="quantity" onclick="updateProductQuantity(${data.id})" id="qForm${data.id}" aria-label="Ingrese cantidad a comprar del producto"
+    value="${localStorage.getItem(`${data.id} quantity`)}" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm qForm"></td>
     <td><span class="currency">USD</span> <span class="subtotal">${subtotal}</span></td>
-    <td class="text-center"><button class="btn btn-danger" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')"><i class="fa fa-times"></i></button></td>
+    <td class="text-center"><button class="btn btn-danger" aria-label="Remover del carrito" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')"><i class="fa fa-times"></i></button></td>
   `;
   cartProducts.appendChild(newRow);
   updateGeneralSubtotal();

@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
               <p class="card-text">Vendidos: ${data.soldCount}</p>
               <p class="card-text">Categoría: ${data.category}</p>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
-                <button class="btn btn-primary favoriteBtn" id="addToFavorites_${data.catId}-${data.id}" onclick="toggleFavorito('${data.catId}', '${data.id}')">
-                    <i class="fas fa-heart"></i> <!-- Icono de corazón -->
+                <button class="btn btn-primary favoriteBtn" id="addToFavorites_${data.catId}-${data.id}"  aria-label="Agregar o quitar de favoritos" onclick="toggleFavorito('${data.catId}', '${data.id}')">
+                <i class="fas fa-heart"></i> <!-- Icono de corazón -->
                 </button>
-                <button type="button" class="btn text-white border-0 cartIcon" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
+                <button type="button" class="btn text-white border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
               </div>
         `
 
@@ -88,10 +88,10 @@ function comJson(comments) {
                     <li class="list-group-item bg-light">
                         <div>
                             <strong>${comment.user}</strong>
-                            <small class='text-muted'>   - ${formattedDate} -   </small>
-                            ${estrellas(comment.score)}
+                            <small class='text-muted'> - ${formattedDate} - </small>
+                            <label aria-label="Puntuación de ${comment.score.toFixed(0)} estrellas">${estrellas(comment.score)}</label>
                             <br>
-                            ${comment.description}
+                            <p>${comment.description}</p>
                         </div>
                     </li>
                 </ul>
@@ -109,9 +109,9 @@ function comJson(comments) {
             <div>
               <strong>${actualUser}</strong>
               <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
-              ${estrellas(puntuacion)}
+              <label aria-label="Puntuación de ${puntuacion} estrellas">${estrellas(puntuacion)}</label>
               <br>
-              ${opinion}
+              <p>${opinion}</p>
             </div>
           </li>`;
         const productId = localStorage.getItem('productId');
@@ -169,7 +169,7 @@ function comJson(comments) {
         array.relatedProducts.forEach((element)=>
         relProds.innerHTML += ` 
             <div class="card bg-light m-3">
-                <img onclick="setProdId(${element.id})" src="${element.image}" class="card-img-top cursor-active mt-2" alt="imagen del producto">
+                <img onclick="setProdId(${element.id})" src="${element.image}" aria-label="Imágen ilustrativa de ${element.name}" class="card-img-top cursor-active mt-2" alt="imagen del producto">
                 <div class="card-body">
                 <h4 class="card-title text-center pb-2">${element.name}</h4>
                 </div>

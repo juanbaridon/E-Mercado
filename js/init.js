@@ -51,7 +51,7 @@ let page = "";
 // Fetch de categorias
 getJSONData(CATEGORIES_URL).then(function (resultObj) {
   categories = resultObj.data;
-  datalist.innerHTML += `<a><li class="ps-3 p-2 pe-0 optionTitle optionItem">Categorias</li>`;
+  datalist.innerHTML += `<a><li class="ps-3 p-2 pe-0 optionTitle optionItem">Categorías</li>`;
 // Agrega el nombre de la categoria a las opciones.
   categories.forEach((option) => {
     datalist.innerHTML += `<li><a class="dropdown-item optionItem" data-id="${option.id}" data-page="categories">${option.name}</a></li>`;
@@ -310,3 +310,51 @@ function btnCart(prodId) {
         }
         return stars;
     }
+
+
+// Screen reader
+
+let synth = window.speechSynthesis; 
+let reading = null;
+const toggleReaderButton = document.getElementById('toggleReaderButton');
+let isReaderEnabled = false;
+
+toggleReaderButton.addEventListener('click', function() {
+  if (isReaderEnabled) {
+    //Turn it on
+    isReaderEnabled = false;
+    toggleReaderButton.innerHTML = '<strong><h5><i class="fa fa-audio-description"></i> Activar Lector de pantalla</h5>';
+  } else {
+    //Turn it off
+    isReaderEnabled = true;
+    toggleReaderButton.innerHTML = '<strong><h5><i class="fa fa-audio-description"></i> Desactivar Lector de pantalla</h5>';
+  }
+});
+
+function mouseoverReader(event) {
+  const element = event.target;
+
+ //List of  elements to be read
+  const allowedTags = ["P", "H1", "H2", "H3","H4", "H5", "H6","A", "SMALL","STRONG", "BUTTON", "INPUT", "LABEL", "TH", "TD", "STRONG","IMG","LI","SELECT","TEXTAREA"];
+
+  if (isReaderEnabled && element.nodeType === Node.ELEMENT_NODE && allowedTags.includes(element.tagName)) {
+   
+    if (reading) {
+      synth.cancel();
+    }
+
+    if (element.hasAttribute("aria-label")) {
+      text = element.getAttribute("aria-label");
+    } else {
+      text = element.textContent;
+    }
+
+    const message = new SpeechSynthesisUtterance(text);
+    reading = message;
+
+    synth.speak(message);
+  }
+}
+
+
+document.addEventListener("mouseover", mouseoverReader);
