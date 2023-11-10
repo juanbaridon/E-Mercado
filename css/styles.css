@@ -621,3 +621,9 @@ padding-top: 0%;
     display: none;
   }
 }
+
+#divFavoritos {
+margin-left: 33%;
+margin-right: 0%;
+width: 100%;
+}
