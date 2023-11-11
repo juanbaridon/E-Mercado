@@ -201,9 +201,6 @@ a.custom-card:hover {
   color: red; 
 }
 
-
-/* Inicio Agregado */
-
 /* Cambios */
 
 nav, .cartIcon{
@@ -238,7 +235,13 @@ nav, .cartIcon{
   border: none;
 }
 
-/* Estrellas */
+/* Price */
+.products-price {
+  padding-bottom: 0.8rem;
+  text-align: center;
+}
+
+/* Stars */
 
 #puntuacion input[type = "radio"]{
   display:none;
@@ -250,8 +253,8 @@ nav, .cartIcon{
     unicode-bidi: bidi-override;
 }
 
-/* Selecciona la estrella que tocamos con el mouse y las siguientes, al voltearlas previamente se ven como las anteriores */
-/* Colorea las estrellas al pasar el mouse y al hacer click */
+/* Selects the star clicked and the following ones, when previously flipped they look like the previous ones */
+/* Color the stars on hover and click */
 #puntuacion label:hover, #puntuacion label:hover ~ label, #puntuacion input[type = "radio"]:checked ~ label{
   color:#fda638;
 }
@@ -412,8 +415,8 @@ nav, .cartIcon{
   max-height: 120%;
 }
 .chip img {
-  max-width: 110%; /* Asegura que la imagen no se desborde del contenedor */
-  height: auto; /* Mantiene la proporción original de la imagen */
+  max-width: 110%; /* Ensures that the image does not overflow from the container */
+  height: auto; /* Keeps the image's original aspect ratio */
   margin-bottom: 350%;
 }
 
@@ -537,7 +540,70 @@ padding-top: 0%;
   background-color: #c5ddeb;
 }
 
-/* Modo oscuro */
+/* Skeleton Loading */
+
+#preloader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #e2e2e2;
+  z-index: 9999;
+}
+
+#card-img-skeleton {
+  height: 10rem;
+}
+
+#nav-skeleton {
+  height: 3rem;
+}
+
+#card-container {
+  margin: 0 5% 0 5%;
+}
+
+#line-skeleton {
+  height: 15rem;
+  margin-bottom: 2rem;
+  color: rgb(160, 160, 160);
+}
+
+#line-skeleton-categories {
+  height: 5rem;
+  margin-bottom: 2rem;
+  color: rgb(160, 160, 160);
+}
+
+#line-skeleton-products {
+  height: 8rem;
+  margin-bottom: 8rem;
+  color: rgb(160, 160, 160);
+}
+
+.card-skeleton {
+  opacity: 0.5 !important;
+}
+
+#product-info {
+  margin-top: 3em;
+  margin-bottom: 5rem;
+}
+
+#product-title-skeleton {
+  height: 3rem;
+  margin-top: 2rem;
+  color: rgb(160, 160, 160);
+}
+
+#img-product-skeleton {
+  margin-bottom: 1rem;
+}
+
+.placeholder-skeleton {
+  height: 3rem;
+}
+
+/* Dark Mode */
 .sun, .moon{
   padding: 5px 15px;
   color: #fff;
@@ -621,4 +687,3 @@ padding-top: 0%;
     display: none;
   }
 }
-

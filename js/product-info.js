@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         divProductInfo.innerHTML = `
         <h5 class="card-title">${data.description}</h5>
-              <p class="btn btn-success">${data.cost} ${data.currency}</p>
+        <p class="product-info-price"> ${data.currency} ${data.cost}</p>
               <p class="card-text">Vendidos: ${data.soldCount}</p>
               <p class="card-text">Categoría: ${data.category}</p>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
