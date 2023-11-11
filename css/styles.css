@@ -595,6 +595,17 @@ padding-top: 0%;
   .col {
     margin: 0 !important;
   }
+    .top-nav {
+    flex-direction: column;
+  }
+  .top-nav .input-group {
+    width: auto;
+    margin: 15px 0 !important;
+  }
+  .btn-mode{
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
 
 @media (min-width: 769px) {
@@ -606,17 +617,6 @@ padding-top: 0%;
 @media screen and (max-width: 576px) {
   .grid-container {
     grid-template-columns: 1fr;
-  }
-  .top-nav {
-    flex-direction: column;
-  }
-  .top-nav .input-group {
-    width: auto;
-    margin: 15px 0 !important;
-  }
-  .btn-mode{
-    margin: 0 !important;
-    padding: 0 !important;
   }
   .costCart{
     display: none;
