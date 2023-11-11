@@ -70,6 +70,7 @@ function showData(dataArray) {
               <label aria-label="Puntuación de ${prod.averageScore.toFixed(1)} estrellas">${estrellas(prod.averageScore)}</label>
             </div>
           </div>`;
+                modeList();
 
         btnFavorite(prod.id);
         btnCart(prod.id);
@@ -81,8 +82,6 @@ function showData(dataArray) {
         </div>`;
     }
   }
-
-  modeList();
 }
 
 // Function to check if a product is in the favorites list
