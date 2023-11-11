@@ -15,11 +15,6 @@ const btnPrecioDesc = document.getElementById("sortDesc2");
 const btnRelevancia = document.getElementById("sortByCount2");
 const campoBusqueda = document.getElementById("buscador");
 
-//Function that stores the product id and redirects to product-info.html
-function redirectProduct(prodId){
-  localStorage.setItem("productId", prodId);
-  window.location.href = "product-info.html";
-};
 
 //Show Data
 function showData(dataArray) {
