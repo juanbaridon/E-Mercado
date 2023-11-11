@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <button class="btn btn-primary favoriteBtn" id="addToFavorites_${data.catId}-${data.id}"  aria-label="Agregar o quitar de favoritos" onclick="toggleFavorito('${data.catId}', '${data.id}')">
                 <i class="fas fa-heart"></i> <!-- Icono de corazón -->
                 </button>
-                <button type="button" class="btn text-white border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
+                <button type="button" class="btn btn-warning text-white border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
               </div>
         `
 
