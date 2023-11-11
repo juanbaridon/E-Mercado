@@ -365,3 +365,8 @@ function mouseoverReader(event) {
 
 
 document.addEventListener("mouseover", mouseoverReader);
+
+function redirectProduct(prodId){
+  localStorage.setItem("productId", prodId);
+  window.location.href = "product-info.html";
+};
