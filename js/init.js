@@ -10,6 +10,12 @@ const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 const spinnerWrapper = document.getElementById("spinner-wrapper");
 
+function redirectProduct(prodId){
+  localStorage.setItem("productId", prodId);
+  window.location.href = "product-info.html";
+};
+
+
 let getJSONData = function (url) {
   let result = {};
   try {

@@ -15,11 +15,7 @@ const btnPrecioDesc = document.getElementById("sortDesc2");
 const btnRelevancia = document.getElementById("sortByCount2");
 const campoBusqueda = document.getElementById("buscador");
 
-//Function that stores the product id and redirects to product-info.html
-function redirectProduct(prodId){
-  localStorage.setItem("productId", prodId);
-  window.location.href = "product-info.html";
-};
+
 
 //Show Data
 function showData(dataArray) {
@@ -74,6 +70,7 @@ function showData(dataArray) {
               <label aria-label="Puntuación de ${prod.averageScore.toFixed(1)} estrellas">${estrellas(prod.averageScore)}</label>
             </div>
           </div>`;
+                modeList();
 
         btnFavorite(prod.id);
         btnCart(prod.id);
@@ -85,8 +82,6 @@ function showData(dataArray) {
         </div>`;
     }
   }
-
-  modeList();
 }
 
 // Function to check if a product is in the favorites list
