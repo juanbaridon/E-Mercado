@@ -118,7 +118,8 @@ function showFavorites(favoriteProducts) { // Show favorites
       <div class="text-center text-muted">
       <h4>No tienes productos favoritos.</h4>
       <p>¿Quieres agregar productos favoritos? <a href="categories.html">Explora productos</a></p>
-    </div>`;
+    </div>
+    <hr>`;
     }
   }
   modeList();
