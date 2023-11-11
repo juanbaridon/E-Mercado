@@ -68,7 +68,7 @@ function showData(dataArray) {
                   <button class="btn btn-primary favoriteBtn" aria-label="Agregar o quitar de favoritos" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
                     <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
                   </button>
-                  <button type="button" class="btn text-white border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
+                  <button type="button" class="btn btn-warning text-white border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
                 </div>
               </div>
               <label aria-label="Puntuación de ${prod.averageScore.toFixed(1)} estrellas">${estrellas(prod.averageScore)}</label>

@@ -10,13 +10,13 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="css/styles.css" rel="stylesheet">
   <link rel="icon" href="icon/IconoInvi.png">
 </head>
 
-<!-- Skeleton Loading - Gastón-->
+<!-- Skeleton Loading -->
 
 <div class="preloader" id="preloader">
 
@@ -100,7 +100,7 @@
 </div>
   
   <!--  -->
-  
+
 <body>
   <div class="d-flex m-0 top-nav">
     <div class="nav-img">
@@ -176,54 +176,39 @@
       <!--Filter and order-->
       <div class="container filterProducts">
         <div class="row">
-          <div class="col-lg-5">
-            <div class="input-group ms-3">
-              <!-- Search -->
-              <input type="search" name="buscador" aria-label="Buscar producto" id="buscador" placeholder="Buscar..." class="form-control bg-white">
-              <button type="button" class="btn btn-primary" id="searchButton">
-                <i class="fas fa-search"></i>
-              </button>
-              <button type="button" class="btn btn-primary" aria-label="Activar búsqueda por voz" id="voiceSearch">
-                <i class="fas fa-microphone"></i>
-              </button>
-
-              <!---->
-            </div>
-          </div>
-          <div class="col text-end me-3">
+          <div class="col text-end me-4">
             <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
               <!--Ascending price-->
-              <input type="radio" class="btn-check" name="options" id="sortAsc2">
-              <label class="btn btn-secondary" aria-label="Ordenar por precio ascendente" for="sortAsc2" data-toggle="tooltip"
-                title="Ordenar por precio ascendente."><i class="fas fa-sort-amount-up mr-1">$</i></label>
+              <input type="radio" class="btn-check" name="options" id="sortAsc">
+              <label class="btn btn-link text-dark text-decoration-none" for="sortAsc" data-toggle="tooltip"
+                title="Ordenar alfabéticamente." aria-label="Ordenar alfabéticamente">A-Z</label>
               <!--Descending price-->
-              <input type="radio" class="btn-check" name="options" id="sortDesc2">
-              <label class="btn btn-secondary" aria-label="Ordenar por precio descendente" for="sortDesc2" data-toggle="tooltip"
-                title="Ordenar por precio descendente."><i class="fas fa-sort-amount-down mr-1">$</i></label>
+              <input type="radio" class="btn-check"  name="options" id="sortDesc">
+              <label class="btn btn-link text-dark text-decoration-none" for="sortDesc" data-toggle="tooltip"
+                title="Ordenar alfabéticamente inverso." aria-label="Ordenar alfabéticamente inverso">Z-A</label>
               <!--Relevance-->
-              <input type="radio" class="btn-check" name="options" id="sortByCount2">
-              <label class="btn btn-secondary" aria-label="Ordenar de más a menos vendido" for="sortByCount2" data-toggle="tooltip"
-                title="Ordenar de más a menos vendido."><i class="fas fa-sort-amount-down mr-1">Relevancia</i></label>
-            </div>
+              <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
+              <label class="btn btn-link text-dark text-decoration-none" for="sortByCount" data-toggle="tooltip"
+                title="Ordenar por cantidad de artículos." aria-label="Ordenar por cantidad de artículos"><i class="fas fa-sort-amount-down mr-1"></i></label>
+              </div>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
             <div class="row container p-0">
               <div class="col">
-                <!--Price Range-->
-                <p class="font-weight-normal text-dark text-end my-2">Precio</p>
+                <p class="font-weight-normal text-dark text-end my-2" aria-label="Cantidad">Cant.</p>
               </div>
               <div class="col">
-                <input class="form-control bg-white" aria-label="Ingrese un precio mínimo" type="number" placeholder="min." id="rangeFilterCountMin2" min=0>
+                <input class="form-control bg-white" type="number" placeholder="min." id="rangeFilterCountMin" min=0 aria-label="Ingrese cantidad mínima">
               </div>
               <div class="col">
-                <input class="form-control bg-white" aria-label="Ingrese un precio máximo" type="number" placeholder="máx." id="rangeFilterCountMax2" min=0>
+                <input class="form-control bg-white" type="number" placeholder="máx." id="rangeFilterCountMax" min=0 aria-label="Ingrese cantidad máxima">
               </div>
               <div class="col p-0 me-2">
                 <div class="btn-group" role="group">
-                  <button class="btn btn-primary btn-block rangeFilterButton" id="rangeFilterCount2">Filtrar</button>
-                  <button class="btn btn-danger btn-sm clearRangeButton" id="clearRangeFilter2">Limpiar</button>
+                  <button class="btn btn-link text-dark text-decoration-none btn-block rangeFilterButton" id="rangeFilterCount">Filtrar</button>
+                  <button class="btn btn-link text-dark text-decoration-none btn-sm clearRangeButton" id="clearRangeFilter">Limpiar</button>
                 </div>
               </div>
             </div>
