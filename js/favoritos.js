@@ -84,6 +84,9 @@ async function loadFavorites() {
     .then(favoriteProducts => {
       favoriteProducts = favoriteProducts.filter(product => product);
       showFavorites(favoriteProducts);
+      // Currency
+      let favoriteCurrency = localStorage.getItem("currency")
+      updateFavoritePrices(favoriteCurrency)
     })
     .catch(error => {
       console.error('Error al cargar productos favoritos:', error);
@@ -96,12 +99,22 @@ function showFavorites(favoriteProducts) { // Show favorites
 
     if (favoriteProducts.length > 0) {
       favoriteProducts.forEach((prod) => {
+         // Currency
+         let originalCost
+
+         if (prod.currency == "USD") {
+           originalCost = prod.cost
+         } else {
+           originalCost = prod.cost / 40
+         }
+ 
+         // Currency _ add data-price _ cost -> original cost _ prod.currency -> USD
         divFavoritos.innerHTML +=
           `<div class="card bg-light m-3">
           <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" aria-label="Imágen ilustrativa de ${prod.name}" class="card-img-top cursor-active" alt="imagen del producto">
           <div class="card-body">
             <h4 class="card-title text-center pb-2">${prod.name}</h4>
-              <button type="button" class="btn btn-success">${prod.cost} ${prod.currency}</button>
+            <button type="button" class="btn btn-success price" data-price="${originalCost}">USD ${originalCost.toFixed(2)}</button>
             <div class="card-text">
               <p>${prod.description}</p>
               <small class="text-muted">${prod.soldCount} vendidos</small>
@@ -127,3 +140,17 @@ function showFavorites(favoriteProducts) { // Show favorites
 
 
 loadFavorites();
+
+//Currency
+
+function updateFavoritePrices(selectedCurrency) {
+  const prices = document.getElementsByClassName("price");
+
+for (const price of prices) {
+  
+  const originalPrice = parseFloat(price.getAttribute("data-price"));
+  const convertedPrice = originalPrice * currencyExchange[selectedCurrency];   
+
+  price.textContent = `${selectedCurrency} ${convertedPrice.toFixed(2)}`;
+}
+} 

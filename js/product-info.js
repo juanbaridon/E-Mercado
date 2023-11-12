@@ -39,10 +39,23 @@ document.addEventListener("DOMContentLoaded", function () {
     function showData(data){
 
         productName.innerHTML = data.name
-        
+
+        //Currency
+
+        let originalCost
+        const currency = localStorage.getItem("currency")
+
+        if (data.currency == "USD") {
+          originalCost = data.cost
+        } else {
+          originalCost = data.cost / 40
+        }
+
+        const convertedPrice = originalCost * currencyExchange[currency];   
+
         divProductInfo.innerHTML = `
         <h5 class="card-title">${data.description}</h5>
-              <p class="btn btn-success">${data.cost} ${data.currency}</p>
+              <p class="btn btn-success">${currency} ${convertedPrice.toFixed(2)}</p>
               <p class="card-text">Vendidos: ${data.soldCount}</p>
               <p class="card-text">Categoría: ${data.category}</p>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">

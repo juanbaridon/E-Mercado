@@ -329,11 +329,11 @@ toggleReaderButton.addEventListener('click', function() {
   if (isReaderEnabled) {
     //Turn it on
     isReaderEnabled = false;
-    toggleReaderButton.innerHTML = '<strong><h5><i class="fa fa-audio-description"></i> Activar Lector de pantalla</h5>';
+    toggleReaderButton.innerHTML = '<strong><h5><i class="fas fa-file-audio"></i> Activar Lector de pantalla</h5>';
   } else {
     //Turn it off
     isReaderEnabled = true;
-    toggleReaderButton.innerHTML = '<strong><h5><i class="fa fa-audio-description"></i> Desactivar Lector de pantalla</h5>';
+    toggleReaderButton.innerHTML = '<strong><h5><i class="fas fa-file-audio"></i> Desactivar Lector de pantalla</h5>';
   }
 });
 
@@ -364,3 +364,19 @@ function mouseoverReader(event) {
 
 
 document.addEventListener("mouseover", mouseoverReader);
+
+//Currency
+
+if (!localStorage.getItem("currency")) {
+  localStorage.setItem("currency", "USD")
+}
+
+let currency = localStorage.getItem("currency")
+
+const currencyExchange = {
+  USD: 1,
+  EUR: 0.85, 
+  $: 40,
+  YEN: 151,
+  CAD: 1.35
+};

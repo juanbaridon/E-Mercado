@@ -30,6 +30,14 @@ function showData(dataArray) {
       dataArray.products.forEach(async (prod) => {
         const isFavorito = isProductInFavoritos(prod.catId, prod.id);
         const favoritoClass = isFavorito ? "favorito" : "";
+        //Currency
+        let originalCost
+
+        if (prod.currency == "USD") {
+          originalCost = prod.cost
+        } else {
+          originalCost = prod.cost / 40
+        }
 
         try {
           const responseComm = await fetch(PRODUCT_INFO_COMMENTS_URL + prod.id + EXT_TYPE);
@@ -50,13 +58,13 @@ function showData(dataArray) {
           console.error("Error fetching comments for product", prod.id, error);
           prod.averageScore = 0; 
         }
-
+        // Currency _ add data-price _ cost -> original cost _ prod.currency -> USD
         divProductos.innerHTML += `
           <div class="card bg-light m-3">
             <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" aria-label="Imágen ilustrativa de ${prod.name}" class="card-img-top cursor-active" alt="imagen del producto">
             <div class="card-body">
               <h4 class="card-title text-center pb-2">${prod.name}</h4>
-              <button type="button" class="btn btn-success">${prod.cost} ${prod.currency}</button>
+              <button type="button" class="btn btn-success price" data-price="${originalCost}">USD ${originalCost.toFixed(2)}</button>
               <div class="card-text">
                 <p>${prod.description}</p>
                 <small class="text-muted">${prod.soldCount} vendidos</small>
@@ -71,6 +79,11 @@ function showData(dataArray) {
             </div>
           </div>`;
                 modeList();
+
+        //Currency
+        const selectedCurrency = currencySelect.value;
+ 
+        updatePriceCurrency(selectedCurrency);
 
         btnFavorite(prod.id);
         btnCart(prod.id);
@@ -221,3 +234,27 @@ function executeSearch(query) {
   showData(category);
 }
 
+// Currency
+
+const currencySelect = document.getElementById("currencySelectorProducts");
+currencySelect.value = currency;
+
+currencySelect.addEventListener("change", function () {
+  
+  const selectedCurrency = currencySelect.value;
+  
+  localStorage.setItem("currency", selectedCurrency);
+  updatePriceCurrency(selectedCurrency);
+});
+
+function updatePriceCurrency(selectedCurrency) {
+    const prices = document.getElementsByClassName("price");
+  
+  for (const price of prices) {
+    
+    const originalPrice = parseFloat(price.getAttribute("data-price"));
+    const convertedPrice = originalPrice * currencyExchange[selectedCurrency];   
+
+    price.textContent = ` ${selectedCurrency} ${convertedPrice.toFixed(2)}`;
+  }
+}

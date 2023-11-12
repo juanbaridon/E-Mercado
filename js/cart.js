@@ -1,5 +1,4 @@
 const cartProducts = document.getElementById("cartProducts");
-const exchangeRate = 0.04;
 
 //Adds an item to the shopping cart by storing its ID in the cart list stored in the browser's local storage.
 function addToCart(itemId) {
@@ -48,21 +47,27 @@ if (
 
 //Displays and updates product details, including the subtotal, in a table row, considering the currency exchange rate for UYU.
 function showCart(data) {
-  const cost =
-    data.currency === "UYU"
-      ? parseFloat(data.cost) * exchangeRate
-      : parseFloat(data.cost);
-  const subtotal = cost.toFixed(0);
   const newRow = document.createElement("tr");
+  //Currency
+  let originalCost
+
+   if (data.currency == "USD") {
+     originalCost = data.cost
+   } else {
+     originalCost = data.cost / 40
+   }
+   const quantity = parseInt(localStorage.getItem(`${data.id} quantity`)) || 0;
+  // Currency 
   newRow.innerHTML = `
     <td>${data.name}</td>
-    <td>${data.currency} ${data.cost}</td>
+    <td class="price" data-price="${originalCost}">${currency} ${originalCost.toFixed(2)}</td>
     <td><input min="0" name="quantity" onclick="updateProductQuantity(${data.id})" id="qForm${data.id}" aria-label="Ingrese cantidad a comprar del producto"
-    value="${localStorage.getItem(`${data.id} quantity`)}" type="number" oninput="updateSubtotal(this, ${cost})" class="form-control form-control-sm qForm"></td>
-    <td><span class="currency">USD</span> <span class="subtotal">${subtotal}</span></td>
+    value="${localStorage.getItem(`${data.id} quantity`)}" type="number" oninput="updateSubtotal(this, ${originalCost})" class="form-control form-control-sm qForm"></td>
+    <td><span class="subtotal" data-subtotal="${originalCost * quantity}">${(originalCost).toFixed(2)}</span></td>
     <td class="text-center"><button class="btn btn-danger" aria-label="Remover del carrito" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')"><i class="fa fa-times"></i></button></td>
   `;
   cartProducts.appendChild(newRow);
+  updateCartPrice(currency)
   updateGeneralSubtotal();
   updateTotal();
   modeList();
@@ -99,9 +104,9 @@ function removeCartItem(row, id) {
 //Recalculates the subtotal, and updates the overall subtotal, delivery cost, and total.
 function updateSubtotal(input, cost) {
   const quantity = parseInt(input.value);
-  const subtotal = Math.round(quantity * cost);
+  const subtotal = Math.round(quantity * cost * currencyExchange[localStorage.getItem("currency")]).toFixed(2);
   const subtotalElement = input.closest("tr").querySelector(".subtotal");
-  subtotalElement.textContent = `${subtotal}`;
+  subtotalElement.textContent = `${currency} ${subtotal}`;
   updateGeneralSubtotal();
   updateDeliveryCost();
   updateTotal();
@@ -114,7 +119,7 @@ function updateDeliveryCost() {
   const percentageDelivery = parseInt(selectedDelivery.getAttribute("data-percentage")); 
   const deliveryCost = (subtotalGeneral * percentageDelivery) / 100;
   const deliveryCostContainer = document.getElementById("deliveryCost");
-  deliveryCostContainer.textContent = `USD ${deliveryCost.toFixed(0)}`;
+  deliveryCostContainer.textContent = `${currency} ${deliveryCost.toFixed(2)}`;
   updateTotal();
 }
 
@@ -128,7 +133,7 @@ function updateGeneralSubtotal() {
     subtotalGeneral += subtotalValue;
   });
   const subtotalGeneralElement = document.getElementById("subtotalGen");
-  subtotalGeneralElement.textContent = `USD ${subtotalGeneral.toFixed(0)}`;
+  subtotalGeneralElement.textContent = `${currency} ${subtotalGeneral.toFixed(2)}`;
   updateTotal();
 }
 
@@ -146,7 +151,42 @@ function updateTotal() {
     ) || 0;
   const total = subtotalGeneral + deliveryCost;
   const finalPriceContainer = document.getElementById("finalPrice");
-  finalPriceContainer.textContent = `USD ${total.toFixed(0)}`;
+  finalPriceContainer.textContent = `${currency} ${total.toFixed(2)}`;
+}
+//Currency
+const currencySelectCart = document.getElementById("currencySelectorCart");
+currencySelectCart.value = currency;
+
+currencySelectCart.addEventListener("change", function () {
+  
+  const selectedCurrency = currencySelectCart.value;
+  localStorage.setItem("currency", selectedCurrency)
+
+  updateCartPrice(selectedCurrency)
+  currency = localStorage.getItem("currency")
+  location.reload();
+});
+
+function updateCartPrice(currency) {
+  const prices = document.getElementsByClassName("price");
+  const subtotals = document.getElementsByClassName("subtotal");
+
+  selectedCurrency = currency
+  currency = localStorage.getItem("currency")
+  
+  //considerar cantidad en la cuenta final, posible local storage
+  for (let i = 0; i < prices.length; i++) {
+    //Update Price
+    const originalPrice = parseFloat(prices[i].getAttribute("data-price"));
+    const convertedPrice = originalPrice * currencyExchange[currency];
+    prices[i].textContent = `${currency} ${convertedPrice.toFixed(2)}`;
+    
+    // Update Subtotal
+    const originalSubtotal = parseFloat(subtotals[i].getAttribute("data-subtotal"));
+    const convertedSubtotal = originalSubtotal * currencyExchange[currency];
+    subtotals[i].textContent = `${currency} ${convertedSubtotal.toFixed(2)}`;
+  }
+  
 }
 
 // ***************CODE FOR PAYMENT METHODS*********************
