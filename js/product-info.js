@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Check if a product is in favorites list
     function isProductInFavoritos(catId, prodId) {
-        const storedFavorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+        const storedFavorites = JSON.parse(localStorage.getItem("favoritos-"+localStorage.getItem("user"))) || [];
         return storedFavorites.some(item => item.catId === catId && item.prodId === prodId);
     }
 
@@ -39,17 +39,30 @@ document.addEventListener("DOMContentLoaded", function () {
     function showData(data){
 
         productName.innerHTML = data.name
-        
+
+        //Currency
+
+        let originalCost
+        const currency = localStorage.getItem("currency")
+
+        if (data.currency == "USD") {
+          originalCost = data.cost
+        } else {
+          originalCost = data.cost / 40
+        }
+
+        const convertedPrice = originalCost * currencyExchange[currency];   
+
         divProductInfo.innerHTML = `
-        <h5 class="card-title">${data.description}</h5>
-              <p class="btn btn-success">${data.cost} ${data.currency}</p>
+        <h5 class="card-title product-info-name">${data.description}</h5>
+              <p class="product-info-price">${currency} ${convertedPrice.toFixed(2)}</p>
               <p class="card-text">Vendidos: ${data.soldCount}</p>
               <p class="card-text">Categoría: ${data.category}</p>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
-                <button class="btn btn-primary favoriteBtn" id="addToFavorites_${data.catId}-${data.id}" onclick="toggleFavorito('${data.catId}', '${data.id}')">
-                    <i class="fas fa-heart"></i> <!-- Icono de corazón -->
+                <button class="btn btn-primary favoriteBtn" id="addToFavorites_${data.catId}-${data.id}"  aria-label="Agregar o quitar de favoritos" onclick="toggleFavorito('${data.catId}', '${data.id}')">
+                <i class="fas fa-heart"></i> <!-- Icono de corazón -->
                 </button>
-                <button type="button" class="btn text-white border-0 cartIcon" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
+                <button type="button" class="btn text-white border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
               </div>
         `
 
@@ -64,51 +77,38 @@ document.addEventListener("DOMContentLoaded", function () {
         btnCart(data.id)
     }
 
-    // Shows Stars
-    function estrellas(score) {
-        let stars = '';
-        const maxStars = 5;
-        const yellowStar = '<span class="fa fa-star checked"></span>';
-        const blackStar = '<span class="fa fa-star"></span>';
-
-        for (let i = 0; i < maxStars; i++) {
-            if (i < score) {
-                stars += yellowStar;
-            } else {
-                stars += blackStar;
-            }
-        }
-        return stars;
-    }
 
 //  Display JSON comments
 const comentarios = document.getElementById("comments");
+
+function formatDate(date) {
+    return date.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
 
 function comJson(comments) {
 // Sort comments from newest to oldest
   comments.sort((a, b) => {
     const fechaA = new Date(a.dateTime);
     const fechaB = new Date(b.dateTime);
-
     return fechaB - fechaA;
   });
     // -------------------------------- //
   for (let comment of comments) {
+    const formattedDate = formatDate(new Date(comment.dateTime));
     comentarios.innerHTML += `
             <div class="commentsHechos">
                 <ul class='list-group'>
                     <li class="list-group-item bg-light">
                         <div>
                             <strong>${comment.user}</strong>
-                            <small class='text-muted'>   - ${comment.dateTime} -   </small>
-                            ${estrellas(comment.score)}
+                            <small class='text-muted'> - ${formattedDate} - </small>
+                            <label aria-label="Puntuación de ${comment.score.toFixed(0)} estrellas">${estrellas(comment.score)}</label>
                             <br>
-                            ${comment.description}
+                            <p>${comment.description}</p>
                         </div>
                     </li>
                 </ul>
-            </div>
-        `;
+            </div>`;
   }
   // Dark Mode
   modeList();
@@ -116,26 +116,32 @@ function comJson(comments) {
 
 
     //Add comment and save it to localstorage
-function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
-    const comentarioHTML = `
-      <li class="list-group-item">
-        <div>
-          <strong>${actualUser}</strong>
-          <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
-          ${estrellas(puntuacion)}
-          <br>
-          ${opinion}
-        </div>
-      </li>`;
-    const productId = localStorage.getItem('productId');
-    localStorage.setItem(`comentario ${productId}`, comentarioHTML);
-  
-    const comentariosList = document.querySelector("#comments .commentsHechos ul");
-    comentariosList.insertAdjacentHTML('afterbegin', comentarioHTML);
-  
-    // Dark Mode
-    modeList();
-  }
+    function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
+        const comentarioHTML = `
+          <li class="list-group-item">
+            <div>
+              <strong>${actualUser}</strong>
+              <small class='text-muted'> &nbsp; - ${fechaFormateada} - &nbsp; </small>
+              <label aria-label="Puntuación de ${puntuacion} estrellas">${estrellas(puntuacion)}</label>
+              <br>
+              <p>${opinion}</p>
+            </div>
+          </li>`;
+        const productId = localStorage.getItem('productId');
+        const comentarioAnterior = localStorage.getItem(`comentario ${productId}`);
+      
+        if (comentarioAnterior) {
+          localStorage.setItem(`comentario ${productId}`, comentarioHTML);
+          window.location.reload(); 
+        } else {
+          const comentariosList = document.querySelector("#comments .commentsHechos ul");
+          comentariosList.insertAdjacentHTML('afterbegin', comentarioHTML);
+          localStorage.setItem(`comentario ${productId}`, comentarioHTML);
+        }
+      
+        // Dark Mode
+        modeList();
+      }
 
     //The comment is obtained from localstorage and displayed on the screen
     const productId = localStorage.getItem('productId')
@@ -176,7 +182,7 @@ function agregarComentario(opinion, fechaFormateada, actualUser, puntuacion) {
         array.relatedProducts.forEach((element)=>
         relProds.innerHTML += ` 
             <div class="card bg-light m-3">
-                <img onclick="setProdId(${element.id})" src="${element.image}" class="card-img-top cursor-active mt-2" alt="imagen del producto">
+                <img onclick="setProdId(${element.id})" src="${element.image}" aria-label="Imágen ilustrativa de ${element.name}" class="card-img-top cursor-active mt-2" alt="imagen del producto">
                 <div class="card-body">
                 <h4 class="card-title text-center pb-2">${element.name}</h4>
                 </div>
