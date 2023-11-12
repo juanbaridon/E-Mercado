@@ -114,7 +114,7 @@ function showFavorites(favoriteProducts) { // Show favorites
           <img onclick="redirectProduct('${prod.id}')" src="${prod.image}" aria-label="Imágen ilustrativa de ${prod.name}" class="card-img-top cursor-active" alt="imagen del producto">
           <div class="card-body">
             <h4 class="card-title text-center pb-2">${prod.name}</h4>
-            <button type="button" class="btn btn-success price" data-price="${originalCost}">USD ${originalCost.toFixed(2)}</button>
+            <div class="price products-price" data-price="${originalCost}">USD ${originalCost.toFixed(2)}</div>
             <div class="card-text">
               <p>${prod.description}</p>
               <small class="text-muted">${prod.soldCount} vendidos</small>
