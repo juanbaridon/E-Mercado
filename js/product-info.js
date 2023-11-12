@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const convertedPrice = originalCost * currencyExchange[currency];   
 
         divProductInfo.innerHTML = `
-        <h5 class="card-title">${data.description}</h5>
-              <p class="btn btn-success">${currency} ${convertedPrice.toFixed(2)}</p>
+        <h5 class="card-title product-info-name">${data.description}</h5>
+              <p class="product-info-price">${currency} ${convertedPrice.toFixed(2)}</p>
               <p class="card-text">Vendidos: ${data.soldCount}</p>
               <p class="card-text">Categoría: ${data.category}</p>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">

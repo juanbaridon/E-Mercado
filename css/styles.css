@@ -622,3 +622,20 @@ padding-top: 0%;
     display: none;
   }
 }
+
+
+/* Product Info */
+.products-price {
+  font-size: 1.4rem;
+  padding-bottom: 0.8rem;
+  text-align: center;
+}
+
+.product-info-price {
+  font-size: 1.4rem;
+  padding-top: 0.8rem;
+}
+
+.product-name {
+  font-size: 1.3rem;
+}
