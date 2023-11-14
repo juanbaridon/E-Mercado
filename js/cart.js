@@ -208,6 +208,12 @@ if (document.getElementById("transferFields")) {
         }
       });
 
+  // card number format (space for each group of 4 numbers)
+      function formatCardNumber(cardNumber) {
+        return cardNumber.replace(/\D/g, "");
+      }
+    
+    // function to accept only numbers in certain fields 
     function onlyNumbers(element) {
       element.addEventListener("input", function () {
         this.value = this.value.replace(/\D/g, "");
@@ -218,11 +224,13 @@ if (document.getElementById("transferFields")) {
     onlyNumbers(document.getElementById("cardNumber"));
     onlyNumbers(document.getElementById("accountNumber"));
 
+
+    // toggle payment method 
     const paymentMethod = document.querySelectorAll(
       'input[name="paymentMethod"]'
     );
     let selectedPayment = null;
-
+    
     paymentMethod.forEach(function (radio) {
       radio.addEventListener("change", function () {
         if (radio.value === "transfer") {
@@ -241,11 +249,12 @@ if (document.getElementById("transferFields")) {
           cardContainer.style.display = "none";
           selectedPayment = null;
         }
-
+     // save the payment methd setected in the local storage:)
         localStorage.setItem("metodoPago", selectedPayment);
       });
     });
 
+    // validations
     function checkField(field, maxLength) {
       if (field.value.length === maxLength) {
         field.classList.add("is-valid");
@@ -295,14 +304,12 @@ if (document.getElementById("transferFields")) {
     const cardNumberInput = document.getElementById("cardNumber");
     const formattedCardNumberElement = document.getElementById(
       "formattedCardNumber"
-    );
+      );
     const expirationDateInput = document.getElementById("expirationDate");
     const cvvInput = document.getElementById("cvv");
-
     const cardNumberElement = document.querySelector(".card .number");
     const cardHolderNameElement = document.querySelector(".card .name");
     const expirationDateElement = document.querySelector(".card .expiry");
-    const cvvElement = document.getElementById("cvv");
 
     cardNumberInput.addEventListener("input", updateCardNumber);
     cardHolderNameInput.addEventListener("input", updateCardHolderName);
@@ -317,49 +324,25 @@ if (document.getElementById("transferFields")) {
       });
     });
 
+    //  card number completed in real time
     function updateCardNumber() {
       cardNumberElement.textContent =
         cardNumberInput.value || "#### #### #### ####";
     }
 
+   // card holder completed in real time
     function updateCardHolderName() {
       const cardHolderName = cardHolderNameInput.value || "Nombre del Titular";
       cardHolderNameElement.textContent = cardHolderName.toUpperCase();
     }
 
+    //card expitation date update in real time also
     function updateExpirationDate() {
       expirationDateElement.textContent = expirationDateInput.value || "MM/YY";
     }
 
+    //the same with cvv
     function updateCvv() {
-      cvvElement.textContent = cvvInput.value || "XXX";
-    }
-
-    updateCardNumber();
-    updateCardHolderName();
-    updateExpirationDate();
-    updateCvv();
-
-    function formatCardNumber(cardNumber) {
-      return cardNumber.replace(/\D/g, "");
-    }
-
-    document.getElementById("cvv").addEventListener("mouseenter", function () {
-      const cardbacks = document.getElementsByClassName("card-back");
-      for (let i = 0; i < cardbacks.length; i++) {
-        cardbacks[i].style.transition = "transform 0.5s";
-        cardbacks[i].style.transform = "rotateY(0deg)";
-      }
-    });
-
-    document.getElementById("cvv").addEventListener("mouseleave", function () {
-      const cardbacks = document.getElementsByClassName("card-back");
-      for (let i = 0; i < cardbacks.length; i++) {
-        cardbacks[i].style.transition = "transform 0.5s";
-        cardbacks[i].style.transform = "rotateY(180deg)";
-      }
-    });
-
     const cvvInpu = document.getElementById("cvv");
     const cvvElemen = document.getElementById("cvv-preview");
 
@@ -368,21 +351,42 @@ if (document.getElementById("transferFields")) {
       cvvElemen.textContent = cvv;
     });
 
-    // cardnumber format
-    document
-      .getElementById("cardNumber")
-      .addEventListener("input", function () {
-        const value = this.value.replace(/\D/g, "");
-        let formattedValue = "";
-        for (let i = 0; i < value.length; i++) {
-          if (i > 0 && i % 4 === 0) {
-            formattedValue += " ";
-          }
-          formattedValue += value[i];
-        }
-        this.value = formattedValue;
-      });
+  }
+    updateCardNumber();
+    updateCardHolderName();
+    updateExpirationDate();    // CALLS 
+    updateCvv();
+    
+    // card "efect" show the back of the card when we hover cvv field 
+    document.getElementById("cvv").addEventListener("mouseenter", function () {
+      const cardbacks = document.getElementsByClassName("card-back");
+      for (let i = 0; i < cardbacks.length; i++) {
+        cardbacks[i].style.transition = "transform 0.5s";
+        cardbacks[i].style.transform = "rotateY(0deg)";
+      }
+    });
 
+   // card "efect" show the back of the card when we leave cvv field 
+    document.getElementById("cvv").addEventListener("mouseleave", function () {
+      const cardbacks = document.getElementsByClassName("card-back");
+      for (let i = 0; i < cardbacks.length; i++) {
+        cardbacks[i].style.transition = "transform 0.5s";
+        cardbacks[i].style.transform = "rotateY(180deg)";
+      }
+    });
+
+   //function to show the back
+   const cardBack = document.querySelector(".card-back");
+
+   cvvInput.addEventListener("mouseover", () => {
+     cardBack.style.display = "block";
+   });
+
+   cvvInput.addEventListener("mouseout", () => {
+     cardBack.style.display = "none";
+   });
+
+    //validation check when we press SELECCIONAR button 
     const selectPaymentButton = document.getElementById("selectPayment");
 
     selectPaymentButton.addEventListener("click", function () {
@@ -397,8 +401,7 @@ if (document.getElementById("transferFields")) {
       }
     });
 
-    //validity card num
-
+    //validity card num real time 
     cardNumberInput.addEventListener("input", function () {
       const cardNumber = this.value.replace(/\D/g, "");
 
@@ -411,8 +414,7 @@ if (document.getElementById("transferFields")) {
       }
     });
 
-    //validity name
-
+    //validity name real time 
     cardHolderNameInput.addEventListener("input", function () {
       if (!isFieldEmpty(cardHolderNameInput)) {
         cardHolderNameInput.classList.remove("is-invalid");
@@ -423,8 +425,7 @@ if (document.getElementById("transferFields")) {
       }
     });
 
-    //validity cvv
-
+    //validity cvv real time 
     cvvInput.addEventListener("input", function () {
       const cvv = cvvInput.value.replace(/\D/g, "");
 
@@ -436,17 +437,7 @@ if (document.getElementById("transferFields")) {
         cvvInput.classList.add("is-invalid");
       }
     });
-
-    const cardBack = document.querySelector(".card-back");
-
-    cvvInput.addEventListener("mouseover", () => {
-      cardBack.style.display = "block";
-    });
-
-    cvvInput.addEventListener("mouseout", () => {
-      cardBack.style.display = "none";
-    });
-
+    
     //validity cardnumber
     cardNumberInput.addEventListener("input", function () {
       const cardNumber = cardNumberInput.value.replace(/\D/g, "");
@@ -460,8 +451,7 @@ if (document.getElementById("transferFields")) {
       }
     });
 
-    //validity experation
-
+    //validity expiration
     expirationDateInput.addEventListener("input", function () {
       const expirationDate = expirationDateInput.value.replace(/\D/g, "");
 
@@ -474,6 +464,7 @@ if (document.getElementById("transferFields")) {
       }
     });
 
+    //validity account number
     const accountNumberInput = document.getElementById("accountNumber");
 
     accountNumberInput.addEventListener("input", function () {
@@ -512,7 +503,7 @@ if (document.getElementById("transferFields")) {
       return false;
     }
 
-    // check when we press SELECCIONAR botton
+    // check when we press SELECCIONAR botton if everything is right (feedback for the user)
     document
       .getElementById("selectPayment")
       .addEventListener("click", function () {
