@@ -207,7 +207,7 @@ a.custom-card:hover {
 
 /* Cambios */
 
-nav, .cartIcon{
+nav /*.cartIcon*/{
   background-color: #ef9333;
 }
 
@@ -639,3 +639,12 @@ padding-top: 0%;
 .product-name {
   font-size: 1.3rem;
 }
+
+/* .far, .fas {
+  font-size: 1.5rem;
+  color: #0d6efd;
+}
+
+.cartIcon {
+  color: #0d6efd !important;
+} */
