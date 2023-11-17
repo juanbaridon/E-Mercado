@@ -288,12 +288,12 @@ function btnCart(prodId) {
     const cartIcon = document.querySelectorAll(".cartIcon");
     cartIcon.forEach((element) => {
       element.addEventListener("click", () => {
-        element.classList.add("text-danger");
-        element.classList.remove("text-white");
+        element.classList.add("cart-selected"); // gaston - se elimina text-danger
+        element.classList.remove("cart-unselected"); // gaston - se elimina text-white
       });
       if (cartElement.includes(prodId)) {
-        element.classList.add("text-danger");
-        element.classList.remove("text-white");
+        element.classList.add("cart-selected"); // gaston - se elimina text-white
+        element.classList.remove("cart-unselected"); // gaston - se elimina text-white
       }
     });
   }

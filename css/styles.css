@@ -207,9 +207,32 @@ a.custom-card:hover {
 
 /* Cambios */
 
-nav, .cartIcon{
+/* inicio gaston */
+nav {
   background-color: #ef9333;
 }
+
+.cartIcon{
+  font-size: 1.1rem;
+  /*background-color: #ef9333;*/
+}
+
+/* Agregado */
+
+.cartIcon:hover {
+  color: rgb(0, 123, 255) !important;
+  font-size: 1.1rem;
+}
+
+.cart-unselected {
+  color: rgb(176, 175, 175);
+}
+
+.cart-selected {
+  color: rgb(0, 123, 255);
+}
+
+/* final gaston */
 
 .card{
   animation: listar .3s forwards;
