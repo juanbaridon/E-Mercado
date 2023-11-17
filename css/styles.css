@@ -212,17 +212,13 @@ nav {
   background-color: #ef9333;
 }
 
-.cartIcon{
-  font-size: 1.1rem;
+.cartIcon,
+.favoriteBtn {
+  font-size: 1.4rem;
   /*background-color: #ef9333;*/
 }
 
 /* Agregado */
-
-.cartIcon:hover {
-  color: rgb(0, 123, 255) !important;
-  font-size: 1.1rem;
-}
 
 .cart-unselected {
   color: rgb(176, 175, 175);
@@ -230,6 +226,12 @@ nav {
 
 .cart-selected {
   color: rgb(0, 123, 255);
+}
+
+.cartIcon:hover,
+.favoriteBtn:hover {
+  color: rgb(0, 123, 255) !important;
+  scale: 1.2;
 }
 
 /* final gaston */

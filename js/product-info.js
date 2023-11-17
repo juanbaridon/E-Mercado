@@ -59,9 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <p class="card-text">Vendidos: ${data.soldCount}</p>
               <p class="card-text">Categoría: ${data.category}</p>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
-                <button class="btn favoriteBtn" id="addToFavorites_${data.catId}-${data.id}"  aria-label="Agregar o quitar de favoritos" onclick="toggleFavorito('${data.catId}', '${data.id}')"> <!-- gaston - se eliminabtn-primary -->
-                <i class="fas fa-heart"></i> <!-- Icono de corazón -->
-                </button>
+                <button class="btn cart-unselected favoriteBtn" id="addToFavorites_${data.catId}-${data.id}"  aria-label="Agregar o quitar de favoritos" onclick="toggleFavorito('${data.catId}', '${data.id}')"><i class="fas fa-heart"></i></button> <!-- Icono de corazón --> <!-- gaston - se eliminabtn-primary -->
                 <button type="button" class="btn cart-unselected border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button> <!-- gaston - se agrega cart-unselected - se elimina text-white -->
               </div>
         `

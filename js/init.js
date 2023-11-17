@@ -271,10 +271,10 @@ function btnFavorite(prodId) {
     const heartIcon = document.querySelectorAll(".favoriteBtn");
     heartIcon.forEach((element) => {
       element.addEventListener("click", () => {
-        element.classList.toggle("text-danger");
+        element.classList.toggle("cart-selected"); // gaston - se borra text-danger
       });
       if (favoriteElement.includes(prodId)) {
-        element.classList.add("text-danger");
+        element.classList.add("cart-selected");
       }
     });
   }
