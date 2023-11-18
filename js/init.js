@@ -271,7 +271,7 @@ function btnFavorite(prodId) {
     const heartIcon = document.querySelectorAll(".favoriteBtn");
     heartIcon.forEach((element) => {
       element.addEventListener("click", () => {
-        element.classList.toggle("cart-selected"); // gaston - se borra text-danger
+        element.classList.toggle("cart-selected");
       });
       if (favoriteElement.includes(prodId)) {
         element.classList.add("cart-selected");
@@ -288,12 +288,12 @@ function btnCart(prodId) {
     const cartIcon = document.querySelectorAll(".cartIcon");
     cartIcon.forEach((element) => {
       element.addEventListener("click", () => {
-        element.classList.add("cart-selected"); // gaston - se elimina text-danger
-        element.classList.remove("cart-unselected"); // gaston - se elimina text-white
+        element.classList.add("cart-selected");
+        element.classList.remove("cart-unselected");
       });
       if (cartElement.includes(prodId)) {
-        element.classList.add("cart-selected"); // gaston - se elimina text-white
-        element.classList.remove("cart-unselected"); // gaston - se elimina text-white
+        element.classList.add("cart-selected");
+        element.classList.remove("cart-unselected");
       }
     });
   }

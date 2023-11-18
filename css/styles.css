@@ -203,11 +203,8 @@ a.custom-card:hover {
 }
 
 
-/* Inicio Agregado */
+/* EDITED */
 
-/* Cambios */
-
-/* inicio gaston */
 nav {
   background-color: #ef9333;
 }
@@ -215,10 +212,7 @@ nav {
 .cartIcon,
 .favoriteBtn {
   font-size: 1.4rem;
-  /*background-color: #ef9333;*/
 }
-
-/* Agregado */
 
 .cart-unselected {
   color: rgb(176, 175, 175);
@@ -234,7 +228,6 @@ nav {
   scale: 1.2;
 }
 
-/* final gaston */
 
 .card{
   animation: listar .3s forwards;

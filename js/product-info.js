@@ -59,8 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
               <p class="card-text">Vendidos: ${data.soldCount}</p>
               <p class="card-text">Categoría: ${data.category}</p>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
-                <button class="btn cart-unselected favoriteBtn" id="addToFavorites_${data.catId}-${data.id}"  aria-label="Agregar o quitar de favoritos" onclick="toggleFavorito('${data.catId}', '${data.id}')"><i class="fas fa-heart"></i></button> <!-- Icono de corazón --> <!-- gaston - se eliminabtn-primary -->
-                <button type="button" class="btn cart-unselected border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button> <!-- gaston - se agrega cart-unselected - se elimina text-white -->
+                <button class="btn cart-unselected favoriteBtn" id="addToFavorites_${data.catId}-${data.id}"  aria-label="Agregar o quitar de favoritos" onclick="toggleFavorito('${data.catId}', '${data.id}')"><i class="fas fa-heart"></i></button>
+                <button type="button" class="btn cart-unselected border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
               </div>
         `
 
@@ -190,7 +190,7 @@ function comJson(comments) {
             <div class="card bg-light m-3">
             <img id="emercadoImg" src="img/login_light.png" class="card-img-top cursor-active mt-2" alt="ver más">
             <div class="card-body">
-                <h4 class="card-title text-center pb-2"><a href="products.html" class="btn <!-- gaston btn-primary --> ">Ver más ${array.category}</a></h4>
+                <h4 class="card-title text-center pb-2"><a href="products.html" class="btn">Ver más ${array.category}</a></h4>
             </div>
             </div>`
 
