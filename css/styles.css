@@ -269,8 +269,8 @@ nav {
     unicode-bidi: bidi-override;
 }
 
-/* Selecciona la estrella que tocamos con el mouse y las siguientes, al voltearlas previamente se ven como las anteriores */
-/* Colorea las estrellas al pasar el mouse y al hacer click */
+/* Select the star clicked and the following ones; when flipped over, they look like the previous ones */
+/* Color the stars when hovering and when clicking */
 #puntuacion label:hover, #puntuacion label:hover ~ label, #puntuacion input[type = "radio"]:checked ~ label{
   color:#fda638;
 }
@@ -381,7 +381,7 @@ nav {
  .card-back {
   transform: rotateY(180deg); 
     display: none;
-  transition: opacity 0.3s, transform 0.5s ease-in-out; /* Agregar transición para transform */
+  transition: opacity 0.3s, transform 0.5s ease-in-out;  /* Transform transition */
 
 }
 
@@ -431,8 +431,8 @@ nav {
   max-height: 120%;
 }
 .chip img {
-  max-width: 110%; /* Asegura que la imagen no se desborde del contenedor */
-  height: auto; /* Mantiene la proporción original de la imagen */
+  max-width: 110%; /* Ensure the image does not overflow from the container */
+  height: auto; /* Keep the original aspect ratio */
   margin-bottom: 350%;
 }
 
