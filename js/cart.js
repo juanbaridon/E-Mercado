@@ -64,7 +64,7 @@ function showCart(data) {
     <td><input min="0" name="quantity" oninput="updateProductQuantity(${data.id})" id="qForm${data.id}" aria-label="Ingrese cantidad a comprar del producto"
     value="${localStorage.getItem(`${data.id} quantity`) || 1}" type="number" onchange="updateSubtotal(this, ${originalCost})" class="form-control form-control-sm qForm"></td>
     <td><span class="subtotal" data-subtotal="${originalCost * quantity}">${(originalCost).toFixed(2)}</span></td>
-    <td class="text-center"><button class="btn btn-danger" aria-label="Remover del carrito" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')"><i class="fa fa-times"></i></button></td>
+    <td class="text-center"><button class="btn btn-delete" aria-label="Remover del carrito" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')"><i class="fa fa-trash"></i></button></td>
   `;
   cartProducts.appendChild(newRow);
   updateCartPrice(currency)

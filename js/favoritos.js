@@ -118,8 +118,8 @@ function showFavorites(favoriteProducts) { // Show favorites
             <div class="card-text">
               <p>${prod.description}</p>
               <small class="text-muted">${prod.soldCount} vendidos</small>
-                <button class="btn btn-danger float-end" aria-label="Remover del carrito" id="removeFromFavorites_${prod.catId}-${prod.id}" onclick="removeFromFavoritos('${prod.catId}', '${prod.id}')">
-                    <i class="fa fa-times"></i>
+                <button class="btn  float-end" aria-label="Remover del carrito" id="removeFromFavorites_${prod.catId}-${prod.id}" onclick="removeFromFavoritos('${prod.catId}', '${prod.id}')">
+                    <i class="fa fa-trash btn-delete"></i>
                 </button>
             </div>
           </div>

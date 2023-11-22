@@ -228,6 +228,15 @@ nav {
   scale: 1.2;
 }
 
+.btn-delete {
+  font-size: 1.3rem;
+  color: rgb(222, 99, 90) !important;
+}
+
+.btn-delete:hover {
+  scale: 1.2;
+}
+
 
 .card{
   animation: listar .3s forwards;
