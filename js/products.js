@@ -8,14 +8,12 @@ const divProductos = document.getElementById('divProductos');
 const CategoryName = document.getElementById('nombreCategoria');
 const campoMin = document.getElementById("rangeFilterCountMin2");
 const campoMax = document.getElementById("rangeFilterCountMax2");
-const btnFiltrar = document.getElementById("rangeFilterCount2");
-const btnLimpiar = document.getElementById("clearRangeFilter2");
-const btnPrecioAsc = document.getElementById("sortAsc2");
-const btnPrecioDesc = document.getElementById("sortDesc2");
-const btnRelevancia = document.getElementById("sortByCount2");
+const btnFiltrar = document.getElementById("rangeFilterCount");
+const btnLimpiar = document.getElementById("clearRangeFilter");
+const btnPrecioAsc = document.getElementById("sortAsc");
+const btnPrecioDesc = document.getElementById("sortDesc");
+const btnRelevancia = document.getElementById("sortByCount");
 const campoBusqueda = document.getElementById("buscador");
-
-
 
 //Show Data
 function showData(dataArray) {

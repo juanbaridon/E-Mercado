@@ -1,20 +1,35 @@
 const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
-const PUBLISH_PRODUCT_URL =
-  "https://japceibal.github.io/emercado-api/sell/publish.json";
+const PUBLISH_PRODUCT_URL = "https://japceibal.github.io/emercado-api/sell/publish.json";
 const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
 const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
-const PRODUCT_INFO_COMMENTS_URL =
-  "https://japceibal.github.io/emercado-api/products_comments/";
+const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/products_comments/";
 const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 const spinnerWrapper = document.getElementById("spinner-wrapper");
+const toggleReaderButton = document.getElementById("toggleReaderButton");
+const toggleReaderLi = document.getElementById("toggleReaderLi");
+const toggleReaderDiv = document.getElementById("toggleReaderDiv");
+
+function toggleReaderPosition() {
+  if (window.innerWidth <= 838) {
+    toggleReaderLi.append(toggleReaderButton)
+  }
+  else{
+    toggleReaderDiv.append(toggleReaderButton);
+  }
+}
+
+toggleReaderPosition()
+
+window.addEventListener('resize', ()=>{
+  toggleReaderPosition()
+})
 
 function redirectProduct(prodId){
   localStorage.setItem("productId", prodId);
   window.location.href = "product-info.html";
 };
-
 
 let getJSONData = function (url) {
   let result = {};
@@ -322,7 +337,6 @@ function btnCart(prodId) {
 
 let synth = window.speechSynthesis; 
 let reading = null;
-const toggleReaderButton = document.getElementById('toggleReaderButton');
 let isReaderEnabled = false;
 
 toggleReaderButton.addEventListener('click', function() {

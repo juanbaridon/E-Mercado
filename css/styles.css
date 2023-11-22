@@ -39,7 +39,7 @@ nav a {
   margin: 0;
   background-color: #53C0FB;
   background: url('../img/cover_back_light.png');
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -588,6 +588,11 @@ padding-top: 0%;
   padding: 15px;
 }
 
+@media screen and (max-width: 1040px) {
+  .jumbotron{
+    background-size: contain;
+  }
+}
 
 @media screen and (max-width: 768px) {
   .grid-container {

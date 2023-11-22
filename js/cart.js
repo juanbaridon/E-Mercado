@@ -56,13 +56,13 @@ function showCart(data) {
    } else {
      originalCost = data.cost / 40
    }
-   const quantity = parseInt(localStorage.getItem(`${data.id} quantity`)) || 0;
+   const quantity = parseInt(localStorage.getItem(`${data.id} quantity`)) || 1;
   // Currency 
   newRow.innerHTML = `
     <td>${data.name}</td>
     <td class="price" data-price="${originalCost}">${currency} ${originalCost.toFixed(2)}</td>
-    <td><input min="0" name="quantity" onclick="updateProductQuantity(${data.id})" id="qForm${data.id}" aria-label="Ingrese cantidad a comprar del producto"
-    value="${localStorage.getItem(`${data.id} quantity`)}" type="number" oninput="updateSubtotal(this, ${originalCost})" class="form-control form-control-sm qForm"></td>
+    <td><input min="0" name="quantity" oninput="updateProductQuantity(${data.id})" id="qForm${data.id}" aria-label="Ingrese cantidad a comprar del producto"
+    value="${localStorage.getItem(`${data.id} quantity`) || 1}" type="number" onchange="updateSubtotal(this, ${originalCost})" class="form-control form-control-sm qForm"></td>
     <td><span class="subtotal" data-subtotal="${originalCost * quantity}">${(originalCost).toFixed(2)}</span></td>
     <td class="text-center"><button class="btn btn-danger" aria-label="Remover del carrito" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')"><i class="fa fa-times"></i></button></td>
   `;
