@@ -8,14 +8,12 @@ const divProductos = document.getElementById('divProductos');
 const CategoryName = document.getElementById('nombreCategoria');
 const campoMin = document.getElementById("rangeFilterCountMin2");
 const campoMax = document.getElementById("rangeFilterCountMax2");
-const btnFiltrar = document.getElementById("rangeFilterCount2");
-const btnLimpiar = document.getElementById("clearRangeFilter2");
-const btnPrecioAsc = document.getElementById("sortAsc2");
-const btnPrecioDesc = document.getElementById("sortDesc2");
-const btnRelevancia = document.getElementById("sortByCount2");
+const btnFiltrar = document.getElementById("rangeFilterCount");
+const btnLimpiar = document.getElementById("clearRangeFilter");
+const btnPrecioAsc = document.getElementById("sortAsc");
+const btnPrecioDesc = document.getElementById("sortDesc");
+const btnRelevancia = document.getElementById("sortByCount");
 const campoBusqueda = document.getElementById("buscador");
-
-
 
 //Show Data
 function showData(dataArray) {
@@ -69,10 +67,10 @@ function showData(dataArray) {
                 <p>${prod.description}</p>
                 <small class="text-muted">${prod.soldCount} vendidos</small>
                 <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
-                  <button class="btn btn-primary favoriteBtn" aria-label="Agregar o quitar de favoritos" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
+                  <button class="btn favoriteBtn cart-unselected" aria-label="Agregar o quitar de favoritos" id="addToFavorites_${prod.catId}-${prod.id}" onclick="toggleFavorito('${prod.catId}', '${prod.id}')">
                     <i class="fas fa-heart ${favoritoClass}"></i> <!-- Icono de corazón -->
                   </button>
-                  <button type="button" class="btn text-white border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
+                  <button type="button" class="cart-unselected btn border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${prod.id}')"><i class="fa fa-shopping-cart"></i></button>
                 </div>
               </div>
               <label aria-label="Puntuación de ${prod.averageScore.toFixed(1)} estrellas">${estrellas(prod.averageScore)}</label>
