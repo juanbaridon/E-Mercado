@@ -207,6 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const logoutSession = document.getElementById("logoutSession");
 logoutSession.addEventListener("click", () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("token");
 });
 
 //Dark Mode

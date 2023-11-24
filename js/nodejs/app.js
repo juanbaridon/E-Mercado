@@ -29,7 +29,7 @@ app.post("/login", (req, res) => {
 });
 
 // Middleware que autoriza a realizar peticiones a /cart
-app.use("/userCart", (req, res, next) => {
+app.use("/user_cart", (req, res, next) => {
   try {
     const decoded = jwt.verify(req.headers["access-token"], SECRET_KEY);
     console.log(decoded);

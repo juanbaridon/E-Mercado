@@ -28,8 +28,16 @@ function submitForm(event) {
 
   if (user.value !== "" && contrasena.value !== "") {
     if (emailValido(user.value) && contrasenaValida(contrasena.value)) {
-      localStorage.setItem("user", user.value);
-      window.location.href = "index.html";
+      async function holdOn() {
+        try {
+          const resultadoLogin = await login(); // Espera a que se complete el inicio de sesión
+          localStorage.setItem("user", user.value); // Guarda el usuario en el almacenamiento local
+          window.location.href = "index.html"; // Redirige a la página index.html
+        } catch (error) {
+          console.error("Ocurrió un error durante el inicio de sesión:", error);
+        }
+      }
+      holdOn()
     }
 
     //Error Message
@@ -113,4 +121,34 @@ else {
   document.querySelector("body").style.backgroundColor = "#e2e2e2";
   //Image
   loginImg.src = "img/login_light.png";
+}
+
+
+//Auth
+async function fetchData(url, options) {
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function login() {
+const loginOptions = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    "username": user.value,
+    "password": contrasena.value
+  }),
+};
+fetchData("http://localhost:3000/login", loginOptions)
+.then((data) => {
+  localStorage.setItem('token', data.token);
+  console.log(data);
+})
 }
