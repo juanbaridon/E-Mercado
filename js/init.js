@@ -1,15 +1,57 @@
-const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
-const PUBLISH_PRODUCT_URL = "https://japceibal.github.io/emercado-api/sell/publish.json";
-const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
-const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
-const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/products_comments/";
-const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
-const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
+const CATEGORIES_URL = "http://localhost:3000/categories/";
+const PUBLISH_PRODUCT_URL = "http://localhost:3000/sell/";
+const PRODUCTS_URL = "http://localhost:3000/cats_products/";
+const PRODUCT_INFO_URL = "http://localhost:3000/products/";
+const PRODUCT_INFO_COMMENTS_URL = "http://localhost:3000/products_comments/";
+const CART_INFO_URL = "http://localhost:3000/user_cart/";
+const CART_BUY_URL = "http://localhost:3000/cart/";
 const EXT_TYPE = ".json";
 const spinnerWrapper = document.getElementById("spinner-wrapper");
 const toggleReaderButton = document.getElementById("toggleReaderButton");
 const toggleReaderLi = document.getElementById("toggleReaderLi");
 const toggleReaderDiv = document.getElementById("toggleReaderDiv");
+
+async function postCart(id) {
+  const postOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "access-token": localStorage.getItem("token"),
+    },
+    body: JSON.stringify({
+      "id": id
+    }),
+  };
+
+  try {
+    const response = await fetch(CART_INFO_URL, postOptions);
+    const data = await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function deleteCart(id) {
+  console.log(id)
+  const deleteOptions = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "access-token": localStorage.getItem("token"),
+    },
+    body: JSON.stringify({
+      "id": parseInt(id)
+    }),
+  };
+
+  try {
+    const response = await fetch(CART_INFO_URL, deleteOptions);
+    const data = await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 function toggleReaderPosition() {
   if (window.innerWidth <= 838) {
