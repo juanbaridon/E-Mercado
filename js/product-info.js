@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <p class="card-text">Categoría: ${data.category}</p>
               <div class="btn-group mb-3 float-end" role="group" aria-label="Basic example">
                 <button class="btn cart-unselected favoriteBtn" id="addToFavorites_${data.catId}-${data.id}"  aria-label="Agregar o quitar de favoritos" onclick="toggleFavorito('${data.catId}', '${data.id}')"><i class="fas fa-heart"></i></button>
-                <button type="button" class="btn cart-unselected border-0 cartIcon" aria-label="Agregar al carrito" onclick="addToCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
+                <button type="button" class="btn cart-unselected border-0 cartIcon" aria-label="Agregar al carrito" onclick="postCart('${data.id}')"><i class="fa fa-shopping-cart"></i></button>
               </div>
         `
 

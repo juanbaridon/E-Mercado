@@ -16,12 +16,26 @@ function addToCart(itemId) {
 }
 
 async function fetchCart() {
-  const cartList =
-    JSON.parse(
-      localStorage.getItem("cartList-" + localStorage.getItem("user"))
-    ) || [];
+  const getOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "access-token": localStorage.getItem("token"),
+    },
+  };
+
   try {
-    for (const element of cartList) {
+    const response = await fetch(CART_INFO_URL, getOptions);
+    const data = await response.json();
+    console.log(data.articles);
+    showProducts(data.articles)
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+
+  async function showProducts(product) {
+    for (const element of product) {
       const response = await fetch(`${PRODUCT_INFO_URL}${element}${EXT_TYPE}`);
       if (!response.ok) {
         throw new Error("Error de respuesta de la red");
@@ -29,21 +43,10 @@ async function fetchCart() {
       const data = await response.json();
       showCart(data);
     }
-  } catch (error) {
-    console.error("Error de fetch:", error);
-    cartProducts.innerHTML = `
-      <div class="bg-danger text-white text-center rounded p-4 m-4">
-        <h5>Lo sentimos, ha ocurrido un error.</h5>
-      </div>`;
   }
 }
 
-if (
-  localStorage.getItem("cartList-" + localStorage.getItem("user")) !== null &&
-  cartProducts
-) {
-  fetchCart();
-}
+fetchCart();
 
 //Displays and updates product details, including the subtotal, in a table row, considering the currency exchange rate for UYU.
 function showCart(data) {
@@ -64,7 +67,7 @@ function showCart(data) {
     <td><input min="0" name="quantity" oninput="updateProductQuantity(${data.id})" id="qForm${data.id}" aria-label="Ingrese cantidad a comprar del producto"
     value="${localStorage.getItem(`${data.id} quantity`) || 1}" type="number" onchange="updateSubtotal(this, ${originalCost})" class="form-control form-control-sm qForm"></td>
     <td><span class="subtotal" data-subtotal="${originalCost * quantity}">${(originalCost).toFixed(2)}</span></td>
-    <td class="text-center"><button class="btn btn-delete" aria-label="Remover del carrito" onclick="removeCartItem(this.parentNode.parentNode, '${data.id}')"><i class="fa fa-trash"></i></button></td>
+    <td class="text-center"><button class="btn btn-delete" aria-label="Remover del carrito" onclick="deleteCart(${data.id})"><i class="fa fa-trash"></i></button></td>
   `;
   cartProducts.appendChild(newRow);
   updateCartPrice(currency)
